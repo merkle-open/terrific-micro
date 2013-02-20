@@ -63,5 +63,3 @@ if (is_file($view)) {
 } else {
     die('view does not exist');
 }
-
-?>
