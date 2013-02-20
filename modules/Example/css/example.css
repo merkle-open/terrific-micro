@@ -1,0 +1,13 @@
+/* @group Module: example */
+@media all {
+
+    .mod-example {
+        background-image: url(/assets/img/logo.png);
+    }
+
+    .mod-example a {
+        color: red;
+    }
+
+}
+/* @end */
