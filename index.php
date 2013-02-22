@@ -19,35 +19,59 @@ function module($name, $template = null, $skin = null, $attr = array()) {
 }
 
 /**
+ * Compile a CSS/LESS/SCSS file.
+ */
+function compile($filename, $extension) {
+    switch ($extension) {
+        case 'less':
+            require_once BASE . 'library/lessphp/lessc.inc.php';
+            $less = new lessc;
+            $content = $less->compileFile($filename);
+            break;
+        default:
+            $content = file_get_contents($filename);
+            break;
+    }
+    return $content;
+}
+
+/**
  * Dump CSS/JS.
  */
 function dump($extension, $mimetype) {
+    $formats = array(
+        'js' => array('js'),
+        'css' => array('less', 'scss', 'css')
+    );
     $files = array();
     $output = "";
     $assets = json_decode(file_get_contents(BASE . '/assets/assets.json'));
     foreach ($assets->$extension as $pattern) {
-        foreach (glob(BASE . '/assets/' . $extension . '/' . $pattern) as $entry) {
+        foreach (glob(BASE . 'assets/' . $extension . '/' . $pattern) as $entry) {
             if (is_file($entry) && !array_key_exists($entry, $files)) {
-                $output .= file_get_contents($entry);
+                $format = substr(strrchr($entry, '.'), 1);
+                $output .= compile($entry, $format);
                 $files[$entry] = true;
             }
         }
     }
-    foreach (glob(BASE . '/modules/*', GLOB_ONLYDIR) as $dir) {
+    foreach (glob(BASE . 'modules/*', GLOB_ONLYDIR) as $dir) {
         $module = basename($dir);
-        $entry = $dir . '/' . $extension . '/' . strtolower($module) . '.' . $extension;
-        if (is_file($entry) && !array_key_exists($entry, $files)) {
-            $output .= file_get_contents($entry);
-            $files[$entry] = true;
-        }
-        foreach (glob($dir . '/' . $extension . '/*.*.' . $extension) as $entry) {
+        foreach ($formats[$extension] as $format) {
+            $entry = $dir . '/' . $extension . '/' . strtolower($module) . '.' . $format;
             if (is_file($entry) && !array_key_exists($entry, $files)) {
-                $output .= file_get_contents($entry);
+                $output .= compile($entry, $format);
                 $files[$entry] = true;
+            }
+            foreach (glob($dir . '/' . $extension . '/*.*.' . $format) as $entry) {
+                if (is_file($entry) && !array_key_exists($entry, $files)) {
+                    $output .= compile($entry, $format);
+                    $files[$entry] = true;
+                }
             }
         }
     }
-    
+
     if (isset($_REQUEST['min'])) {
         switch ($extension) {
             case 'css':

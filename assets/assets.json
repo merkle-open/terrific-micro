@@ -2,7 +2,8 @@
     "css": [
         "reset.css",
         "elements.css",
-        "*.css"
+        "*.css",
+        "*.less"
     ],
     "js": [
         "jquery.min.js",
