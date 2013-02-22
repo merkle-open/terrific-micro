@@ -28,6 +28,13 @@ function compile($filename, $extension) {
             $less = new lessc;
             $content = $less->compileFile($filename);
             break;
+
+        case 'scss':
+            require_once BASE . 'library/phpsass/SassParser.php';
+            $sass = new SassParser(array('style'=>'nested', 'cache' => false));
+            $content = $sass->toCss($filename);
+            break;
+
         default:
             $content = file_get_contents($filename);
             break;

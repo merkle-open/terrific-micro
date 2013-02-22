@@ -3,7 +3,8 @@
         "reset.css",
         "elements.css",
         "*.css",
-        "*.less"
+        "*.less",
+        "*.scss"
     ],
     "js": [
         "jquery.min.js",
