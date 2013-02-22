@@ -8,3 +8,4 @@ Features
 * CSS/JS concatenation
 * CSS/JS minification support
 * LESS support (optional)
+* SASS support (optional)
