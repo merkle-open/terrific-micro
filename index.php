@@ -47,12 +47,25 @@ function dump($extension, $mimetype) {
             }
         }
     }
+    
+    if (isset($_REQUEST['min'])) {
+        switch ($extension) {
+            case 'css':
+                require BASE . 'library/cssmin/cssmin.php';
+                $output = CssMin::minify($output);
+                break;
+            case 'js':
+                require BASE . 'library/jsmin/jsmin.php';
+                $output = JsMin::minify($output);
+                break;
+        }
+    }
     header("Content-Type: " . $mimetype);
     echo $output;
 }
 
-if ($_SERVER['REQUEST_URI'] == '/app.css') { dump('css', 'text/css'); exit(); }
-if ($_SERVER['REQUEST_URI'] == '/app.js') { dump('js', 'text/javascript'); exit(); }
+if (substr($_SERVER['REQUEST_URI'],0,8) == '/app.css') { dump('css', 'text/css'); exit(); }
+if (substr($_SERVER['REQUEST_URI'],0,7) == '/app.js') { dump('js', 'text/javascript'); exit(); }
 
 $route = str_replace('?' . $_SERVER['QUERY_STRING'], '', explode('/', $_SERVER['REQUEST_URI']));
 if ($route[1] == "") { $route[1] = 'index'; }
