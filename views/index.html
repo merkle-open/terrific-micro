@@ -1,26 +1,13 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Example</title>
-        <meta charset="utf-8" />
-        <link rel="stylesheet" href="app.css" type="text/css" />
+        <?php partial('head.html', array('title' => 'asdfadsf')) ?>
     </head>
     <body>
-        
         <?php module('Example') ?>
         <?php module('Example', 'second') ?>
         <?php module('Example', null, 'blue') ?>
         <?php module('Example', null, null, array('data-id' => 1)) ?>
-
-        <script src="app.js"></script>
-        <script>
-        (function($) {
-            $(document).ready(function() {
-                var application = new Tc.Application($('html'), {});
-                application.registerModules();
-                application.start();
-            });
-        })(Tc.$);
-        </script>
+        <?php partial('foot.html') ?>
     </body>
 </html>

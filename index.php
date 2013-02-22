@@ -2,6 +2,13 @@
 
 define('BASE', dirname(__FILE__) . '/');
 
+global $nocache;
+$nocache = false;
+
+function partial($file, $data = array()) {
+    require BASE . '/views/partials/' . $file;
+}
+
 /**
  * Output module markup.
  */
@@ -21,18 +28,41 @@ function module($name, $template = null, $skin = null, $attr = array()) {
 /**
  * Compile a CSS/LESS/SCSS file.
  */
-function compile($filename, $extension) {
+function compile($filename, $extension, $base = false) {
+    global $nocache;
     switch ($extension) {
         case 'less':
-            require_once BASE . 'library/lessphp/lessc.inc.php';
-            $less = new lessc;
-            $content = $less->compileFile($filename);
+            $modified = filemtime($filename);
+            $cachefile = sys_get_temp_dir() . '/terrific-' . md5($filename) . '.css';
+            if ($nocache || !is_file($cachefile) || (filemtime($cachefile) != $modified)) {
+                require_once BASE . 'library/lessphp/lessc.inc.php';
+                $less = new lessc;
+                $content = $less->compileFile($filename);
+                file_put_contents($cachefile, $content);
+                touch($cachefile, $modified);
+                if ($base) {
+                    $nocache = true;
+                }
+            } else {
+                $content = file_get_contents($cachefile);
+            }
             break;
 
         case 'scss':
-            require_once BASE . 'library/phpsass/SassParser.php';
-            $sass = new SassParser(array('style'=>'nested', 'cache' => false));
-            $content = $sass->toCss($filename);
+            $modified = filemtime($filename);
+            $cachefile = sys_get_temp_dir() . '/terrific-' . md5($filename) . '.css';
+            if ($nocache || !is_file($cachefile) || (filemtime($cachefile) != $modified)) {
+                require_once BASE . 'library/phpsass/SassParser.php';
+                $sass = new SassParser(array('style'=>'nested', 'cache' => false));
+                $content = $sass->toCss($filename);
+                file_put_contents($cachefile, $content);
+                touch($cachefile, $modified);
+                if ($base) {
+                    $nocache = true;
+                }
+            } else {
+                $content = file_get_contents($cachefile);
+            }
             break;
 
         default:
@@ -57,7 +87,7 @@ function dump($extension, $mimetype) {
         foreach (glob(BASE . 'assets/' . $extension . '/' . $pattern) as $entry) {
             if (is_file($entry) && !array_key_exists($entry, $files)) {
                 $format = substr(strrchr($entry, '.'), 1);
-                $output .= compile($entry, $format);
+                $output .= compile($entry, $format, true);
                 $files[$entry] = true;
             }
         }

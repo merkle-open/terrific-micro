@@ -1,0 +1,10 @@
+<script src="app.js"></script>
+<script>
+(function($) {
+    $(document).ready(function() {
+        var application = new Tc.Application($('html'), {});
+        application.registerModules();
+        application.start();
+    });
+})(Tc.$);
+</script>
