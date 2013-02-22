@@ -6,7 +6,7 @@ global $nocache;
 $nocache = false;
 
 function partial($file, $data = array()) {
-    require BASE . '/views/partials/' . $file;
+    require BASE . '/views/partials/' . $file . '.html';
 }
 
 /**
