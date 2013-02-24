@@ -1,12 +1,20 @@
-terrific-micro
-==============
+Terrific Micro Framework
+========================
 
-Micro Template for Frontend Projects
+Super-small, but powerful template for both, simple & complex frontend projects.
+
+Features
+========
+* CSS/JS concatenation
+* CSS/JS minification support
+* LESS support (optional)
+* SASS support (optional)
+
 
 Creating a new page (view)
 ==========================
 
-New pages are created within the '''views''' folder. Use pagename.html as filename.
+New pages are created within the `views` folder. Use pagename.html as filename.
 
 Functions
 =========
@@ -30,10 +38,3 @@ Render the Example module with additional attributes.
 Render a partial (e.g. for head or foot). Partials are placed in '''views/partials/''' with .html (e.g. foot.html).
 
     <?php partial('foot') ?>
-
-Features
-========
-* CSS/JS concatenation
-* CSS/JS minification support
-* LESS support (optional)
-* SASS support (optional)
