@@ -33,8 +33,8 @@ Skins (CSS or JS) are created using the following conventions.
     /Example/css/example.skinname.css
     /Example/js/example.skinname.js
 
-Creating a new page
-===================
+Creating pages
+==============
 
 Create a new `*.html` file in the `views` folder.
 
@@ -47,7 +47,7 @@ Your new page can then be called by the following URL
 Render Modules
 ==============
 
-Within your `pages`, you can render your `modules` with one of the following commands.
+Pages are meant to be compositions of your modules. Within your `pages`, you can render a `module` with one of the following commands.
 
 Render the Example module.
 
