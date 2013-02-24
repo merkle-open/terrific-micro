@@ -39,3 +39,11 @@ Render the Example module with additional attributes.
 Render a partial (e.g. for head or foot). Partials are placed in '''views/partials/''' with .html (e.g. foot.html).
 
     <?php partial('foot') ?>
+    
+Minification
+============
+
+You can get the minified versions of your CSS/JS by adding the URL Parameter `min`.
+
+    http://localhost/app.css?min
+    http://localhost/app.js?min
