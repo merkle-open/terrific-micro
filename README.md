@@ -21,7 +21,28 @@ Includes
 Creating a new page (view)
 ==========================
 
-New pages are created within the `views` folder. Use pagename.html as filename.
+Create a new page by creating a normal `*.html` file in the `views` folder.
+
+    /views/page.html
+    
+This page can then be called by the following URL
+
+    http://localhost/page
+
+Creating modules
+================
+
+Modules are created with the following structure in the `modules` folder.
+
+    /Example
+    /Example/example.html
+    /Example/css/example.css
+    /Example/js/example.js
+    
+Skins (CSS or JS) are created using the following conventions.
+
+    /Example/css/example.skinname.css
+    /Example/js/example.skinname.js
 
 Functions
 =========
