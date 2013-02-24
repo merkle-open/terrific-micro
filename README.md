@@ -1,7 +1,9 @@
 Terrific Micro Framework
 ========================
 
-Powerful template for simple & complex frontend projects with a tiny footprint.
+Powerful template for simple & complex frontend projects with a tiny footprint. 
+
+It's useful to read more about the Terrific concept on http://terrifically.org first.
 
 Features
 ========
@@ -45,7 +47,7 @@ Your new page can then be called by the following URL
 Render Modules
 ==============
 
-Within you pages, you can render your modules with one of the following commands.
+Within your `pages`, you can render your `modules` with one of the following commands.
 
 Render the Example module.
 
@@ -66,14 +68,14 @@ Render the Example module with additional attributes.
 Render Partials
 ===============
 
-Render a partial (HTML snippets). Partials are placed in `views/partials/` as `*.html` files (e.g. foot.html).
+Render a partial (HTML snippet). Partials are placed in `views/partials/` as `*.html` files (e.g. foot.html).
 
     <?php partial('foot') ?>
     
 Minification
 ============
 
-You can get the minified versions of your CSS/JS by adding the URL Parameter `min`.
+You can get the minified versions of your CSS/JS by adding the URL Parameter `min`. This is especially useful when deploying for production.
 
     http://localhost/app.css?min
     http://localhost/app.js?min
