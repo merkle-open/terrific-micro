@@ -125,12 +125,13 @@ function dump($extension, $mimetype) {
     echo $output;
 }
 
-if (substr($_SERVER['REQUEST_URI'],0,8) == '/app.css') { dump('css', 'text/css'); exit(); }
-if (substr($_SERVER['REQUEST_URI'],0,7) == '/app.js') { dump('js', 'text/javascript'); exit(); }
+if (preg_match("/\/app.css/",$_SERVER['REQUEST_URI'])) { dump('css', 'text/css'); exit(); }
+if (preg_match("/\/app.js/",$_SERVER['REQUEST_URI'])) { dump('js', 'text/javascript'); exit(); }
 
 $route = str_replace('?' . $_SERVER['QUERY_STRING'], '', explode('/', $_SERVER['REQUEST_URI']));
-if ($route[1] == "") { $route[1] = 'index'; }
-$view = dirname(__FILE__) . '/views/' . $route[1] . '.html';
+$action = end($route);
+if ($action == "") { $action = 'index'; }
+$view = dirname(__FILE__) . '/views/' . $action . '.html';
 
 if (is_file($view)) {
     require $view;
