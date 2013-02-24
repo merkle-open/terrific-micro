@@ -33,6 +33,10 @@ Skins (CSS or JS) are created using the following conventions.
     /Example/css/example.skinname.css
     /Example/js/example.skinname.js
 
+Additional content templates are created directly in the module folder.
+    
+    /Example/example.second.html
+
 Creating pages
 ==============
 
