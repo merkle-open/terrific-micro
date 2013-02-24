@@ -11,6 +11,12 @@ Features
 * SASS support (optional)
 * Caching (LESS/SASS) for optimal performance
 
+Includes
+========
+
+* TerrificJS
+* JQuery (optional, you can also use zepto)
+* YUI Reset (optional, you can use your own as well)
 
 Creating a new page (view)
 ==========================
