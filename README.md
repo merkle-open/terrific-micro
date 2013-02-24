@@ -1,7 +1,7 @@
 Terrific Micro Framework
 ========================
 
-Super-small, but powerful template for both, simple & complex frontend projects.
+Powerful template for simple & complex frontend projects with a tiny footprint.
 
 Features
 ========
@@ -9,6 +9,7 @@ Features
 * CSS/JS minification support
 * LESS support (optional)
 * SASS support (optional)
+* Caching (LESS/SASS) for optimal performance
 
 
 Creating a new page (view)
