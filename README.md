@@ -5,18 +5,16 @@ Powerful template for simple & complex frontend projects with a tiny footprint.
 
 Features
 ========
-* CSS/JS concatenation
-* CSS/JS minification support
-* LESS support (optional)
-* SASS support (optional)
+* CSS/JS concatenation & minification
+* LESS/SASS support (optional)
 * Caching (LESS/SASS) for optimal performance
 
 Includes
 ========
 
-* TerrificJS
+* TerrificJS (http://terrifically.org)
 * JQuery (optional, you can also use zepto)
-* YUI Reset (optional, you can use your own as well)
+* YUI CSS Reset (optional)
 
 Creating modules
 ================
