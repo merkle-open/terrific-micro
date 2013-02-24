@@ -99,3 +99,8 @@ You're able to configure the include order for concatenation by defining the inc
             "*.js"
         ]
     }
+    
+Optimization
+============
+
+If you don't need SASS or LESS support, you can just drop those folders from the `library` folder to save some space.
