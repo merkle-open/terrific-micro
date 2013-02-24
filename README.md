@@ -18,17 +18,6 @@ Includes
 * JQuery (optional, you can also use zepto)
 * YUI Reset (optional, you can use your own as well)
 
-Creating a new page (view)
-==========================
-
-Create a new page by creating a normal `*.html` file in the `views` folder.
-
-    /views/page.html
-    
-This page can then be called by the following URL
-
-    http://localhost/page
-
 Creating modules
 ================
 
@@ -44,8 +33,21 @@ Skins (CSS or JS) are created using the following conventions.
     /Example/css/example.skinname.css
     /Example/js/example.skinname.js
 
-Functions
-=========
+Creating a new page
+===================
+
+Create a new `*.html` file in the `views` folder.
+
+    /views/page.html
+    
+Your new page can then be called by the following URL
+
+    http://localhost/page
+    
+Render Modules
+==============
+
+Within you pages, you can render your modules with one of the following commands.
 
 Render the Example module.
 
@@ -62,8 +64,11 @@ Render the Example module with skin "blue".
 Render the Example module with additional attributes.
 
     <?php module('Example', null, null, array('data-id' => 1)) ?>
+    
+Render Partials
+===============
 
-Render a partial (e.g. for head or foot). Partials are placed in '''views/partials/''' with .html (e.g. foot.html).
+Render a partial (HTML snippets). Partials are placed in `views/partials/` as `*.html` files (e.g. foot.html).
 
     <?php partial('foot') ?>
     
