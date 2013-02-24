@@ -11,12 +11,13 @@ Features
 * LESS/SASS support (optional)
 * Caching (LESS/SASS) for optimal performance
 
-Includes
-========
+Installation & Requirements
+===========================
 
-* TerrificJS (http://terrifically.org)
-* JQuery (optional, you can also use zepto)
-* YUI CSS Reset (optional)
+You just need an Apache with PHP 5+ support. That's fair, isn't it?
+
+1. Unzip the package in your web root.
+2. Start working on your code and call `http://localhost/` to see the results.
 
 Creating modules
 ================
@@ -108,3 +109,10 @@ Optimization
 ============
 
 If you don't need SASS or LESS support, you can just drop those folders from the `library` folder to save some space.
+
+Includes
+========
+
+* TerrificJS (http://terrifically.org)
+* JQuery (optional, you can also use zepto)
+* YUI CSS Reset (optional)
