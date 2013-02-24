@@ -79,3 +79,23 @@ You can get the minified versions of your CSS/JS by adding the URL Parameter `mi
 
     http://localhost/app.css?min
     http://localhost/app.js?min
+    
+Concatenation Configuration
+===========================
+
+You're able to configure the include order for concatenation by defining the include patterns in `assets/assets.json`. You can remove `*.less`, `*.scss` or other entries if you don't need them.
+
+    {
+        "css": [
+            "reset.css",
+            "elements.css",
+            "*.css",
+            "*.less",
+            "*.scss"
+        ],
+        "js": [
+            "jquery.min.js",
+            "terrific.min.js",
+            "*.js"
+        ]
+    }
