@@ -1,5 +1,5 @@
-Terrific Micro Framework
-========================
+Terrific Micro
+==============
 
 Powerful template for simple & complex frontend projects with a tiny footprint. 
 
