@@ -100,7 +100,7 @@ function dump($extension, $mimetype) {
                 $output .= compile($entry, $format);
                 $files[$entry] = true;
             }
-            foreach (glob($dir . '/' . $extension . '/*.*.' . $format) as $entry) {
+            foreach (glob($dir . '/' . $extension . '/*-*.' . $format) as $entry) {
                 if (is_file($entry) && !array_key_exists($entry, $files)) {
                     $output .= compile($entry, $format);
                     $files[$entry] = true;
