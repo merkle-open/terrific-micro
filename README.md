@@ -1,7 +1,7 @@
 Terrific Micro
 ==============
 
-Powerful template for simple & complex frontend projects with a tiny footprint. 
+Powerful template for simple & complex frontend-only projects with a tiny footprint. 
 
 It's useful to read more about the Terrific concept on http://terrifically.org first.
 
@@ -11,12 +11,13 @@ Features
 * LESS/SASS support (optional)
 * Caching (LESS/SASS) for optimal performance
 
-Includes
-========
+Installation & Requirements
+===========================
 
-* TerrificJS (http://terrifically.org)
-* JQuery (optional, you can also use zepto)
-* YUI CSS Reset (optional)
+You just need an Apache with PHP 5+ support. That's fair, isn't it?
+
+1. Unzip https://github.com/rogerdudler/terrific-micro/archive/master.zip in your web root (or subfolder).
+2. Start working on your code and call `http://localhost/` to see the results.
 
 Creating modules
 ================
@@ -33,8 +34,12 @@ Skins (CSS or JS) are created using the following conventions.
     /Example/css/example.skinname.css
     /Example/js/example.skinname.js
 
-Creating a new page
-===================
+Additional content templates are created directly in the module folder.
+    
+    /Example/example.second.html
+
+Creating pages
+==============
 
 Create a new `*.html` file in the `views` folder.
 
@@ -47,7 +52,7 @@ Your new page can then be called by the following URL
 Render Modules
 ==============
 
-Within your `pages`, you can render your `modules` with one of the following commands.
+Pages are meant to be compositions of your modules. Within your `pages`, you can render a `module` with one of the following commands.
 
 Render the Example module.
 
@@ -104,3 +109,10 @@ Optimization
 ============
 
 If you don't need SASS or LESS support, you can just drop those folders from the `library` folder to save some space.
+
+Includes
+========
+
+* TerrificJS (http://terrifically.org)
+* JQuery (optional, you can also use zepto)
+* YUI CSS Reset (optional)
