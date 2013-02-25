@@ -41,9 +41,11 @@ Additional content templates are created directly in the module folder.
 Creating pages
 ==============
 
-Create a new `*.html` file in the `views` folder.
+Create a new `*.html` file in the `views` folder. Try to keep a flat structure.
 
     /views/page.html
+    /views/content.html
+    /views/content-variant.html
     
 Your new page can then be called by the following URL
 
