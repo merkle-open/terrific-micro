@@ -16,7 +16,7 @@ Installation & Requirements
 
 You just need an Apache with PHP 5+ support. That's fair, isn't it?
 
-1. Unzip [https://github.com/rogerdudler/terrific-micro/archive/master.zip] in your web root.
+1. Unzip https://github.com/rogerdudler/terrific-micro/archive/master.zip in your web root.
 2. Start working on your code and call `http://localhost/` to see the results.
 
 Creating modules
