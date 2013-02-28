@@ -14,7 +14,7 @@ function partial($file, $data = array()) {
  */
 function module($name, $template = null, $skin = null, $attr = array()) {
     $flat = strtolower($name);
-    $template = $template == null ? '' : '.' . $template;
+    $template = $template == null ? '' : '-' . $template;
     $skin = $skin == null ? '' : ' skin-' . $flat . '-' . $skin;
     $attributes = " ";
     foreach ($attr as $key => $value) {
