@@ -45,9 +45,9 @@ Create a new `*.html` file in the `views` folder. Try to keep a flat structure.
     /views/content.html
     /views/content-variant.html
     
-Your new page can then be called by the following URL
+Your new page can then be called by the following URL (with or without trailing slash)
 
-    http://localhost/page
+    http://localhost/page/
     
 Render Modules
 ==============
