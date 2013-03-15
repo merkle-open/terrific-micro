@@ -139,5 +139,6 @@ $view = dirname(__FILE__) . '/views/' . $action . '.html';
 if (is_file($view)) {
     require $view;
 } else {
-    die('view does not exist');
+    header('HTTP/1.0 404 Not Found');
+    exit();
 }
