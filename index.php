@@ -128,7 +128,9 @@ function dump($extension, $mimetype) {
 if (preg_match("/\/app.css/",$_SERVER['REQUEST_URI'])) { dump('css', 'text/css'); exit(); }
 if (preg_match("/\/app.js/",$_SERVER['REQUEST_URI'])) { dump('js', 'text/javascript'); exit(); }
 
-$route = str_replace('?' . $_SERVER['QUERY_STRING'], '', explode('/', $_SERVER['REQUEST_URI']));
+$url = str_replace('?' . $_SERVER['QUERY_STRING'], '', $_SERVER['REQUEST_URI']);
+$url = rtrim($url, "/");
+$route = explode('/', $url);
 $action = end($route);
 if ($action == "") { $action = 'index'; }
 $view = dirname(__FILE__) . '/views/' . $action . '.html';
