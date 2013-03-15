@@ -14,13 +14,14 @@ function partial($file, $data = array()) {
  */
 function module($name, $template = null, $skin = null, $attr = array()) {
     $flat = strtolower($name);
+    $dashed = strtolower(preg_replace(array('/([A-Z]+)([A-Z][a-z])/', '/([a-z\d])([A-Z])/'), array('\\1-\\2', '\\1-\\2'), $name));
     $template = $template == null ? '' : '-' . $template;
-    $skin = $skin == null ? '' : ' skin-' . $flat . '-' . $skin;
+    $skin = $skin == null ? '' : ' skin-' . $dashed . '-' . $skin;
     $attributes = " ";
     foreach ($attr as $key => $value) {
         $attributes .= $key . '="' . $value . '" ';
     }
-    echo "<div class=\"mod mod-" . $flat . $skin . "\"" . chop($attributes) . ">" . "\n";
+    echo "<div class=\"mod mod-" . $dashed . $skin . "\"" . chop($attributes) . ">" . "\n";
     require dirname(__FILE__) . '/modules/' . $name . '/' . $flat . $template . '.html';
     echo "\n</div>";
 }
