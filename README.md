@@ -1,7 +1,7 @@
 Terrific Micro
 ==============
 
-Powerful template for simple & complex frontend-only projects with a tiny footprint. It's useful to read more about the Terrific concept on http://terrifically.org first.
+Powerful template for simple & complex frontend-only projects with a tiny footprint. To unleash the beast, it's useful to read more about the Terrific concept on http://terrifically.org first.
 
 Features
 ========
