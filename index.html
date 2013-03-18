@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Terrific Micro by rogerdudler</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Terrific Micro</h1>
+        <h2>Powerful template for simple &amp; complex frontend projects with a tiny footprint.</h2>
+        <a href="https://github.com/rogerdudler/terrific-micro" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>Terrific Micro</h1>
+
+<p>Powerful template for simple &amp; complex frontend-only projects with a tiny footprint. It's useful to read more about the Terrific concept on <a href="http://terrifically.org">http://terrifically.org</a> first.</p>
+
+<h1>Features</h1>
+
+<ul>
+<li>CSS/JS concatenation &amp; minification</li>
+<li>LESS/SASS support (optional)</li>
+<li>Caching (LESS/SASS) for optimal performance</li>
+</ul><h1>Installation &amp; Requirements</h1>
+
+<p>You just need an Apache with PHP 5+ support. That's fair, isn't it?</p>
+
+<ol>
+<li>Unzip <a href="https://github.com/rogerdudler/terrific-micro/archive/master.zip">https://github.com/rogerdudler/terrific-micro/archive/master.zip</a> in your web root (or subfolder).</li>
+<li>Start working on your code and call <code>http://localhost/</code> to see the results.</li>
+</ol><h1>Creating modules</h1>
+
+<p>Modules are created with the following structure in the <code>modules</code> folder.</p>
+
+<pre><code>/Example
+/Example/example.html
+/Example/css/example.css
+/Example/js/example.js
+</code></pre>
+
+<p>Skins (CSS or JS) are created using the following conventions.</p>
+
+<pre><code>/Example/css/example-skinname.css
+/Example/js/example-skinname.js
+</code></pre>
+
+<p>Additional content templates are created directly in the module folder.</p>
+
+<pre><code>/Example/example-second.html
+</code></pre>
+
+<h1>Creating pages</h1>
+
+<p>Create a new <code>*.html</code> file in the <code>views</code> folder. Try to keep a flat structure.</p>
+
+<pre><code>/views/page.html
+/views/content.html
+/views/content-variant.html
+</code></pre>
+
+<p>Your new page can then be called by the following URL (with or without trailing slash)</p>
+
+<pre><code>http://localhost/page/
+</code></pre>
+
+<h1>Render Modules</h1>
+
+<p>Pages are meant to be compositions of your modules. Within your <code>pages</code>, you can render a <code>module</code> with one of the following commands.</p>
+
+<p>Render the Example module.</p>
+
+<pre><code>&lt;?php module('Example') ?&gt;
+</code></pre>
+
+<p>Render "second" template from the Example module.</p>
+
+<pre><code>&lt;?php module('Example', 'second') ?&gt;
+</code></pre>
+
+<p>Render the Example module with skin "blue".</p>
+
+<pre><code>&lt;?php module('Example', null, 'blue') ?&gt;
+</code></pre>
+
+<p>Render the Example module with additional attributes.</p>
+
+<pre><code>&lt;?php module('Example', null, null, array('data-id' =&gt; 1)) ?&gt;
+</code></pre>
+
+<h1>Render Partials</h1>
+
+<p>Render a partial (HTML snippet). Partials are placed in <code>views/partials/</code> as <code>*.html</code> files (e.g. foot.html).</p>
+
+<pre><code>&lt;?php partial('foot') ?&gt;
+</code></pre>
+
+<h1>Minification</h1>
+
+<p>You can get the minified versions of your CSS/JS by adding the URL Parameter <code>min</code>. This is especially useful when deploying for production.</p>
+
+<pre><code>http://localhost/app.css?min
+http://localhost/app.js?min
+</code></pre>
+
+<h1>Configuration</h1>
+
+<p>You're able to configure the include order for concatenation by defining the include patterns in <code>assets/assets.json</code>. You can remove <code>*.less</code>, <code>*.scss</code> or other entries if you don't need them.</p>
+
+<pre><code>{
+    "css": [
+        "reset.css",
+        "elements.css",
+        "*.css",
+        "*.less",
+        "*.scss"
+    ],
+    "js": [
+        "jquery.min.js",
+        "terrific.min.js",
+        "*.js"
+    ]
+}
+</code></pre>
+
+<h1>Optimization</h1>
+
+<p>If you don't need SASS or LESS support, you can just drop those folders from the <code>library</code> folder to save some space.</p>
+
+<h1>Includes</h1>
+
+<ul>
+<li>TerrificJS (<a href="http://terrifically.org">http://terrifically.org</a>)</li>
+<li>JQuery (optional, you can also use zepto)</li>
+<li>YUI CSS Reset (optional)</li>
+</ul>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/rogerdudler/terrific-micro/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/rogerdudler/terrific-micro/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/rogerdudler/terrific-micro"></a> is maintained by <a href="https://github.com/rogerdudler">rogerdudler</a>.</p>
+
+          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+            <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-652147-13");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
