@@ -14,7 +14,7 @@ Installation & Requirements
 
 You just need an Apache with PHP 5+ support. That's fair, isn't it?
 
-1. Unzip https://github.com/rogerdudler/terrific-micro/archive/master.zip in your web root (or subfolder).
+1. Unzip https://github.com/rogerdudler/terrific-micro/archive/master.zip in your web root (or any subfolder).
 2. Start working on your code and call `http://localhost/` to see the results.
 
 Creating modules
@@ -45,9 +45,11 @@ Create a new `*.html` file in the `views` folder. Try to keep a flat structure.
     /views/content.html
     /views/content-variant.html
     
-Your new page can then be called by the following URL (with or without trailing slash)
+Your new pages can then be called by the following URL (with or without an extension)
 
-    http://localhost/page/
+    http://localhost/page
+    http://localhost/content
+    http://localhost/content-variant
     
 Render Modules
 ==============

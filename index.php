@@ -130,7 +130,7 @@ if (preg_match("/\/app.css/",$_SERVER['REQUEST_URI'])) { dump('css', 'text/css')
 if (preg_match("/\/app.js/",$_SERVER['REQUEST_URI'])) { dump('js', 'text/javascript'); exit(); }
 
 $url = str_replace('?' . $_SERVER['QUERY_STRING'], '', $_SERVER['REQUEST_URI']);
-$url = rtrim($url, "/");
+$url = preg_replace('/\.[^.\s]{2,4}$/', '', $url);	// remove file extension
 $route = explode('/', $url);
 $action = end($route);
 if ($action == "") { $action = 'index'; }
