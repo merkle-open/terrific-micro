@@ -15,7 +15,7 @@ function partial($file, $data = array()) {
 function module($name, $template = null, $skin = null, $attr = array()) {
     $flat = strtolower($name);
     $dashed = strtolower(preg_replace(array('/([A-Z]+)([A-Z][a-z])/', '/([a-z\d])([A-Z])/'), array('\\1-\\2', '\\1-\\2'), $name));
-    $template = $template == null ? '' : '-' . $template;
+    $template = $template == null ? '' : '-' . strtolower($template);
     $skin = $skin == null ? '' : ' skin-' . $dashed . '-' . $skin;
     $attributes = ' ';
     $additionalClasses = '';
