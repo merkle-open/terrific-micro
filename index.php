@@ -14,18 +14,13 @@ function partial($file, $data = array()) {
  */
 function module($name, $template = null, $skin = null, $attr = array()) {
     $flat = strtolower($name);
-    $dashed = strtolower(preg_replace(array('/([A-Z]+)([A-Z][a-z])/', '/([a-z\d])([A-Z])/'), array('\\1-\\2', '\\1-\\2'), $name));
-    $template = $template == null ? '' : '-' . $template;
-    $skin = $skin == null ? '' : ' skin-' . $dashed . '-' . $skin;
-    $attributes = ' ';
-    $additionalClasses = '';
+    $template = $template == null ? '' : '-' . strtolower($template);
+    $skin = $skin == null ? '' : ' skin-' . $flat . '-' . $skin;
+    $attributes = " ";
     foreach ($attr as $key => $value) {
         $attributes .= $key . '="' . $value . '" ';
-        if ($key === 'class' && $value !== '') {
-            $additionalClasses .= ' ' . $value;
-        }
     }
-    echo "<div class=\"mod mod-" . $dashed . $skin . $additionalClasses . "\"" . chop($attributes) . ">" . "\n";
+    echo "<div class=\"mod mod-" . $flat . $skin . "\"" . chop($attributes) . ">" . "\n";
     require dirname(__FILE__) . '/modules/' . $name . '/' . $flat . $template . '.html';
     echo "\n</div>";
 }
@@ -133,9 +128,7 @@ function dump($extension, $mimetype) {
 if (preg_match("/\/app.css/",$_SERVER['REQUEST_URI'])) { dump('css', 'text/css'); exit(); }
 if (preg_match("/\/app.js/",$_SERVER['REQUEST_URI'])) { dump('js', 'text/javascript'); exit(); }
 
-$url = str_replace('?' . $_SERVER['QUERY_STRING'], '', $_SERVER['REQUEST_URI']);
-$url = preg_replace('/\.[^.\s]{2,4}$/', '', $url);	// remove file extension
-$route = explode('/', $url);
+$route = str_replace('?' . $_SERVER['QUERY_STRING'], '', explode('/', $_SERVER['REQUEST_URI']));
 $action = end($route);
 if ($action == "") { $action = 'index'; }
 $view = dirname(__FILE__) . '/views/' . $action . '.html';
@@ -143,6 +136,5 @@ $view = dirname(__FILE__) . '/views/' . $action . '.html';
 if (is_file($view)) {
     require $view;
 } else {
-    header('HTTP/1.0 404 Not Found');
-    exit();
+    die('view does not exist');
 }

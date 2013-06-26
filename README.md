@@ -1,7 +1,7 @@
 Terrific Micro
 ==============
 
-Powerful template for simple & complex frontend-only projects with a tiny footprint. To unleash the beast, it's useful to read more about the Terrific concept on http://terrifically.org first.
+Powerful template for simple & complex frontend-only projects with a tiny footprint. It's useful to read more about the Terrific concept on http://terrifically.org first.
 
 Features
 ========
@@ -14,7 +14,7 @@ Installation & Requirements
 
 You just need an Apache with PHP 5+ support. That's fair, isn't it?
 
-1. Unzip https://github.com/rogerdudler/terrific-micro/archive/master.zip in your web root (or any subfolder).
+1. Unzip https://github.com/rogerdudler/terrific-micro/archive/master.zip in your web root (or subfolder).
 2. Start working on your code and call `http://localhost/` to see the results.
 
 Creating modules
@@ -45,11 +45,9 @@ Create a new `*.html` file in the `views` folder. Try to keep a flat structure.
     /views/content.html
     /views/content-variant.html
     
-Your new pages can then be called by the following URL (with or without an extension)
+Your new page can then be called by the following URL
 
     http://localhost/page
-    http://localhost/content
-    http://localhost/content-variant
     
 Render Modules
 ==============
@@ -118,27 +116,3 @@ Includes
 * TerrificJS (http://terrifically.org)
 * JQuery (optional, you can also use zepto)
 * YUI CSS Reset (optional)
-
-License
-=======
-
-Copyright (c) 2013 Roger Dudler, http://twitter.com/rogerdudler
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-"Software"), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
