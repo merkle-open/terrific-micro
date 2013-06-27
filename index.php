@@ -20,9 +20,11 @@ function module($name, $template = null, $skin = null, $attr = array()) {
     $attributes = ' ';
     $additionalClasses = '';
     foreach ($attr as $key => $value) {
-        $attributes .= $key . '="' . $value . '" ';
         if ($key === 'class' && $value !== '') {
             $additionalClasses .= ' ' . $value;
+        }
+        else {
+            $attributes .= $key . '="' . $value . '" ';
         }
     }
     echo "<div class=\"mod mod-" . $dashed . $skin . $additionalClasses . "\"" . chop($attributes) . ">" . "\n";
