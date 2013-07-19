@@ -40,7 +40,7 @@ function compile($filename, $extension, $base = false) {
     switch ($extension) {
         case 'less':
             $modified = filemtime($filename);
-            $cachefile = sys_get_temp_dir() . '/terrific-' . md5($filename) . '.css';
+            $cachefile = sys_get_temp_dir() . '/terrific-' . md5(BASE.$filename) . '.css';
             if ($nocache || !is_file($cachefile) || (filemtime($cachefile) != $modified)) {
                 require_once BASE . 'library/lessphp/lessc.inc.php';
                 $less = new lessc;
@@ -57,7 +57,7 @@ function compile($filename, $extension, $base = false) {
 
         case 'scss':
             $modified = filemtime($filename);
-            $cachefile = sys_get_temp_dir() . '/terrific-' . md5($filename) . '.css';
+            $cachefile = sys_get_temp_dir() . '/terrific-' . md5(BASE.$filename) . '.css';
             if ($nocache || !is_file($cachefile) || (filemtime($cachefile) != $modified)) {
                 require_once BASE . 'library/phpsass/SassParser.php';
                 $sass = new SassParser(array('style'=>'nested', 'cache' => false));
