@@ -5,15 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
 
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <title>Terrific Micro by rogerdudler</title>
+    <title>Terrific Micro by namics</title>
   </head>
 
   <body>
@@ -21,31 +21,35 @@
       <div class="inner">
         <h1>Terrific Micro</h1>
         <h2>Powerful template for simple &amp; complex frontend projects with a tiny footprint.</h2>
-        <a href="https://github.com/rogerdudler/terrific-micro" class="button"><small>View project on</small>GitHub</a>
+        <a href="https://github.com/namics/terrific-micro" class="button"><small>View project on</small>GitHub</a>
       </div>
     </header>
 
     <div id="content-wrapper">
       <div class="inner clearfix">
         <section id="main-content">
-          <h1>Terrific Micro</h1>
+          <h1>
+<a name="terrific-micro" class="anchor" href="#terrific-micro"><span class="octicon octicon-link"></span></a>Terrific Micro</h1>
 
 <p>Powerful template for simple &amp; complex frontend-only projects with a tiny footprint. To unleash the beast, it's useful to read more about the Terrific concept on <a href="http://terrifically.org">http://terrifically.org</a> first.</p>
 
-<h1>Features</h1>
+<h1>
+<a name="features" class="anchor" href="#features"><span class="octicon octicon-link"></span></a>Features</h1>
 
 <ul>
 <li>CSS/JS concatenation &amp; minification</li>
 <li>LESS/SASS support (optional)</li>
 <li>Caching (LESS/SASS) for optimal performance</li>
-</ul><h1>Installation &amp; Requirements</h1>
+</ul><h1>
+<a name="installation--requirements" class="anchor" href="#installation--requirements"><span class="octicon octicon-link"></span></a>Installation &amp; Requirements</h1>
 
 <p>You just need an Apache with PHP 5+ support. That's fair, isn't it?</p>
 
 <ol>
-<li>Unzip <a href="https://github.com/rogerdudler/terrific-micro/archive/master.zip">https://github.com/rogerdudler/terrific-micro/archive/master.zip</a> in your web root (or subfolder).</li>
+<li>Unzip <a href="https://github.com/rogerdudler/terrific-micro/archive/master.zip">https://github.com/rogerdudler/terrific-micro/archive/master.zip</a> in your web root (or any subfolder).</li>
 <li>Start working on your code and call <code>http://localhost/</code> to see the results.</li>
-</ol><h1>Creating modules</h1>
+</ol><h1>
+<a name="creating-modules" class="anchor" href="#creating-modules"><span class="octicon octicon-link"></span></a>Creating modules</h1>
 
 <p>Modules are created with the following structure in the <code>modules</code> folder.</p>
 
@@ -66,7 +70,8 @@
 <pre><code>/Example/example-second.html
 </code></pre>
 
-<h1>Creating pages</h1>
+<h1>
+<a name="creating-pages" class="anchor" href="#creating-pages"><span class="octicon octicon-link"></span></a>Creating pages</h1>
 
 <p>Create a new <code>*.html</code> file in the <code>views</code> folder. Try to keep a flat structure.</p>
 
@@ -75,12 +80,15 @@
 /views/content-variant.html
 </code></pre>
 
-<p>Your new page can then be called by the following URL (with or without trailing slash)</p>
+<p>Your new pages can then be called by the following URL (with or without an extension)</p>
 
-<pre><code>http://localhost/page/
+<pre><code>http://localhost/page
+http://localhost/content
+http://localhost/content-variant
 </code></pre>
 
-<h1>Render Modules</h1>
+<h1>
+<a name="render-modules" class="anchor" href="#render-modules"><span class="octicon octicon-link"></span></a>Render Modules</h1>
 
 <p>Pages are meant to be compositions of your modules. Within your <code>pages</code>, you can render a <code>module</code> with one of the following commands.</p>
 
@@ -104,14 +112,16 @@
 <pre><code>&lt;?php module('Example', null, null, array('data-id' =&gt; 1)) ?&gt;
 </code></pre>
 
-<h1>Render Partials</h1>
+<h1>
+<a name="render-partials" class="anchor" href="#render-partials"><span class="octicon octicon-link"></span></a>Render Partials</h1>
 
 <p>Render a partial (HTML snippet). Partials are placed in <code>views/partials/</code> as <code>*.html</code> files (e.g. foot.html).</p>
 
 <pre><code>&lt;?php partial('foot') ?&gt;
 </code></pre>
 
-<h1>Minification</h1>
+<h1>
+<a name="minification" class="anchor" href="#minification"><span class="octicon octicon-link"></span></a>Minification</h1>
 
 <p>You can get the minified versions of your CSS/JS by adding the URL Parameter <code>min</code>. This is especially useful when deploying for production.</p>
 
@@ -119,7 +129,8 @@
 http://localhost/app.js?min
 </code></pre>
 
-<h1>Configuration</h1>
+<h1>
+<a name="configuration" class="anchor" href="#configuration"><span class="octicon octicon-link"></span></a>Configuration</h1>
 
 <p>You're able to configure the include order for concatenation by defining the include patterns in <code>assets/assets.json</code>. You can remove <code>*.less</code>, <code>*.scss</code> or other entries if you don't need them.</p>
 
@@ -139,32 +150,50 @@ http://localhost/app.js?min
 }
 </code></pre>
 
-<h1>Optimization</h1>
+<h1>
+<a name="optimization" class="anchor" href="#optimization"><span class="octicon octicon-link"></span></a>Optimization</h1>
 
 <p>If you don't need SASS or LESS support, you can just drop those folders from the <code>library</code> folder to save some space.</p>
 
-<h1>Includes</h1>
+<h1>
+<a name="includes" class="anchor" href="#includes"><span class="octicon octicon-link"></span></a>Includes</h1>
 
 <ul>
 <li>TerrificJS (<a href="http://terrifically.org">http://terrifically.org</a>)</li>
 <li>JQuery (optional, you can also use zepto)</li>
 <li>YUI CSS Reset (optional)</li>
-</ul>
+</ul><h1>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h1>
+
+<p>Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so.</p>
+
+<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
         </section>
 
         <aside id="sidebar">
-          <a href="https://github.com/rogerdudler/terrific-micro/zipball/master" class="button">
+          <a href="https://github.com/namics/terrific-micro/zipball/master" class="button">
             <small>Download</small>
             .zip file
           </a>
-          <a href="https://github.com/rogerdudler/terrific-micro/tarball/master" class="button">
+          <a href="https://github.com/namics/terrific-micro/tarball/master" class="button">
             <small>Download</small>
             .tar.gz file
           </a>
 
-          <p class="repo-owner"><a href="https://github.com/rogerdudler/terrific-micro"></a> is maintained by <a href="https://github.com/rogerdudler">rogerdudler</a>.</p>
+          <p class="repo-owner"><a href="https://github.com/namics/terrific-micro"></a> is maintained by <a href="https://github.com/namics">namics</a>.</p>
 
-          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.</p>
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
         </aside>
       </div>
     </div>
