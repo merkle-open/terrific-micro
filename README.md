@@ -20,13 +20,13 @@ Enable mod_rewrite and optionally mod_deflate and add the directive `AllowOverri
 
 1. Clone Repo in a `project`-folder of your web root:
 
-    git clone https://github.com/namics/terrific-micro.git project
+        git clone https://github.com/namics/terrific-micro.git project
 
 2. Start working on your code and see the results:
 
-    http://localhost/project/
-    http://localhost/project/app.css
-    http://localhost/project/app.js
+        http://localhost/project/
+        http://localhost/project/app.css
+        http://localhost/project/app.js
 
 ### Features
 
