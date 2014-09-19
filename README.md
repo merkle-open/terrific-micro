@@ -7,7 +7,7 @@ To unleash the beast, it's useful to read more about the Terrific concept on [te
 ## Table of contents
 
 * [Quick Start](#quick-start)
-* [Daily Work - Components & Pages](#daily-work-creating-components-amp-pages)
+* [Daily Work - Components & Pages](#daily-work---creating-components--pages)
 * [Assets](#assets)
 * [Conventions](#conventions)
 * [Security](#security)
@@ -296,4 +296,4 @@ Terrific Micro was initiated by [Roger Dudler](https://github.com/rogerdudler) a
 
 ## License
 
-Released under [the MIT license](LICENSE)
+Released under the [MIT license](LICENSE)
