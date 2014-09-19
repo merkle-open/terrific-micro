@@ -110,7 +110,16 @@ class Component {
 	 * @return string
 	 */
 	private function getComponentPrefix() {
-		return property_exists($this->config, 'prefix') ? $this->config->prefix : '';
+		return property_exists($this->config, 'component_prefix') ? $this->config->component_prefix : '';
+	}
+
+	/**
+	 * get configured skin prefix
+	 *
+	 * @return string
+	 */
+	private function getSkinPrefix() {
+		return property_exists($this->config, 'skin_prefix') ? $this->config->skin_prefix : '';
 	}
 
 	/**
@@ -237,11 +246,12 @@ class Component {
 	 * @param $skinName
 	 */
 	private function fillSkinPlaceholders( $skinName ) {
-		$this->placeholders['{{skin}}']      = $skinName;
-		$this->placeholders['{{skin-css}}']  = $this->getCssName( $skinName );
-		$this->placeholders['{{skin-js}}']   = $this->getJsName( $skinName );
-		$this->placeholders['{{skin-file}}'] = strtolower( $skinName );
-		$this->placeholders['{{skin-id}}']   = strtolower( $this->getJsName( $skinName ) );
+		$this->placeholders['{{skin}}']        = $skinName;
+		$this->placeholders['{{skin-css}}']    = $this->getCssName( $skinName );
+		$this->placeholders['{{skin-js}}']     = $this->getJsName( $skinName );
+		$this->placeholders['{{skin-file}}']   = strtolower( $skinName );
+		$this->placeholders['{{skin-id}}']     = strtolower( $this->getJsName( $skinName ) );
+		$this->placeholders['{{skin-prefix}}'] = $this->getSkinPrefix();
 	}
 
 	/**
@@ -272,13 +282,18 @@ class Component {
 
 		$markup .= '
 					</p>
-				</div>
+				</div>';
 
+
+		if ( property_exists( $this->config, 'skin_prefix' ) ) {
+		$markup .= '
 				<div class="form-group">
 					<label class="control-label" for="skin">Skin:</label>
 					<input type="text" id="skin" name="skin" class="form-control" placeholder="Skin SkinTwo" value="" />
-				</div>
+				</div>';
+		}
 
+		$markup .= '
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group">

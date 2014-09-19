@@ -30,7 +30,8 @@ if ( !function_exists( 'partial' ) ) {
 		$partial_template = BASE . $config->micro->view_partials_directory . '/' . $file . '.' . $config->micro->view_file_extension;
 		if ( file_exists( $partial_template ) ) {
 			require $partial_template;
-		} else {
+		}
+		else {
 			echo '<p>Could not find the partial file: <code>' . $file . '.' . $config->micro->view_file_extension . '</code></p>';
 		}
 	}
@@ -57,18 +58,18 @@ if ( !function_exists( 'component' ) ) {
 
 		$component_template = $name . '/' . $flat . $template . '.' . $config->micro->view_file_extension;
 		$component_file     = false;
-		$component_prefix   = '';
+
 		foreach ( $config->micro->components as $key => $component ) {
 			$directory = $component->path;
+			$component_prefix = property_exists( $component, 'component_prefix') ? $component->component_prefix : '';
 			if ( file_exists( BASE . $directory . '/' . $component_template ) ) {
-				$component_prefix = $component->prefix;
-				$component_file   = BASE . $directory . '/' . $component_template;
+				$component_file = BASE . $directory . '/' . $component_template;
 				break 1;
-			} else {
+			}
+			else {
 				foreach ( glob( BASE . $directory . '/*/' . $component_template ) as $component_template_file ) {
 					if ( file_exists( $component_template_file ) ) {
 						$component_file   = $component_template_file;
-						$component_prefix = $component->prefix;
 						break 2;
 					}
 				}
@@ -78,7 +79,8 @@ if ( !function_exists( 'component' ) ) {
 		echo PHP_EOL;
 		if ( $component_file === false ) {
 			echo '<p>Could not find the component template: <code>' . $flat . $template . '.' . $config->micro->view_file_extension . '</code></p>';
-		} else {
+		}
+		else {
 			if ( $component_wrapper ) {
 				$dashed = strtolower( preg_replace( array(
 					'/([A-Z]+)([A-Z][a-z])/',
@@ -87,12 +89,14 @@ if ( !function_exists( 'component' ) ) {
 
 				$skins = '';
 				if ( !empty( $skin ) || $skin === '0' ) {
+					$skin_prefix = property_exists( $component, 'skin_prefix') ? $component->skin_prefix : '';
 					if ( is_array( $skin ) ) {
 						foreach ( $skin as $key => $value ) {
-							$skins .= ' skin-' . $dashed . '-' . $value;
+							$skins .= ' ' . $skin_prefix . '-' . $dashed . '-' . $value;
 						}
-					} else {
-						$skins = !is_string( $skin ) ? '' : ' skin-' . $dashed . '-' . $skin;
+					}
+					else {
+						$skins = !is_string( $skin ) ? '' : ' ' . $skin_prefix . '-' . $dashed . '-' . $skin;
 					}
 				}
 
@@ -102,7 +106,8 @@ if ( !function_exists( 'component' ) ) {
 					foreach ( $attr as $key => $value ) {
 						if ( $key === 'class' && !empty( $value ) ) {
 							$additional_classes .= ' ' . $value;
-						} else {
+						}
+						else {
 							$attributes .= $key . '="' . $value . '" ';
 						}
 					}
@@ -189,7 +194,8 @@ if ( !function_exists( 'compile' ) ) {
 					} catch ( Exception $e ) {
 						$content = get_compile_error_css( $e, $filename, 'lessphp' );
 					}
-				} else {
+				}
+				else {
 					$content = file_get_contents( $cachefile );
 				}
 				break;
@@ -223,7 +229,8 @@ if ( !function_exists( 'compile' ) ) {
 					} catch ( Exception $e ) {
 						$content = get_compile_error_css( $e, $filename, 'scssphp' );
 					}
-				} else {
+				}
+				else {
 					$content = file_get_contents( $cachefile );
 				}
 				break;
@@ -267,9 +274,11 @@ if ( !function_exists( 'dump' ) ) {
 			$firstchar = substr( $pattern, 0, 1 );
 			if ( $firstchar === '!' ) {
 				$excludes[] = substr( $pattern, 1 );
-			} else if ( $firstchar === '+' ) {
+			}
+			else if ( $firstchar === '+' ) {
 				$dependencies[] = substr( $pattern, 1 );
-			} else {
+			}
+			else {
 				$patterns[] = $pattern;
 			}
 		}
@@ -282,7 +291,8 @@ if ( !function_exists( 'dump' ) ) {
 			if ( !$debugjavascript ) {
 				$format = substr( strrchr( $entry, '.' ), 1 );
 				$output .= compile( BASE . $entry, $format, $dependencies );
-			} else {
+			}
+			else {
 				$output .= "document.write('<script type=\"text/javascript\" src=\"$entry\"><\/script>');" . PHP_EOL;
 			}
 		}
@@ -427,7 +437,8 @@ if ( !function_exists( 'render_view_template' ) ) {
 	function render_view_template( $view ) {
 		if ( file_exists( $view ) ) {
 			require $view;
-		} else {
+		}
+		else {
 			throw new Exception();
 		}
 	}
