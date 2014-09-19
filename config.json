@@ -1,0 +1,35 @@
+{
+	"assets": {
+		"app.css": [
+			"+assets/css/variables.*",
+			"+assets/css/mixins.less",
+			"!**/somefile.*",
+			"!components/modules/Test*/*",
+			"assets/css/cssreset.css",
+			"assets/css/*.*",
+			"components/modules/*/css/*.*",
+			"components/modules/*/css/skins/*.*"
+		],
+		"app.js": [
+			"!**/somefile.*",
+			"!components/modules/Test*/*",
+			"assets/js/jquery-1.11.1.min.js",
+			"assets/js/terrific-2.1.0.js",
+			"assets/js/*.js",
+			"components/modules/*/js/*.js",
+			"components/modules/*/js/skins/*.js"
+		]
+	},
+	"micro": {
+		"components": {
+			"module": {
+				"prefix": "mod",
+				"path": "components/modules",
+				"template": "project/templates/module"
+			}
+		},
+		"view_file_extension": "html",
+		"view_directory": "views",
+		"view_partials_directory": "views/_partials"
+	}
+}

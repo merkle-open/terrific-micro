@@ -1,0 +1,13 @@
+<script src="app.js"></script>
+<script>
+(function($) {
+	$(document).ready(function() {
+		var config = {},
+			$root = $('html'),
+			application = new Tc.Application($root, config);
+
+		application.registerModules();
+		application.start();
+	});
+})(Tc.$);
+</script>

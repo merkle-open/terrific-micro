@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<?php partial('head', array('title' => 'Content Variant')); ?>
+	</head>
+	<body>
+		<?php component('Example', 'second'); ?>
+		<?php
+		/*
+		 * advanced mode: you need a template without the component wrapper (.mod)
+		 * this is: more flexible, but maybe suboptimal for integration
+		 */
+		component('Example', 'wrapme', 'gray', array('data-color'=>'gray'));
+		component('Example', 'wrapme', 'blue', array('data-color'=>'red', 'contenteditable'=>'true'), 'div');
+		component('Example', 'wrapme', array('gray', 'big', 'different'), array('data-color'=>'gray', 'data-weekday'=>date('l')), 'article');
+		component('Example', 'wrapme', true);
+		component('Example', 'wrapme', true, true, 'nav');
+		?>
+		<?php partial('foot'); ?>
+	</body>
+</html>
