@@ -18,7 +18,7 @@ To unleash the beast, it's useful to read more about the Terrific concept on [te
 You just need an Apache with PHP 5.3+ support. 
 Enable mod_rewrite and optionally mod_deflate and add the directive `AllowOverride All` for your directory.
 
-1. Clone Repo in a `project`-folder of your web root:
+1. Clone repo in a `project`-folder of your web root:
 
         git clone https://github.com/namics/terrific-micro.git project
 
@@ -41,43 +41,44 @@ Enable mod_rewrite and optionally mod_deflate and add the directive `AllowOverri
 ### Creating Components
 
 Components are created in the `components` folder. A component is an encapsulated block of markup with corresponding styles and scripts. 
-A terrific module for example uses the following structure.
+A terrific module for example uses the following structure:
 
     /Example
     /Example/example.html
     /Example/css/example.css
     /Example/js/example.js
 
-Terrific Skins (css or js) are created using the following conventions.
+Terrific Skins (css or js) are created using the following conventions:
 
     /Example/css/skins/example-skinname.css
     /Example/js/skins/example-skinname.js
 
-Create additional content templates directly in the component folder.
+Create additional content templates directly in the component folder:
 
     /Example/example-second.html
 
 ### Creating Components & Skins by GUI
 
-But the easyest way to do so is using the included GUI. 
+But the easiest way to do so is using the included GUI. 
 Try it out by requesting http://localhost/project/terrific/ (don't forget the trailing slash)
 
 #### Components Configuration
 
-You can use more than one type of components. Components are configured in config.json (`micro/components`).
+You can use more than one type of components. Components are configured in `config.json` (`micro/components`).
 
-    "modulename": {
-        "prefix": "mod",                        // class prefix
-        "path": "components/modules",           // path for the newly created component
+    "component-type": {
         "template": "project/templates/module"  // template folder to copy by creating a component
+        "path": "components/modules",           // path for the newly created component
+        "component_prefix": "mod",              // class prefix of component
+        "skin_prefix": "skin",                  // class prefix of skin (optional)
     }
 
 The GUI component creator replaces `_component` and `_skin` in file names with the appropriate names. 
 For file contents there is a bunch of placeholders available: 
 
-* {{component}} {{component-css}} {{component-js}} {{component-file}} {{component-id}} {{component-prefix}}
-* {{skin}} {{skin-css}} {{skin-js}} {{skin-file}} {{skin-id}}
-* {{user}} {{email}}
+    {{component}} {{component-css}} {{component-js}} {{component-file}} {{component-id}} {{component-prefix}}
+    {{skin}} {{skin-css}} {{skin-js}} {{skin-file}} {{skin-id}} {{skin-prefix}}
+    {{user}} {{email}}
 
 ### Creating pages
 
