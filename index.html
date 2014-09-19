@@ -53,7 +53,7 @@ Enable mod_rewrite and optionally mod_deflate and add the directive <code>AllowO
 
 <ol>
 <li>
-<p>Clone Repo in a <code>project</code>-folder of your web root:</p>
+<p>Clone repo in a <code>project</code>-folder of your web root:</p>
 
 <pre><code>git clone https://github.com/namics/terrific-micro.git project
 </code></pre>
@@ -82,7 +82,7 @@ http://localhost/project/app.js
 <a name="creating-components" class="anchor" href="#creating-components"><span class="octicon octicon-link"></span></a>Creating Components</h3>
 
 <p>Components are created in the <code>components</code> folder. A component is an encapsulated block of markup with corresponding styles and scripts. 
-A terrific module for example uses the following structure.</p>
+A terrific module for example uses the following structure:</p>
 
 <pre><code>/Example
 /Example/example.html
@@ -90,13 +90,13 @@ A terrific module for example uses the following structure.</p>
 /Example/js/example.js
 </code></pre>
 
-<p>Terrific Skins (css or js) are created using the following conventions.</p>
+<p>Terrific Skins (css or js) are created using the following conventions:</p>
 
 <pre><code>/Example/css/skins/example-skinname.css
 /Example/js/skins/example-skinname.js
 </code></pre>
 
-<p>Create additional content templates directly in the component folder.</p>
+<p>Create additional content templates directly in the component folder:</p>
 
 <pre><code>/Example/example-second.html
 </code></pre>
@@ -104,29 +104,31 @@ A terrific module for example uses the following structure.</p>
 <h3>
 <a name="creating-components--skins-by-gui" class="anchor" href="#creating-components--skins-by-gui"><span class="octicon octicon-link"></span></a>Creating Components &amp; Skins by GUI</h3>
 
-<p>But the easyest way to do so is using the included GUI. 
+<p>But the easiest way to do so is using the included GUI. 
 Try it out by requesting http://localhost/project/terrific/ (don't forget the trailing slash)</p>
 
 <h4>
 <a name="components-configuration" class="anchor" href="#components-configuration"><span class="octicon octicon-link"></span></a>Components Configuration</h4>
 
-<p>You can use more than one type of components. Components are configured in config.json (<code>micro/components</code>).</p>
+<p>You can use more than one type of components. Components are configured in <code>config.json</code> (<code>micro/components</code>).</p>
 
-<pre><code>"modulename": {
-    "prefix": "mod",                        // class prefix
-    "path": "components/modules",           // path for the newly created component
+<pre><code>"component-type": {
     "template": "project/templates/module"  // template folder to copy by creating a component
+    "path": "components/modules",           // path for the newly created component
+    "component_prefix": "mod",              // class prefix of component
+    "skin_prefix": "skin",                  // class prefix of skin (optional)
 }
 </code></pre>
 
 <p>The GUI component creator replaces <code>_component</code> and <code>_skin</code> in file names with the appropriate names. 
 For file contents there is a bunch of placeholders available: </p>
 
-<ul>
-<li>{{component}} {{component-css}} {{component-js}} {{component-file}} {{component-id}} {{component-prefix}}</li>
-<li>{{skin}} {{skin-css}} {{skin-js}} {{skin-file}} {{skin-id}}</li>
-<li>{{user}} {{email}}</li>
-</ul><h3>
+<pre><code>{{component}} {{component-css}} {{component-js}} {{component-file}} {{component-id}} {{component-prefix}}
+{{skin}} {{skin-css}} {{skin-js}} {{skin-file}} {{skin-id}} {{skin-prefix}}
+{{user}} {{email}}
+</code></pre>
+
+<h3>
 <a name="creating-pages" class="anchor" href="#creating-pages"><span class="octicon octicon-link"></span></a>Creating pages</h3>
 
 <p>Create a new <code>*.html</code> file in the <code>views</code> folder. You can use subfolders (one level).</p>
