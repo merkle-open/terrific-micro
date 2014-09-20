@@ -1,4 +1,4 @@
 # Changelog - Terrific Micro
 
-## v1.0 - 2014-09-19
+## v1.0 - 2014-09-
 
