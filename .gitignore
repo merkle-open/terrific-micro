@@ -2,3 +2,4 @@
 .idea
 .project
 app/cache/*
+!.gitkeep
