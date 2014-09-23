@@ -146,7 +146,7 @@ You can send variables as an array and use them in the partial
 
 ## Assets
 
-The main functionality of Terrific Micro ist the assets concatenator for CSS & JavaScript files. 
+The main functionality of Terrific Micro is the assets concatenator for CSS & JavaScript files. 
 These files will be updated on each request, so you always get the newest version.
 
 ### Assets Configuration
@@ -197,7 +197,7 @@ The order of these special patterns does not matter.
 #### Note on less & scss @import
 
 Terrific Micro does not use a watcher for joining assets. The resources are combined with each request. 
-Due to the less & scss caching-mechanism this is very fast. But be warned if you want to use less or scss @import.  
+Due to the less & scss caching-mechanism this is very fast. But be warned if you want to use less or scss @import. 
 They work as long as you configure them relative to the file but changes in the imported files are not tracked. 
 So you have to clean the cache manually either by changing the main file who imports or by disabling the cache completely with the boolean `$nocache = true;` in `project/index.project.php`
 
@@ -226,7 +226,7 @@ For JavaScript debugging, the assets can be loaded individually by adding the UR
 
 ### Resource linking
 
-Use relative pathes everywhere to stay best portable. Link all of the resources relative to the `project`-folder without a leading slash e.g
+Use relative paths everywhere to stay best portable. Link all of the resources relative to the `project`-folder without a leading slash e.g.:
 
     <link rel="stylesheet" href="app.css" type="text/css" />
     <link rel="shortcut icon" href="assets/img/icon/favicon.ico" type="image/x-icon" />
@@ -238,7 +238,7 @@ Use relative pathes everywhere to stay best portable. Link all of the resources 
 ### Upper & lower case letters
 
 Use all lowercase if possible. 
-Exeptions:
+Exceptions:
 
 * Components Folders are our terrific classes, so they are case sensitive.
 * TerrificJS uses upper case for its namespace `Tc` & Class names `Tc.Module.Example`
