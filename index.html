@@ -210,7 +210,7 @@ Or you let the helper write the wrapping container with different inputs (= adva
 <h2>
 <a name="assets" class="anchor" href="#assets"><span class="octicon octicon-link"></span></a>Assets</h2>
 
-<p>The main functionality of Terrific Micro ist the assets concatenator for CSS &amp; JavaScript files. 
+<p>The main functionality of Terrific Micro is the assets concatenator for CSS &amp; JavaScript files. 
 These files will be updated on each request, so you always get the newest version.</p>
 
 <h3>
@@ -271,7 +271,7 @@ More on standard glob patterns: <a href="http://www.php.net/manual/en/function.g
 </h4>
 
 <p>Terrific Micro does not use a watcher for joining assets. The resources are combined with each request. 
-Due to the less &amp; scss caching-mechanism this is very fast. But be warned if you want to use less or scss <a href="https://github.com/import" class="user-mention">@import</a>.<br>
+Due to the less &amp; scss caching-mechanism this is very fast. But be warned if you want to use less or scss <a href="https://github.com/import" class="user-mention">@import</a>. 
 They work as long as you configure them relative to the file but changes in the imported files are not tracked. 
 So you have to clean the cache manually either by changing the main file who imports or by disabling the cache completely with the boolean <code>$nocache = true;</code> in <code>project/index.project.php</code></p>
 
@@ -308,7 +308,7 @@ http://localhost/project/app.js?min
 <h3>
 <a name="resource-linking" class="anchor" href="#resource-linking"><span class="octicon octicon-link"></span></a>Resource linking</h3>
 
-<p>Use relative pathes everywhere to stay best portable. Link all of the resources relative to the <code>project</code>-folder without a leading slash e.g</p>
+<p>Use relative paths everywhere to stay best portable. Link all of the resources relative to the <code>project</code>-folder without a leading slash e.g.:</p>
 
 <pre><code>&lt;link rel="stylesheet" href="app.css" type="text/css" /&gt;
 &lt;link rel="shortcut icon" href="assets/img/icon/favicon.ico" type="image/x-icon" /&gt;
@@ -322,7 +322,7 @@ background: url(assets/img/bg/texture.png) scroll 0 0 no-repeat;
 <a name="upper--lower-case-letters" class="anchor" href="#upper--lower-case-letters"><span class="octicon octicon-link"></span></a>Upper &amp; lower case letters</h3>
 
 <p>Use all lowercase if possible. 
-Exeptions:</p>
+Exceptions:</p>
 
 <ul>
 <li>Components Folders are our terrific classes, so they are case sensitive.</li>
