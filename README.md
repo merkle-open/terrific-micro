@@ -1,8 +1,8 @@
 # Readme - Terrific Micro
 
-Terrific Micro is a powerful application for development of simple and complex frontend projects with a tiny footprint. 
-It provides you with a proven but still flexible structure to develop your frontend code.
-To unleash the beast it's useful to read more about the Terrific concept on [terrifically.org](http://terrifically.org) first.
+Terrific Micro is a powerful application for simple and complex frontend development with a tiny footprint. 
+It provides a proven but flexible structure to develop your frontend code.
+To unleash the beast it's recommended to read more about the Terrific concept on [terrifically.org](http://terrifically.org) first.
 
 ## Table of contents
 
@@ -18,7 +18,7 @@ To unleash the beast it's useful to read more about the Terrific concept on [ter
 You only need an Apache web server with PHP 5.3+ support. 
 Enable `mod_rewrite` and optionally `mod_deflate` and add the directive `AllowOverride All` for your directory.
 
-1. Clone repo in a `project`-folder of your web root:
+1. Clone repo to a `project`-folder in your web root:
 
         git clone https://github.com/namics/terrific-micro.git project
 
@@ -95,12 +95,12 @@ Your new page can then be called by the according URL (with or without an extens
 
 ### Render Components
 
-Pages are meant to be compositions of your components. Within your `pages`, you can render a component. The component helper gives you two options: 
-You may write all the markup in your template (= basic mode). 
+Pages are meant to be compositions of your components. Therefore you can render components in pages. The component helper gives you two options: 
+You can write all markup in your template (= basic mode). 
 Or you let the helper write the wrapping container with different inputs (= advanced mode).
 
 * for basic mode use one or two parameters
-* applying three parameters enables the advanced mode
+* for advanced mode use three or more parameters
 
 Use the your component's name as the first parameter. Be aware, the component name is case-sensitive!
 
@@ -110,9 +110,9 @@ Render the Example component. (file: `example.html`)
 
     <?php component('Example'); ?>
 
-Render "second" template from the Example component. (file: `example-second.html`)
+Render the "variant" template from the Example component. (file: `example-variant.html`)
 
-    <?php component('Example', 'second'); ?>
+    <?php component('Example', 'variant'); ?>
 
 #### Advanced Mode: Template without wrapper container
 
