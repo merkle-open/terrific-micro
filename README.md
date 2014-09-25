@@ -1,8 +1,8 @@
 # Readme - Terrific Micro
 
-Terrific Micro is a powerful template for simple & complex frontend projects with a tiny footprint. 
-It gives you a proven but still flexible structure to develop your frontend code.
-To unleash the beast, it's useful to read more about the Terrific concept on [terrifically.org](http://terrifically.org) first.
+Terrific Micro is a powerful application for simple and complex frontend development with a tiny footprint. 
+It provides a proven but flexible structure to develop your frontend code.
+To unleash the beast it's recommended to read more about the Terrific concept on [terrifically.org](http://terrifically.org) first.
 
 ## Table of contents
 
@@ -15,10 +15,10 @@ To unleash the beast, it's useful to read more about the Terrific concept on [te
 
 ## Quick Start
 
-You just need an Apache with PHP 5.3+ support. 
-Enable mod_rewrite and optionally mod_deflate and add the directive `AllowOverride All` for your directory.
+You only need an Apache web server with PHP 5.3+ support. 
+Enable `mod_rewrite` and optionally `mod_deflate` and add the directive `AllowOverride All` for your directory.
 
-1. Clone repo in a `project`-folder of your web root:
+1. Clone repo to a `project`-folder in your web root:
 
         git clone https://github.com/namics/terrific-micro.git project
 
@@ -31,7 +31,7 @@ Enable mod_rewrite and optionally mod_deflate and add the directive `AllowOverri
 ### Features
 
 * Simple project structure
-* CSS/JS concatenation & minification
+* CSS/JS concatenation and minification
 * LESS/SCSS support
 * Caching (LESS/SCSS) for optimal performance
 * GUI to create components
@@ -41,7 +41,7 @@ Enable mod_rewrite and optionally mod_deflate and add the directive `AllowOverri
 ### Creating Components
 
 Components are created in the `components` folder. A component is an encapsulated block of markup with corresponding styles and scripts. 
-A terrific module for example uses the following structure:
+A terrific module uses the following structure:
 
     /Example
     /Example/example.html
@@ -74,7 +74,7 @@ You can use more than one type of components. Components are configured in `conf
     }
 
 The GUI component creator replaces `_component` and `_skin` in file names with the appropriate names. 
-For file contents there is a bunch of placeholders available: 
+For file contents there are a bunch of placeholders available: 
 
     {{component}} {{component-css}} {{component-js}} {{component-file}} {{component-id}} {{component-prefix}}
     {{skin}} {{skin-css}} {{skin-js}} {{skin-file}} {{skin-id}} {{skin-prefix}}
@@ -96,14 +96,14 @@ Your new page can then be called by the according URL (with or without an extens
 
 ### Render Components
 
-Pages are meant to be compositions of your components. Within your `pages`, you can render a component. The component helper gives you two options: 
-You may write all the markup in your template (= basic mode). 
+Pages are meant to be compositions of your components. Therefore you can render components in pages. The component helper gives you two options: 
+You can write all markup in your template (= basic mode). 
 Or you let the helper write the wrapping container with different inputs (= advanced mode).
 
 * for basic mode use one or two parameters
-* from three parameters, the advanced mode is used
+* for advanced mode use three or more parameters
 
-Use the exact upper and lowercase letters of your component folder for the first parameter.
+Use the component's name as the first parameter. Be aware, the component name is case-sensitive!
 
 #### Basic Mode: Template with complete Markup
 
@@ -111,9 +111,9 @@ Render the Example component. (file: `example.html`)
 
     <?php component('Example'); ?>
 
-Render "second" template from the Example component. (file: `example-second.html`)
+Render the "variant" template from the Example component. (file: `example-variant.html`)
 
-    <?php component('Example', 'second'); ?>
+    <?php component('Example', 'variant'); ?>
 
 #### Advanced Mode: Template without wrapper container
 
@@ -123,7 +123,7 @@ Render the Example component with skin "skinname". (file: `example-wrapme.html`)
 
 Render the Example component with additional attributes. (file: `example-wrapme.html`)
 
-    <?php component('Example', 'wrapme', null, array('data-id' => 1)); ?> (file: `example-wrapme.html`)
+    <?php component('Example', 'wrapme', null, array('data-id' => 1)); ?> 
 
 Render the Example component with different skins and additional attributes.
 
@@ -135,23 +135,22 @@ Render the Example component without special markup. (file: `example-wrapme.html
 
 ### Render Partials
 
-Render a partial (HTML snippet). Partials are placed in `views/_partials/` as `*.html` files (e.g. head.html).
+Render a partial (HTML snippet). Partials are placed in `views/_partials/` as `*.html` files (e.g. `head.html`).
 
     <?php partial('head'); ?>
 
-You can send variables as an array and use them in the partial
+You can apply variables as an array and use them in the partial
 
     <?php partial('head', array('title' => 'Page Title')) ?>
     <?php echo $data['title']; ?>
 
 ## Assets
 
-The main functionality of Terrific Micro is the assets concatenator for CSS & JavaScript files. 
-These files will be updated on each request, so you always get the newest version.
+Terrific Micro's main feature is asset concatenation for CSS and JavaScript files. If changed, the files will be updated on every request, therefore you'll always get the latest version.
 
 ### Assets Configuration
 
-You're able to configure the include order of your assets for concatenation by defining patterns in `config.json`.
+You can configure the include order of your assets by defining patterns in `config.json`.
 
     "assets": {
         "app.css": [
@@ -174,17 +173,19 @@ You're able to configure the include order of your assets for concatenation by d
 
 #### Pattern
 
-The File matching patterns follows the rules of standard glob patterns. 
-Glob patterns are like simplified regular expressions that shells use. 
-Keep the patterns simple. Usually we only need the asterisk `*` which matches zero or more characters. 
-More on standard glob patterns: [php.net](http://www.php.net/manual/en/function.glob.php) and [coburn.info](http://cowburn.info/2010/04/30/glob-patterns/)
+The matching patterns follow the standard glob patterns.
+Glob patterns are similar to regular expression but simplified. They are used by several shells.
+You should always try to keep the patterns simple. Usually you only need the asterisk `*` which
+matches zero or more characters.
+
+You can read more on standard glob patterns on [php.net](http://www.php.net/manual/en/function.glob.php) and [coburn.info](http://cowburn.info/2010/04/30/glob-patterns/).
 
 #### Special Pattern Prefixes
 
-* You can negate a pattern by starting with an exclamation point `!`.
+* You can negate a pattern by starting with an exclamation mark `!`.
   `!` = exclude pattern
-* Define all your dependencies for the compiling-process with the prefix `+`
-  `+` = exclude file but prepend to every compile call of same file extension.
+* Define all your dependencies for the compiling-process with the `+` prefix
+  `+` = exclude file but prepend it to every compile call for files with the same file extension.
 
 The order of these special patterns does not matter.
 
@@ -196,14 +197,12 @@ The order of these special patterns does not matter.
 
 #### Note on less & scss @import
 
-Terrific Micro does not use a watcher for joining assets. The resources are combined with each request. 
-Due to the less & scss caching-mechanism this is very fast. But be warned if you want to use less or scss @import. 
-They work as long as you configure them relative to the file but changes in the imported files are not tracked. 
-So you have to clean the cache manually either by changing the main file who imports or by disabling the cache completely with the boolean `$nocache = true;` in `project/index.project.php`
+Terrific Micro does not use a watcher for asset concatenation. The resources are concatenated with each request. 
+Due to less and scss caching-mechanisms in place, this process is quite fast. You should be warned about the usage of @import, though. As long as you configure them relatively to the file, they work quite well. But changes in imported files are not tracked by Terrific Micro and therefore changes do not invalidate the cache. This means you either have to clean manually by changing the main file or you can disable caching by setting `$nocache = true;` in `project/index.project.php`.
 
 #### Other Asset Files
 
-Any number of assets can be configured.
+You can configure as many different assets as you wish.
 
     "brand.css": [
         "assets/css/reset.css",
@@ -211,14 +210,14 @@ Any number of assets can be configured.
 
 ### Asset Minification
 
-You can get the minified versions of your CSS/JS by adding the URL parameter `min`.
+Minified versions of the CSS and/or JS files can be requested by adding the URL parameter `min`.
 
     http://localhost/project/app.css?min
     http://localhost/project/app.js?min
 
 ### JavaScript Debugging
 
-For JavaScript debugging, the assets can be loaded individually by adding the URL parameter `debug` (e.g. for remote debugging in PhpStorm).
+The assets can be loaded individually by adding the URL parameter `debug`. This is pretty useful for things like remote debugging in PhpStorm.
 
     http://localhost/project/app.js?debug
 
@@ -226,7 +225,7 @@ For JavaScript debugging, the assets can be loaded individually by adding the UR
 
 ### Resource linking
 
-Use relative paths everywhere to stay best portable. Link all of the resources relative to the `project`-folder without a leading slash e.g.:
+To stay portable you should favour the use of relative pathes. Link to resources relatively to the `project`-folder **without** a leading slash.
 
     <link rel="stylesheet" href="app.css" type="text/css" />
     <link rel="shortcut icon" href="assets/img/icon/favicon.ico" type="image/x-icon" />
@@ -240,14 +239,14 @@ Use relative paths everywhere to stay best portable. Link all of the resources r
 Use all lowercase if possible. 
 Exceptions:
 
-* Components Folders are our terrific classes, so they are case sensitive.
-* TerrificJS uses upper case for its namespace `Tc` & Class names `Tc.Module.Example`
+* Component folders must match terrific classes, therefore they are case-sensitive.
+* TerrificJS uses upper case for its namespace `Tc` and class names `Tc.Module.Example`
 
-Use the component helper with the exact name of the folder:
+Use the component helper with the *exact* component name:
 
     <?php component('NavMain'); ?>
 
-Note that mixed ComponentNames are represented in CSS with dashes.
+Note that camel case ComponentNames are represented in CSS with dashes.
 
     Navigation   -> Tc.Module.Navigation   -> mod-navigation
     NavMain      -> Tc.Module.NavMain      -> mod-nav-main
@@ -259,17 +258,18 @@ Terrific Micro uses tabs for indentation and spaces for alignment.
 
 ## Security
 
-So that the directory can be used in any project structure, some precautions were taken. 
-Most arrangements are made ​​for the Apache web server using `.htaccess`, but can be easily adjusted as necessary.
+To enable the use of Terrific Micro in any project structure some access restricting rules were set.
+These rules were made with the Apache web server in mind by using `.htaccess` files. These files can
+easily be adjusted as necessary.
 
 ### Terrific GUI
 
-All calls to `/terrific/` are only for localhost. On a server, nothing will be shown. 
-See `app/terrific/public/.htaccess`
+All requests to `/terrific/` except from `localhost` will be blocked (`403 Forbidden`). To adjust this
+behaviour, see `app/terrific/public/.htaccess`.
 
 ### Directory Listing
 
-The directory listing is turned off by `.htaccess`
+The directory listing is turned off in `.htaccess`.
 
 ## Example Project Includes
 
@@ -289,7 +289,7 @@ The directory listing is turned off by `.htaccess`
 ## Contributing
 
 * For Bugs & Features please use [github](https://github.com/namics/terrific-micro/issues)
-* Feel free to fork or branch and push your code to the repo. The best you discuss your ideas.
+* Feel free to fork and send PRs. That's the best way to discuss your ideas.
 
 ## Credits
 
