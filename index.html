@@ -20,8 +20,8 @@
     <header>
       <div class="inner">
         <h1>Terrific Micro</h1>
-        <h2>Powerful template for simple &amp; complex frontend projects with a tiny footprint.</h2>
-        <a href="https://github.com/namics/terrific-micro" class="button"><small>View project on</small>GitHub</a>
+        <h2>Powerful application for simple &amp; complex frontend development with a tiny footprint.</h2>
+        <a href="https://github.com/namics/terrific-micro" class="button"><small>View project on</small> GitHub</a>
       </div>
     </header>
 
@@ -31,9 +31,9 @@
           <h1>
 <a name="readme---terrific-micro" class="anchor" href="#readme---terrific-micro"><span class="octicon octicon-link"></span></a>Readme - Terrific Micro</h1>
 
-<p>Terrific Micro is a powerful template for simple &amp; complex frontend projects with a tiny footprint. 
-It gives you a proven but still flexible structure to develop your frontend code.
-To unleash the beast, it's useful to read more about the Terrific concept on <a href="http://terrifically.org">terrifically.org</a> first.</p>
+<p>Terrific Micro is a powerful application for simple and complex frontend development with a tiny footprint. 
+It provides a proven but flexible structure to develop your frontend code.
+To unleash the beast it's recommended to read more about the Terrific concept on <a href="http://terrifically.org">terrifically.org</a> first.</p>
 
 <h2>
 <a name="table-of-contents" class="anchor" href="#table-of-contents"><span class="octicon octicon-link"></span></a>Table of contents</h2>
@@ -48,12 +48,12 @@ To unleash the beast, it's useful to read more about the Terrific concept on <a 
 </ul><h2>
 <a name="quick-start" class="anchor" href="#quick-start"><span class="octicon octicon-link"></span></a>Quick Start</h2>
 
-<p>You just need an Apache with PHP 5.3+ support. 
-Enable mod_rewrite and optionally mod_deflate and add the directive <code>AllowOverride All</code> for your directory.</p>
+<p>You only need an Apache web server with PHP 5.3+ support. 
+Enable <code>mod_rewrite</code> and optionally <code>mod_deflate</code> and add the directive <code>AllowOverride All</code> for your directory.</p>
 
 <ol>
 <li>
-<p>Clone repo in a <code>project</code>-folder of your web root:</p>
+<p>Clone repo to a <code>project</code>-folder in your web root:</p>
 
 <pre><code>git clone https://github.com/namics/terrific-micro.git project
 </code></pre>
@@ -71,7 +71,7 @@ http://localhost/project/app.js
 
 <ul>
 <li>Simple project structure</li>
-<li>CSS/JS concatenation &amp; minification</li>
+<li>CSS/JS concatenation and minification</li>
 <li>LESS/SCSS support</li>
 <li>Caching (LESS/SCSS) for optimal performance</li>
 <li>GUI to create components</li>
@@ -82,7 +82,7 @@ http://localhost/project/app.js
 <a name="creating-components" class="anchor" href="#creating-components"><span class="octicon octicon-link"></span></a>Creating Components</h3>
 
 <p>Components are created in the <code>components</code> folder. A component is an encapsulated block of markup with corresponding styles and scripts. 
-A terrific module for example uses the following structure:</p>
+A terrific module uses the following structure:</p>
 
 <pre><code>/Example
 /Example/example.html
@@ -121,7 +121,7 @@ Try it out by requesting http://localhost/project/terrific/ (don't forget the tr
 </code></pre>
 
 <p>The GUI component creator replaces <code>_component</code> and <code>_skin</code> in file names with the appropriate names. 
-For file contents there is a bunch of placeholders available: </p>
+For file contents there are a bunch of placeholders available: </p>
 
 <pre><code>{{component}} {{component-css}} {{component-js}} {{component-file}} {{component-id}} {{component-prefix}}
 {{skin}} {{skin-css}} {{skin-js}} {{skin-file}} {{skin-id}} {{skin-prefix}}
@@ -148,14 +148,14 @@ http://localhost/project/content-variant
 <h3>
 <a name="render-components" class="anchor" href="#render-components"><span class="octicon octicon-link"></span></a>Render Components</h3>
 
-<p>Pages are meant to be compositions of your components. Within your <code>pages</code>, you can render a component. The component helper gives you two options: 
-You may write all the markup in your template (= basic mode). 
+<p>Pages are meant to be compositions of your components. Therefore you can render components in pages. The component helper gives you two options: 
+You can write all markup in your template (= basic mode). 
 Or you let the helper write the wrapping container with different inputs (= advanced mode).</p>
 
 <ul>
 <li>for basic mode use one or two parameters</li>
-<li>from three parameters, the advanced mode is used</li>
-</ul><p>Use the exact upper and lowercase letters of your component folder for the first parameter.</p>
+<li>for advanced mode use three or more parameters</li>
+</ul><p>Use the component's name as the first parameter. Be aware, the component name is case-sensitive!</p>
 
 <h4>
 <a name="basic-mode-template-with-complete-markup" class="anchor" href="#basic-mode-template-with-complete-markup"><span class="octicon octicon-link"></span></a>Basic Mode: Template with complete Markup</h4>
@@ -165,9 +165,9 @@ Or you let the helper write the wrapping container with different inputs (= adva
 <pre><code>&lt;?php component('Example'); ?&gt;
 </code></pre>
 
-<p>Render "second" template from the Example component. (file: <code>example-second.html</code>)</p>
+<p>Render the "variant" template from the Example component. (file: <code>example-variant.html</code>)</p>
 
-<pre><code>&lt;?php component('Example', 'second'); ?&gt;
+<pre><code>&lt;?php component('Example', 'variant'); ?&gt;
 </code></pre>
 
 <h4>
@@ -180,7 +180,7 @@ Or you let the helper write the wrapping container with different inputs (= adva
 
 <p>Render the Example component with additional attributes. (file: <code>example-wrapme.html</code>)</p>
 
-<pre><code>&lt;?php component('Example', 'wrapme', null, array('data-id' =&gt; 1)); ?&gt; (file: `example-wrapme.html`)
+<pre><code>&lt;?php component('Example', 'wrapme', null, array('data-id' =&gt; 1)); ?&gt; 
 </code></pre>
 
 <p>Render the Example component with different skins and additional attributes.</p>
@@ -196,12 +196,12 @@ Or you let the helper write the wrapping container with different inputs (= adva
 <h3>
 <a name="render-partials" class="anchor" href="#render-partials"><span class="octicon octicon-link"></span></a>Render Partials</h3>
 
-<p>Render a partial (HTML snippet). Partials are placed in <code>views/_partials/</code> as <code>*.html</code> files (e.g. head.html).</p>
+<p>Render a partial (HTML snippet). Partials are placed in <code>views/_partials/</code> as <code>*.html</code> files (e.g. <code>head.html</code>).</p>
 
 <pre><code>&lt;?php partial('head'); ?&gt;
 </code></pre>
 
-<p>You can send variables as an array and use them in the partial</p>
+<p>You can apply variables as an array and use them in the partial</p>
 
 <pre><code>&lt;?php partial('head', array('title' =&gt; 'Page Title')) ?&gt;
 &lt;?php echo $data['title']; ?&gt;
@@ -210,13 +210,12 @@ Or you let the helper write the wrapping container with different inputs (= adva
 <h2>
 <a name="assets" class="anchor" href="#assets"><span class="octicon octicon-link"></span></a>Assets</h2>
 
-<p>The main functionality of Terrific Micro is the assets concatenator for CSS &amp; JavaScript files. 
-These files will be updated on each request, so you always get the newest version.</p>
+<p>Terrific Micro's main feature is asset concatenation for CSS and JavaScript files. If changed, the files will be updated on every request, therefore you'll always get the latest version.</p>
 
 <h3>
 <a name="assets-configuration" class="anchor" href="#assets-configuration"><span class="octicon octicon-link"></span></a>Assets Configuration</h3>
 
-<p>You're able to configure the include order of your assets for concatenation by defining patterns in <code>config.json</code>.</p>
+<p>You can configure the include order of your assets by defining patterns in <code>config.json</code>.</p>
 
 <pre><code>"assets": {
     "app.css": [
@@ -241,19 +240,21 @@ These files will be updated on each request, so you always get the newest versio
 <h4>
 <a name="pattern" class="anchor" href="#pattern"><span class="octicon octicon-link"></span></a>Pattern</h4>
 
-<p>The File matching patterns follows the rules of standard glob patterns. 
-Glob patterns are like simplified regular expressions that shells use. 
-Keep the patterns simple. Usually we only need the asterisk <code>*</code> which matches zero or more characters. 
-More on standard glob patterns: <a href="http://www.php.net/manual/en/function.glob.php">php.net</a> and <a href="http://cowburn.info/2010/04/30/glob-patterns/">coburn.info</a></p>
+<p>The matching patterns follow the standard glob patterns.
+Glob patterns are similar to regular expression but simplified. They are used by several shells.
+You should always try to keep the patterns simple. Usually you only need the asterisk <code>*</code> which
+matches zero or more characters.</p>
+
+<p>You can read more on standard glob patterns on <a href="http://www.php.net/manual/en/function.glob.php">php.net</a> and <a href="http://cowburn.info/2010/04/30/glob-patterns/">coburn.info</a>.</p>
 
 <h4>
 <a name="special-pattern-prefixes" class="anchor" href="#special-pattern-prefixes"><span class="octicon octicon-link"></span></a>Special Pattern Prefixes</h4>
 
 <ul>
-<li>You can negate a pattern by starting with an exclamation point <code>!</code>.
+<li>You can negate a pattern by starting with an exclamation mark <code>!</code>.
 <code>!</code> = exclude pattern</li>
-<li>Define all your dependencies for the compiling-process with the prefix <code>+</code>
-<code>+</code> = exclude file but prepend to every compile call of same file extension.</li>
+<li>Define all your dependencies for the compiling-process with the <code>+</code> prefix
+<code>+</code> = exclude file but prepend it to every compile call for files with the same file extension.</li>
 </ul><p>The order of these special patterns does not matter.</p>
 
 <h4>
@@ -270,15 +271,13 @@ More on standard glob patterns: <a href="http://www.php.net/manual/en/function.g
 <a name="note-on-less--scss-import" class="anchor" href="#note-on-less--scss-import"><span class="octicon octicon-link"></span></a>Note on less &amp; scss <a href="https://github.com/import" class="user-mention">@import</a>
 </h4>
 
-<p>Terrific Micro does not use a watcher for joining assets. The resources are combined with each request. 
-Due to the less &amp; scss caching-mechanism this is very fast. But be warned if you want to use less or scss <a href="https://github.com/import" class="user-mention">@import</a>. 
-They work as long as you configure them relative to the file but changes in the imported files are not tracked. 
-So you have to clean the cache manually either by changing the main file who imports or by disabling the cache completely with the boolean <code>$nocache = true;</code> in <code>project/index.project.php</code></p>
+<p>Terrific Micro does not use a watcher for asset concatenation. The resources are concatenated with each request. 
+Due to less and scss caching-mechanisms in place, this process is quite fast. You should be warned about the usage of <a href="https://github.com/import" class="user-mention">@import</a>, though. As long as you configure them relatively to the file, they work quite well. But changes in imported files are not tracked by Terrific Micro and therefore changes do not invalidate the cache. This means you either have to clean manually by changing the main file or you can disable caching by setting <code>$nocache = true;</code> in <code>project/index.project.php</code>.</p>
 
 <h4>
 <a name="other-asset-files" class="anchor" href="#other-asset-files"><span class="octicon octicon-link"></span></a>Other Asset Files</h4>
 
-<p>Any number of assets can be configured.</p>
+<p>You can configure as many different assets as you wish.</p>
 
 <pre><code>"brand.css": [
     "assets/css/reset.css",
@@ -288,7 +287,7 @@ So you have to clean the cache manually either by changing the main file who imp
 <h3>
 <a name="asset-minification" class="anchor" href="#asset-minification"><span class="octicon octicon-link"></span></a>Asset Minification</h3>
 
-<p>You can get the minified versions of your CSS/JS by adding the URL parameter <code>min</code>.</p>
+<p>Minified versions of the CSS and/or JS files can be requested by adding the URL parameter <code>min</code>.</p>
 
 <pre><code>http://localhost/project/app.css?min
 http://localhost/project/app.js?min
@@ -297,7 +296,7 @@ http://localhost/project/app.js?min
 <h3>
 <a name="javascript-debugging" class="anchor" href="#javascript-debugging"><span class="octicon octicon-link"></span></a>JavaScript Debugging</h3>
 
-<p>For JavaScript debugging, the assets can be loaded individually by adding the URL parameter <code>debug</code> (e.g. for remote debugging in PhpStorm).</p>
+<p>The assets can be loaded individually by adding the URL parameter <code>debug</code>. This is pretty useful for things like remote debugging in PhpStorm.</p>
 
 <pre><code>http://localhost/project/app.js?debug
 </code></pre>
@@ -308,7 +307,7 @@ http://localhost/project/app.js?min
 <h3>
 <a name="resource-linking" class="anchor" href="#resource-linking"><span class="octicon octicon-link"></span></a>Resource linking</h3>
 
-<p>Use relative paths everywhere to stay best portable. Link all of the resources relative to the <code>project</code>-folder without a leading slash e.g.:</p>
+<p>To stay portable you should favour the use of relative pathes. Link to resources relatively to the <code>project</code>-folder <strong>without</strong> a leading slash.</p>
 
 <pre><code>&lt;link rel="stylesheet" href="app.css" type="text/css" /&gt;
 &lt;link rel="shortcut icon" href="assets/img/icon/favicon.ico" type="image/x-icon" /&gt;
@@ -325,15 +324,15 @@ background: url(assets/img/bg/texture.png) scroll 0 0 no-repeat;
 Exceptions:</p>
 
 <ul>
-<li>Components Folders are our terrific classes, so they are case sensitive.</li>
-<li>TerrificJS uses upper case for its namespace <code>Tc</code> &amp; Class names <code>Tc.Module.Example</code>
+<li>Component folders must match terrific classes, therefore they are case-sensitive.</li>
+<li>TerrificJS uses upper case for its namespace <code>Tc</code> and class names <code>Tc.Module.Example</code>
 </li>
-</ul><p>Use the component helper with the exact name of the folder:</p>
+</ul><p>Use the component helper with the <em>exact</em> component name:</p>
 
 <pre><code>&lt;?php component('NavMain'); ?&gt;
 </code></pre>
 
-<p>Note that mixed ComponentNames are represented in CSS with dashes.</p>
+<p>Note that camel case ComponentNames are represented in CSS with dashes.</p>
 
 <pre><code>Navigation   -&gt; Tc.Module.Navigation   -&gt; mod-navigation
 NavMain      -&gt; Tc.Module.NavMain      -&gt; mod-nav-main
@@ -348,19 +347,20 @@ AdminNavMain -&gt; Tc.Module.AdminNavMain -&gt; mod-admin-nav-main
 <h2>
 <a name="security" class="anchor" href="#security"><span class="octicon octicon-link"></span></a>Security</h2>
 
-<p>So that the directory can be used in any project structure, some precautions were taken. 
-Most arrangements are made ​​for the Apache web server using <code>.htaccess</code>, but can be easily adjusted as necessary.</p>
+<p>To enable the use of Terrific Micro in any project structure some access restricting rules were set.
+These rules were made with the Apache web server in mind by using <code>.htaccess</code> files. These files can
+easily be adjusted as necessary.</p>
 
 <h3>
 <a name="terrific-gui" class="anchor" href="#terrific-gui"><span class="octicon octicon-link"></span></a>Terrific GUI</h3>
 
-<p>All calls to <code>/terrific/</code> are only for localhost. On a server, nothing will be shown. 
-See <code>app/terrific/public/.htaccess</code></p>
+<p>All requests to <code>/terrific/</code> except from <code>localhost</code> will be blocked (<code>403 Forbidden</code>). To adjust this
+behaviour, see <code>app/terrific/public/.htaccess</code>.</p>
 
 <h3>
 <a name="directory-listing" class="anchor" href="#directory-listing"><span class="octicon octicon-link"></span></a>Directory Listing</h3>
 
-<p>The directory listing is turned off by <code>.htaccess</code></p>
+<p>The directory listing is turned off in <code>.htaccess</code>.</p>
 
 <h2>
 <a name="example-project-includes" class="anchor" href="#example-project-includes"><span class="octicon octicon-link"></span></a>Example Project Includes</h2>
@@ -385,7 +385,7 @@ See <code>app/terrific/public/.htaccess</code></p>
 <ul>
 <li>For Bugs &amp; Features please use <a href="https://github.com/namics/terrific-micro/issues">github</a>
 </li>
-<li>Feel free to fork or branch and push your code to the repo. The best you discuss your ideas.</li>
+<li>Feel free to fork and send PRs. That's the best way to discuss your ideas.</li>
 </ul><h2>
 <a name="credits" class="anchor" href="#credits"><span class="octicon octicon-link"></span></a>Credits</h2>
 
