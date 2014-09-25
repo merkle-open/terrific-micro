@@ -98,7 +98,7 @@ A terrific module uses the following structure:</p>
 
 <p>Create additional content templates directly in the component folder:</p>
 
-<pre><code>/Example/example-second.html
+<pre><code>/Example/example-variant.html
 </code></pre>
 
 <h3>
@@ -183,7 +183,7 @@ Or you let the helper write the wrapping container with different inputs (= adva
 <pre><code>&lt;?php component('Example', 'wrapme', null, array('data-id' =&gt; 1)); ?&gt; 
 </code></pre>
 
-<p>Render the Example component with different skins and additional attributes.</p>
+<p>Render the Example component with different skins and additional attributes. (file: <code>example-wrapme.html</code>)</p>
 
 <pre><code>&lt;?php component('Example', 'wrapme', array('skinname','skinname2'), array('data-id' =&gt; 1, 'connectors' =&gt; 'con1', 'contenteditable' =&gt; 'true')); ?&gt; (file: `example-wrapme.html`)
 </code></pre>
