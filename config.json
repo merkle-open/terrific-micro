@@ -23,9 +23,10 @@
 	"micro": {
 		"components": {
 			"module": {
-				"prefix": "mod",
+				"template": "project/templates/module",
 				"path": "components/modules",
-				"template": "project/templates/module"
+				"component_prefix": "mod",
+				"skin_prefix": "skin"
 			}
 		},
 		"view_file_extension": "html",

@@ -1,4 +1,36 @@
+# OS #####################
 .DS_Store
+.AppleDouble
+.LSOverride
+.Spotlight-V100
+.Trashes
+
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+*~
+.directory
+
+# IDE #####################
+/*.iml
 .idea
+*.ipr
+*.iws
+atlassian-ide-plugin.xml
+
+*.tmlanguage.cache
+*.tmPreferences.cache
+*.stTheme.cache
+*.sublime-workspace
+*.sublime-project
+sftp-config.json
+
 .project
+.cache
+
+# Project #####################
 app/cache/*
+!.gitkeep

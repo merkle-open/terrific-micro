@@ -66,18 +66,19 @@ Try it out by requesting http://localhost/project/terrific/ (don't forget the tr
 
 You can use more than one type of components. Components are configured in `config.json` (`micro/components`).
 
-    "modulename": {
-        "prefix": "mod",                        // class prefix
-        "path": "components/modules",           // path for the newly created component
+    "component-type": {
         "template": "project/templates/module"  // template folder to copy by creating a component
+        "path": "components/modules",           // path for the newly created component
+        "component_prefix": "mod",              // class prefix of component
+        "skin_prefix": "skin",                  // class prefix of skin (optional)
     }
 
 The GUI component creator replaces `_component` and `_skin` in file names with the appropriate names. 
 For file contents there are a bunch of placeholders available: 
 
-* {{component}} {{component-css}} {{component-js}} {{component-file}} {{component-id}} {{component-prefix}}
-* {{skin}} {{skin-css}} {{skin-js}} {{skin-file}} {{skin-id}}
-* {{user}} {{email}}
+    {{component}} {{component-css}} {{component-js}} {{component-file}} {{component-id}} {{component-prefix}}
+    {{skin}} {{skin-css}} {{skin-js}} {{skin-file}} {{skin-id}} {{skin-prefix}}
+    {{user}} {{email}}
 
 ### Creating pages
 
@@ -236,7 +237,7 @@ To stay portable you should favour the use of relative pathes. Link to resources
 ### Upper & lower case letters
 
 Use all lowercase if possible. 
-Exeptions:
+Exceptions:
 
 * Component folders must match terrific classes, therefore they are case-sensitive.
 * TerrificJS uses upper case for its namespace `Tc` and class names `Tc.Module.Example`
