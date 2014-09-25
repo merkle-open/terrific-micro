@@ -55,7 +55,7 @@ Terrific Skins (css or js) are created using the following conventions:
 
 Create additional content templates directly in the component folder:
 
-    /Example/example-second.html
+    /Example/example-variant.html
 
 ### Creating Components & Skins by GUI
 
@@ -125,7 +125,7 @@ Render the Example component with additional attributes. (file: `example-wrapme.
 
     <?php component('Example', 'wrapme', null, array('data-id' => 1)); ?> 
 
-Render the Example component with different skins and additional attributes.
+Render the Example component with different skins and additional attributes. (file: `example-wrapme.html`)
 
     <?php component('Example', 'wrapme', array('skinname','skinname2'), array('data-id' => 1, 'connectors' => 'con1', 'contenteditable' => 'true')); ?> (file: `example-wrapme.html`)
 
