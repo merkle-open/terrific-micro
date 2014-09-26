@@ -2,7 +2,7 @@
 
 Terrific Micro is a powerful application for simple and complex frontend development with a tiny footprint. 
 It provides a proven but flexible structure to develop your frontend code.
-To unleash the beast it's recommended to read more about the Terrific concept on [terrifically.org](http://terrifically.org) first.
+To unleash the beast and all its power we recommend you read more about the Terrific concept on [terrifically.org](http://terrifically.org) first.
 
 ## Table of contents
 
@@ -225,7 +225,7 @@ The assets can be loaded individually by adding the URL parameter `debug`. This 
 
 ### Resource linking
 
-To stay portable you should favour the use of relative pathes. Link to resources relatively to the `project`-folder **without** a leading slash.
+To stay portable you should favour the use of relative paths. Link to resources relatively to the `project`-folder **without** a leading slash.
 
     <link rel="stylesheet" href="app.css" type="text/css" />
     <link rel="shortcut icon" href="assets/img/icon/favicon.ico" type="image/x-icon" />
