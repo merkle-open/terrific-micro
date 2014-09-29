@@ -184,9 +184,7 @@ if ( !function_exists( 'compile' ) ) {
 					}
 					$filecontents .= file_get_contents( $filename );
 
-					require_once BASE . 'app/library/lessphp/lessc.inc.php';
-					$less = new lessc;
-					//$less->setImportDir( array( 'assets/css' ) );
+					$less = get_less_parser();
 					try {
 						$content = $less->compile( $filecontents );
 						file_put_contents( $cachefile, $content );
@@ -219,9 +217,7 @@ if ( !function_exists( 'compile' ) ) {
 					}
 					$filecontents .= file_get_contents( $filename );
 
-					require_once BASE . 'app/library/scssphp/scss.inc.php';
-					$scss = new scssc;
-					//$scss->setImportPaths( array( 'assets/css/' ) );
+					$scss = get_scss_parser();
 					try {
 						$content = $scss->compile( $filecontents );
 						file_put_contents( $cachefile, $content );
@@ -420,6 +416,42 @@ content: "Ups, an error occured.\A ' . strtoupper( $tool ) . ' compile error - '
 }';
 
 		return $msg;
+	}
+}
+
+if ( !function_exists( 'get_less_parser' ) ) {
+	/**
+	 * Returns the less parser
+	 *
+	 * @return lessc
+	 */
+	function get_less_parser() {
+
+		require_once BASE . 'app/library/lessphp/lessc.inc.php';
+		$less = new lessc;
+
+		//$less->setImportDir( array( '' ) ); // default
+		//$less->addImportDir( 'assets/bootstrap' );
+
+		return $less;
+	}
+}
+
+if ( !function_exists( 'get_scss_parser' ) ) {
+	/**
+	 * Returns the scss parser
+	 *
+	 * @return scssc
+	 */
+	function get_scss_parser() {
+
+		require_once BASE . 'app/library/scssphp/scss.inc.php';
+		$scss = new scssc;
+
+		//$scss->setImportPaths( array( '' ) ); // default
+		//$scss->addImportPath( 'assets/bootstrap' );
+
+		return $scss;
 	}
 }
 

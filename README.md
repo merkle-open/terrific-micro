@@ -198,7 +198,7 @@ The order of these special patterns does not matter.
 #### Note on less & scss @import
 
 Terrific Micro does not use a watcher for asset concatenation. The resources are concatenated with each request. 
-Due to less and scss caching-mechanisms in place, this process is quite fast. You should be warned about the usage of @import, though. As long as you configure them relatively to the file, they work quite well. But changes in imported files are not tracked by Terrific Micro and therefore changes do not invalidate the cache. This means you either have to clean manually by changing the main file or you can disable caching by setting `$nocache = true;` in `project/index.project.php`.
+Due to less and scss caching-mechanisms in place, this process is quite fast. You should be warned about the usage of @import, though. As long as you configure them relatively to your `project`-folder, they work quite well. But changes in imported files are not tracked by Terrific Micro and therefore changes do not invalidate the cache. This means you either have to clean manually by changing the main file or you can disable caching by setting `$nocache = true;` in `project/index.project.php`.
 
 #### Other Asset Files
 

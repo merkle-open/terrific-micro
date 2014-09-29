@@ -33,6 +33,31 @@
 //}
 
 // ------------------------------
+// overwrite core functions
+// ------------------------------
+
+//function get_less_parser() {
+//	require_once BASE . 'app/library/lessphp/lessc.inc.php';
+//	$less = new lessc;
+//	//$less->setImportDir( array( '' ) ); // default
+//	$less->addImportDir( 'assets/bootstrap' );
+//	return $less;
+//}
+
+//function get_asset_intro( $filename = '', $filetype = '', $minified = false, $duration ) {
+//	$ret = '';
+//	if ( !$minified && isset( $duration ) ) {
+//		$time_taken = round( $duration * 1000 );
+//		$ret .= '/* time taken: ' . $time_taken . ' ms';
+//		$ret .= ' */' . PHP_EOL;
+//	}
+//	else {
+//		$ret .= '/* ' . $filename . ' */' . PHP_EOL;
+//	}
+//	return $ret;
+//}
+
+// ------------------------------
 // extensions
 // ------------------------------
 //you'll find some extensions ...
