@@ -272,7 +272,7 @@ matches zero or more characters.</p>
 </h4>
 
 <p>Terrific Micro does not use a watcher for asset concatenation. The resources are concatenated with each request. 
-Due to less and scss caching-mechanisms in place, this process is quite fast. You should be warned about the usage of <a href="https://github.com/import" class="user-mention">@import</a>, though. As long as you configure them relatively to the file, they work quite well. But changes in imported files are not tracked by Terrific Micro and therefore changes do not invalidate the cache. This means you either have to clean manually by changing the main file or you can disable caching by setting <code>$nocache = true;</code> in <code>project/index.project.php</code>.</p>
+Due to less and scss caching-mechanisms in place, this process is quite fast. You should be warned about the usage of <a href="https://github.com/import" class="user-mention">@import</a>, though. As long as you configure them relatively to your <code>project</code>-folder, they work quite well. But changes in imported files are not tracked by Terrific Micro and therefore changes do not invalidate the cache. This means you either have to clean manually by changing the main file or you can disable caching by setting <code>$nocache = true;</code> in <code>project/index.project.php</code>.</p>
 
 <h4>
 <a name="other-asset-files" class="anchor" href="#other-asset-files"><span class="octicon octicon-link"></span></a>Other Asset Files</h4>
