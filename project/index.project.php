@@ -44,7 +44,7 @@
 //	return $less;
 //}
 
-//function get_asset_intro( $filename = '', $filetype = '', $minified = false, $duration ) {
+//function get_asset_banner( $filename = '', $filetype = '', $minified = false, $duration ) {
 //	$ret = '';
 //	if ( !$minified && isset( $duration ) ) {
 //		$time_taken = round( $duration * 1000 );

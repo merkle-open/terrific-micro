@@ -307,7 +307,7 @@ if ( !function_exists( 'dump' ) ) {
 		}
 
 		$time_taken = microtime( true ) - $starttime;
-		$output     = get_asset_intro( $name, $filetype, $minify, $time_taken ) . $output;
+		$output     = get_asset_banner( $name, $filetype, $minify, $time_taken ) . $output;
 
 		header( 'Content-Type: ' . $mimetype );
 		echo $output;
@@ -359,7 +359,7 @@ if ( !function_exists( 'is_excluded_file' ) ) {
 	}
 }
 
-if ( !function_exists( 'get_asset_intro' ) ) {
+if ( !function_exists( 'get_asset_banner' ) ) {
 	/**
 	 * Gets a header string for a processed asset
 	 *
@@ -370,7 +370,7 @@ if ( !function_exists( 'get_asset_intro' ) ) {
 	 *
 	 * @return string
 	 */
-	function get_asset_intro( $filename = '', $filetype = '', $minified = false, $duration ) {
+	function get_asset_banner( $filename = '', $filetype = '', $minified = false, $duration ) {
 		$ret = '';
 		if ( isset( $duration ) ) {
 			$time_taken = round( $duration * 1000 );
