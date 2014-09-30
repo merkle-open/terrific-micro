@@ -31,6 +31,9 @@ sftp-config.json
 .project
 .cache
 
+node_modules
+.sublime-grunt.cache
+
 # Project #####################
 app/cache/*
 !.gitkeep
