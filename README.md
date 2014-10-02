@@ -1,5 +1,7 @@
 # Readme - Terrific Micro
 
+<img align="right" src="https://raw.githubusercontent.com/namics/terrific-micro/master/assets/img/icon/terrific-micro.png">
+
 Terrific Micro is a powerful application for simple and complex frontend development with a tiny footprint. 
 It provides a proven but flexible structure to develop your frontend code.
 To unleash the beast and all its power we recommend you read more about the Terrific concept on [terrifically.org](http://terrifically.org) first.
@@ -11,7 +13,8 @@ To unleash the beast and all its power we recommend you read more about the Terr
 * [Assets](#assets)
 * [Conventions](#conventions)
 * [Security](#security)
-* [Credits](#example-project-includes)
+* [Contributing](#contributing)
+* [Credits & License](#example-project-includes)
 
 ## Quick Start
 
@@ -271,6 +274,11 @@ behaviour, see `app/terrific/public/.htaccess`.
 
 The directory listing is turned off in `.htaccess`.
 
+## Contributing
+
+* For Bugs & Features please use [github](https://github.com/namics/terrific-micro/issues)
+* Feel free to fork and send PRs. That's the best way to discuss your ideas.
+
 ## Example Project Includes
 
 * [jQuery 1.11.1](http://jquery.com/)
@@ -285,11 +293,6 @@ The directory listing is turned off in `.htaccess`.
 * [scssphp](http://leafo.net/scssphp)
 * [CssMin](https://code.google.com/p/cssmin/)
 * [JShrink](https://github.com/tedious/JShrink)
-
-## Contributing
-
-* For Bugs & Features please use [github](https://github.com/namics/terrific-micro/issues)
-* Feel free to fork and send PRs. That's the best way to discuss your ideas.
 
 ## Credits
 
