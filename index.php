@@ -7,7 +7,7 @@
 // Do not change this file - use project/index.project.php for your customisations
 // -------------------------------------------------------------------------------------------
 
-define( 'BASE', dirname( __FILE__ ) . '/' );
+define( 'BASE', __DIR__ . '/' );
 $config   = json_decode( file_get_contents( BASE . 'config.json' ) );
 $nocache  = false; // true -> disables .less/.scss caching
 $cachedir = ( is_writeable( sys_get_temp_dir() ) ? sys_get_temp_dir() : BASE . 'app/cache' ); // use php temp or the local cache directory
