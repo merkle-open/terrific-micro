@@ -1,10 +1,8 @@
 # Changelog - Terrific Micro
 
-## v1.0.0 - 2014-09-26
+## v1.0.0 - 2014-09-26 - first version
 
-First version
-
-## v1.0.1 - 2014-10-
+## v1.0.1 - 2014-10-09
 
 ### Features
 
