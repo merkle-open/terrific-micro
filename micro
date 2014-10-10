@@ -32,7 +32,6 @@ if ( isset( $argv ) ) {
 		}
 	}
 	else {
-		//$_server['REQUEST_URI'] = '/';
 		exit($USAGE);
 	}
 	if ( isset( $argv[2] ) ) {
