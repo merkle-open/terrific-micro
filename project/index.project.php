@@ -12,7 +12,7 @@
 // ------------------------------
 // global variables
 // ------------------------------
-//define('OFFLINE', isset($_REQUEST['online']) ? false : true);
+//define('OFFLINE', isset($_request['online']) ? false : true);
 
 // ------------------------------
 // simple functions

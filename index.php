@@ -12,6 +12,42 @@ $config   = json_decode( file_get_contents( BASE . 'config.json' ) );
 $nocache  = false; // true -> disables .less/.scss caching
 $cachedir = ( is_writeable( sys_get_temp_dir() ) ? sys_get_temp_dir() : BASE . 'app/cache' ); // use php temp or the local cache directory
 
+$_server = $_SERVER;
+$_request = $_REQUEST;
+
+// ---------------------
+// Check for commandline
+// ---------------------
+
+if ( isset( $argv ) ) {
+	if ( isset( $argv[1] ) ) {
+		$parts = explode( ':', $argv[1] );
+		switch ( $parts[0] ) {
+			case 'css':
+			case 'js':
+				$_server['REQUEST_URI'] = '/' . $parts[1] . '.' . $parts[0];
+				break;
+			case 'view':
+				$_server['REQUEST_URI'] = '/' . $parts[1];
+				if ( isset( $parts[2] ) ) {
+					$_server['REQUEST_URI'] .= '-' . $parts[2];
+				}
+				break;
+		}
+	}
+	else {
+		$_server['REQUEST_URI'] = '/';
+	}
+	if ( isset( $argv[2] ) ) {
+		$_server['REQUEST_URI'] .= '?' . $argv[2];
+		$_server['QUERY_STRING'] = $argv[2];
+		parse_str( $argv[2], $_request );
+	}
+	else {
+		$_server['QUERY_STRING'] = '';
+	}
+}
+
 include_once( BASE . 'project/index.project.php' ); // use this file for all your customisations
 
 // ------------------
@@ -259,8 +295,8 @@ if ( !function_exists( 'dump' ) ) {
 		$filetype = substr( strrchr( $name, '.' ), 1 );
 		$output   = '';
 
-		$minify          = isset( $_REQUEST['min'] );
-		$debugjavascript = $filetype === 'js' && isset( $_REQUEST['debug'] );
+		$minify          = isset( $_request['min'] );
+		$debugjavascript = $filetype === 'js' && isset( $_request['debug'] );
 		if ( $debugjavascript ) {
 			$output .= '// load js files in a synchronous way' . PHP_EOL;
 		}
@@ -508,7 +544,7 @@ if ( !function_exists( 'process_asset' ) ) {
 		global $config;
 
 		foreach ( $config->assets as $asset => $value ) {
-			if ( preg_match( '/\/' . $asset . '/', $_SERVER['REQUEST_URI'] ) ) {
+			if ( preg_match( '/\/' . $asset . '/', $_server['REQUEST_URI'] ) ) {
 				$filetype = substr( strrchr( $asset, '.' ), 1 );
 				switch ( $filetype ) {
 					case 'css':
@@ -535,7 +571,7 @@ if ( !function_exists( 'process_view' ) ) {
 	function process_view() {
 		global $config;
 
-		$url    = str_replace( '?' . $_SERVER['QUERY_STRING'], '', $_SERVER['REQUEST_URI'] ); // remove query string
+		$url    = str_replace( '?' . $_server['QUERY_STRING'], '', $_server['REQUEST_URI'] ); // remove query string
 		$url    = preg_replace( '/\.[^.\s]{2,4}$/', '', $url ); // remove file extension
 		$route  = explode( '/', $url );
 		$action = end( $route );

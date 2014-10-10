@@ -224,6 +224,44 @@ The assets can be loaded individually by adding the URL parameter `debug`. This 
 
     http://localhost/project/app.js?debug
 
+### Commandline access
+
+You can access Terrific Micro via your commandline and your php binary of choice.
+
+    php index.php
+
+You can add an additional argument to get the output for either
+
+- a specific view
+- a specific CSS file set in config.json
+- a specific JS file set in config.json
+
+Here are some examples:
+
+    // Generate /index view
+    php index.php view:index
+
+    // Generate /sub-example view
+    php index.php view:sub:example
+
+    // Generate /index view with additional GET parameters foo=bar&baz=foo
+    php index.php view:index foo=bar&baz=foo
+
+    // Generate app.css
+    php index.php css:app
+
+    // Generate minified app.css
+    php index.php css:app min
+
+    // Generate app.js
+    php index.php js:app
+
+    // Generate minified app.js
+    php index.php js:app min
+
+    // Generate debug app.js
+    php index.php js:app debug
+
 ## Conventions
 
 ### Resource linking
