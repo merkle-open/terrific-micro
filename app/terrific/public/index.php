@@ -2,8 +2,10 @@
 //error_reporting(-1);
 //ini_set('display_errors', '1');
 
+$_server  = $_SERVER;
+$_request = $_REQUEST;
 $pathes  = explode( '/app/terrific/public', dirname( str_replace( '\\', '/', __FILE__ ) ) );
-$uri     = 'http' . ( empty( $_SERVER['HTTPS'] ) ? '' : 's' ) . '://' . $_SERVER['SERVER_NAME'] . ( $_SERVER['SERVER_PORT'] != '80' ? ':' . $_SERVER['SERVER_PORT'] : '' ) . $_SERVER['REQUEST_URI'];
+$uri     = 'http' . ( empty( $_server['HTTPS'] ) ? '' : 's' ) . '://' . $_server['SERVER_NAME'] . ( $_server['SERVER_PORT'] != '80' ? ':' . $_server['SERVER_PORT'] : '' ) . $_server['REQUEST_URI'];
 $baseuri = substr( $uri, 0, strrpos( $uri, '/terrific/', - 1 ) );
 
 define( 'BASE', $pathes[0] . '/' );
@@ -22,10 +24,10 @@ if ( $nrOfParts > 1 && $parts[0] === 'create' && property_exists( $config->micro
 
 	$componentConfig            = $config->micro->components->$parts[1];
 	$componentConfig->component = $parts[1];
-	$component                  = isset( $_REQUEST['component'] ) ? $_REQUEST['component'] : null;
-	$skin                       = isset( $_REQUEST['skin'] ) ? $_REQUEST['skin'] : null;
-	$username                   = isset( $_REQUEST['user'] ) ? $_REQUEST['user'] : null;
-	$useremail                  = isset( $_REQUEST['email'] ) ? $_REQUEST['email'] : null;
+	$component                  = isset( $_request['component'] ) ? $_request['component'] : null;
+	$skin                       = isset( $_request['skin'] ) ? $_request['skin'] : null;
+	$username                   = isset( $_request['user'] ) ? $_request['user'] : null;
+	$useremail                  = isset( $_request['email'] ) ? $_request['email'] : null;
 
 	$page = new Component( $componentConfig, $component, $skin, $username, $useremail );
 }
