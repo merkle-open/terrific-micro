@@ -28,9 +28,6 @@ if ( isset( $argv ) ) {
 				break;
 			case 'view':
 				$_SERVER['REQUEST_URI'] = '/' . $parts[1];
-				if ( isset( $parts[2] ) ) {
-					$_SERVER['REQUEST_URI'] .= '-' . $parts[2];
-				}
 				break;
 		}
 	}
