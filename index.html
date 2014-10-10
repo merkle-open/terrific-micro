@@ -46,9 +46,12 @@ To unleash the beast and all its power we recommend you read more about the Terr
 <li><a href="#assets">Assets</a></li>
 <li><a href="#conventions">Conventions</a></li>
 <li><a href="#security">Security</a></li>
+<li><a href="#commandline">Commandline</a></li>
 <li><a href="#contributing">Contributing</a></li>
 <li><a href="#example-project-includes">Credits &amp; License</a></li>
-</ul><h2>
+</ul>
+
+<h2>
 <a name="quick-start" class="anchor" href="#quick-start"><span class="octicon octicon-link"></span></a>Quick Start</h2>
 
 <p>You only need an Apache web server with PHP 5.3+ support. 
@@ -69,7 +72,9 @@ http://localhost/project/app.css
 http://localhost/project/app.js
 </code></pre>
 </li>
-</ol><h3>
+</ol>
+
+<h3>
 <a name="features" class="anchor" href="#features"><span class="octicon octicon-link"></span></a>Features</h3>
 
 <ul>
@@ -78,7 +83,9 @@ http://localhost/project/app.js
 <li>LESS/SCSS support</li>
 <li>Caching (LESS/SCSS) for optimal performance</li>
 <li>GUI to create components</li>
-</ul><h2>
+</ul>
+
+<h2>
 <a name="daily-work---creating-components--pages" class="anchor" href="#daily-work---creating-components--pages"><span class="octicon octicon-link"></span></a>Daily Work - Creating Components &amp; Pages</h2>
 
 <h3>
@@ -158,7 +165,9 @@ Or you let the helper write the wrapping container with different inputs (= adva
 <ul>
 <li>for basic mode use one or two parameters</li>
 <li>for advanced mode use three or more parameters</li>
-</ul><p>Use the component's name as the first parameter. Be aware, the component name is case-sensitive!</p>
+</ul>
+
+<p>Use the component's name as the first parameter. Be aware, the component name is case-sensitive!</p>
 
 <h4>
 <a name="basic-mode-template-with-complete-markup" class="anchor" href="#basic-mode-template-with-complete-markup"><span class="octicon octicon-link"></span></a>Basic Mode: Template with complete Markup</h4>
@@ -258,7 +267,9 @@ matches zero or more characters.</p>
 <code>!</code> = exclude pattern</li>
 <li>Define all your dependencies for the compiling-process with the <code>+</code> prefix
 <code>+</code> = exclude file but prepend it to every compile call for files with the same file extension.</li>
-</ul><p>The order of these special patterns does not matter.</p>
+</ul>
+
+<p>The order of these special patterns does not matter.</p>
 
 <h4>
 <a name="examples" class="anchor" href="#examples"><span class="octicon octicon-link"></span></a>Examples</h4>
@@ -270,7 +281,9 @@ matches zero or more characters.</p>
 <code>"!**/*-test.*"</code>                Exclude all filenames ending with <code>-test</code>.</li>
 <li>
 <code>"+assets/css/mixins.less"</code>     Exclude <code>assets/css/mixins.less</code> but prepend to every compile call of every .less file</li>
-</ul><h4>
+</ul>
+
+<h4>
 <a name="note-on-less--scss-import" class="anchor" href="#note-on-less--scss-import"><span class="octicon octicon-link"></span></a>Note on less &amp; scss <a href="https://github.com/import" class="user-mention">@import</a>
 </h4>
 
@@ -330,7 +343,9 @@ Exceptions:</p>
 <li>Component folders must match terrific classes, therefore they are case-sensitive.</li>
 <li>TerrificJS uses upper case for its namespace <code>Tc</code> and class names <code>Tc.Module.Example</code>
 </li>
-</ul><p>Use the component helper with the <em>exact</em> component name:</p>
+</ul>
+
+<p>Use the component helper with the <em>exact</em> component name:</p>
 
 <pre><code>&lt;?php component('NavMain'); ?&gt;
 </code></pre>
@@ -346,6 +361,49 @@ AdminNavMain -&gt; Tc.Module.AdminNavMain -&gt; mod-admin-nav-main
 <a name="indentation" class="anchor" href="#indentation"><span class="octicon octicon-link"></span></a>Indentation</h3>
 
 <p>Terrific Micro uses tabs for indentation and spaces for alignment.</p>
+
+<h2>
+<a name="commandline" class="anchor" href="#commandline"><span class="octicon octicon-link"></span></a>Commandline</h2>
+
+<p>You can access Terrific Micro via your commandline and your php binary of choice.</p>
+
+<pre><code>php app/bin/micro
+</code></pre>
+
+<p>You can add an additional argument to get the output for either</p>
+
+<ul>
+<li>a specific view</li>
+<li>a specific CSS file set in config.json</li>
+<li>a specific JS file set in config.json</li>
+</ul>
+
+<p>Here are some examples:</p>
+
+<pre><code>// Generate index view
+php app/bin/micro view:index
+
+// Generate content-variant view
+php app/bin/micro view:content-variant
+
+// Generate content view with additional GET parameters foo=bar&amp;baz=foo
+php app/bin/micro view:content "foo=bar&amp;baz=foo"
+
+// Generate app.css
+php app/bin/micro css:app
+
+// Generate minified app.css
+php app/bin/micro css:app min
+
+// Generate app.js
+php app/bin/micro js:app
+
+// Generate minified app.js
+php app/bin/micro js:app min
+
+// Generate debug app.js
+php app/bin/micro js:app debug
+</code></pre>
 
 <h2>
 <a name="security" class="anchor" href="#security"><span class="octicon octicon-link"></span></a>Security</h2>
@@ -372,7 +430,9 @@ behaviour, see <code>app/terrific/public/.htaccess</code>.</p>
 <li>For Bugs &amp; Features please use <a href="https://github.com/namics/terrific-micro/issues">github</a>
 </li>
 <li>Feel free to fork and send PRs. That's the best way to discuss your ideas.</li>
-</ul><h2>
+</ul>
+
+<h2>
 <a name="example-project-includes" class="anchor" href="#example-project-includes"><span class="octicon octicon-link"></span></a>Example Project Includes</h2>
 
 <ul>
@@ -381,7 +441,9 @@ behaviour, see <code>app/terrific/public/.htaccess</code>.</p>
 <li><a href="http://yuilibrary.com/yui/docs/cssreset/">YUI CSS Reset 3.17.2</a></li>
 <li>Favicon &amp; Home-Icons from Terrific Micro (replace with your own )</li>
 <li>Component <code>Example</code> and some styles in assets/css (you don't need them)</li>
-</ul><h2>
+</ul>
+
+<h2>
 <a name="used-php-libraries" class="anchor" href="#used-php-libraries"><span class="octicon octicon-link"></span></a>Used PHP Libraries</h2>
 
 <ul>
@@ -389,7 +451,9 @@ behaviour, see <code>app/terrific/public/.htaccess</code>.</p>
 <li><a href="http://leafo.net/scssphp">scssphp</a></li>
 <li><a href="https://code.google.com/p/cssmin/">CssMin</a></li>
 <li><a href="https://github.com/tedious/JShrink">JShrink</a></li>
-</ul><h2>
+</ul>
+
+<h2>
 <a name="credits" class="anchor" href="#credits"><span class="octicon octicon-link"></span></a>Credits</h2>
 
 <p>Terrific Micro was initiated by <a href="https://github.com/rogerdudler">Roger Dudler</a> and is now maintained by Namics AG</p>
