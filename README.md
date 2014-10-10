@@ -264,7 +264,7 @@ Terrific Micro uses tabs for indentation and spaces for alignment.
 
 You can access Terrific Micro via your commandline and your php binary of choice.
 
-    php micro
+    php app/bin/micro
 
 You can add an additional argument to get the output for either
 
@@ -275,28 +275,28 @@ You can add an additional argument to get the output for either
 Here are some examples:
 
     // Generate index view
-    php micro view:index
+    php app/bin/micro view:index
 
     // Generate content-variant view
-    php micro view:content-variant
+    php app/bin/micro view:content-variant
 
     // Generate index view with additional GET parameters foo=bar&baz=foo
-    php micro view:index "foo=bar&baz=foo"
+    php app/bin/micro view:index "foo=bar&baz=foo"
 
     // Generate app.css
-    php micro css:app
+    php app/bin/micro css:app
 
     // Generate minified app.css
-    php micro css:app min
+    php app/bin/micro css:app min
 
     // Generate app.js
-    php micro js:app
+    php app/bin/micro js:app
 
     // Generate minified app.js
-    php micro js:app min
+    php app/bin/micro js:app min
 
     // Generate debug app.js
-    php micro js:app debug
+    php app/bin/micro js:app debug
 
 ## Security
 
