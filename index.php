@@ -13,39 +13,8 @@ $nocache  = false; // true -> disables .less/.scss caching
 $cachedir = ( is_writeable( sys_get_temp_dir() ) ? sys_get_temp_dir() : BASE . 'app/cache' ); // use php temp or the local cache directory
 
 // ---------------------
-// Commandline Usage
+// Project
 // ---------------------
-$_server = $_SERVER;
-$_request = $_REQUEST;
-if ( isset( $argv ) ) {
-	if ( isset( $argv[1] ) ) {
-		$parts = explode( ':', $argv[1] );
-		switch ( $parts[0] ) {
-			case 'css':
-			case 'js':
-				$_server['REQUEST_URI'] = '/' . $parts[1] . '.' . $parts[0];
-				break;
-			case 'view':
-				$_server['REQUEST_URI'] = '/' . $parts[1];
-				if ( isset( $parts[2] ) ) {
-					$_server['REQUEST_URI'] .= '-' . $parts[2];
-				}
-				break;
-		}
-	}
-	else {
-		$_server['REQUEST_URI'] = '/';
-	}
-	if ( isset( $argv[2] ) ) {
-		$_server['REQUEST_URI'] .= '?' . $argv[2];
-		$_server['QUERY_STRING'] = $argv[2];
-		parse_str( $argv[2], $_request );
-	}
-	else {
-		$_server['QUERY_STRING'] = '';
-	}
-}
-
 include_once( BASE . 'project/index.project.php' ); // use this file for all your customisations
 
 // ------------------
@@ -94,8 +63,8 @@ if ( !function_exists( 'component' ) ) {
 		$component_file     = false;
 
 		foreach ( $config->micro->components as $key => $component ) {
-			$directory = $component->path;
-			$component_prefix = property_exists( $component, 'component_prefix') ? $component->component_prefix : '';
+			$directory        = $component->path;
+			$component_prefix = property_exists( $component, 'component_prefix' ) ? $component->component_prefix : '';
 			if ( file_exists( BASE . $directory . '/' . $component_template ) ) {
 				$component_file = BASE . $directory . '/' . $component_template;
 				break 1;
@@ -103,7 +72,7 @@ if ( !function_exists( 'component' ) ) {
 			else {
 				foreach ( glob( BASE . $directory . '/*/' . $component_template ) as $component_template_file ) {
 					if ( file_exists( $component_template_file ) ) {
-						$component_file   = $component_template_file;
+						$component_file = $component_template_file;
 						break 2;
 					}
 				}
@@ -123,7 +92,7 @@ if ( !function_exists( 'component' ) ) {
 
 				$skins = '';
 				if ( !empty( $skin ) || $skin === '0' ) {
-					$skin_prefix = property_exists( $component, 'skin_prefix') ? $component->skin_prefix : '';
+					$skin_prefix = property_exists( $component, 'skin_prefix' ) ? $component->skin_prefix : '';
 					if ( is_array( $skin ) ) {
 						foreach ( $skin as $key => $value ) {
 							$skins .= ' ' . $skin_prefix . '-' . $dashed . '-' . $value;
@@ -223,7 +192,8 @@ if ( !function_exists( 'compile' ) ) {
 						$content = $less->compile( $filecontents );
 						file_put_contents( $cachefile, $content );
 						touch( $cachefile, $modified );
-					} catch ( Exception $e ) {
+					}
+					catch ( Exception $e ) {
 						$content = get_compile_error_css( $e, $filename, 'lessphp' );
 					}
 				}
@@ -256,7 +226,8 @@ if ( !function_exists( 'compile' ) ) {
 						$content = $scss->compile( $filecontents );
 						file_put_contents( $cachefile, $content );
 						touch( $cachefile, $modified );
-					} catch ( Exception $e ) {
+					}
+					catch ( Exception $e ) {
 						$content = get_compile_error_css( $e, $filename, 'scssphp' );
 					}
 				}
@@ -293,8 +264,8 @@ if ( !function_exists( 'dump' ) ) {
 		$filetype = substr( strrchr( $name, '.' ), 1 );
 		$output   = '';
 
-		$minify          = isset( $_request['min'] );
-		$debugjavascript = $filetype === 'js' && isset( $_request['debug'] );
+		$minify          = isset( $_REQUEST['min'] );
+		$debugjavascript = $filetype === 'js' && isset( $_REQUEST['debug'] );
 		if ( $debugjavascript ) {
 			$output .= '// load js files in a synchronous way' . PHP_EOL;
 		}
@@ -521,7 +492,8 @@ if ( !function_exists( 'render_view' ) ) {
 		try {
 			render_view_template( $view );
 			$rendered = true;
-		} catch ( Exception $e ) {
+		}
+		catch ( Exception $e ) {
 		}
 
 		if ( !$rendered ) {
@@ -539,10 +511,10 @@ if ( !function_exists( 'process_asset' ) ) {
 	 * Processes a requested asset (from config.json)
 	 */
 	function process_asset() {
-		global $config, $_server;
+		global $config;
 
 		foreach ( $config->assets as $asset => $value ) {
-			if ( preg_match( '/\/' . $asset . '/', $_server['REQUEST_URI'] ) ) {
+			if ( preg_match( '/\/' . $asset . '/', $_SERVER['REQUEST_URI'] ) ) {
 				$filetype = substr( strrchr( $asset, '.' ), 1 );
 				switch ( $filetype ) {
 					case 'css':
@@ -567,9 +539,9 @@ if ( !function_exists( 'process_view' ) ) {
 	 * Processes a requested view
 	 */
 	function process_view() {
-		global $config, $_server;
+		global $config;
 
-		$url    = str_replace( '?' . $_server['QUERY_STRING'], '', $_server['REQUEST_URI'] ); // remove query string
+		$url    = str_replace( '?' . $_SERVER['QUERY_STRING'], '', $_SERVER['REQUEST_URI'] ); // remove query string
 		$url    = preg_replace( '/\.[^.\s]{2,4}$/', '', $url ); // remove file extension
 		$route  = explode( '/', $url );
 		$action = end( $route );

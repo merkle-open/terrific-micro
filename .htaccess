@@ -12,6 +12,11 @@ Options -Indexes +FollowSymLinks
 	Deny From All
 </Files>
 
+<Files micro>
+	Order Deny,Allow
+	Deny From All
+</Files>
+
 <FilesMatch "\.(md|conf|log|sh)$">
 	Order Deny,Allow
 	Deny from all
