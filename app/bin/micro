@@ -1,6 +1,8 @@
 #!/usr/bin/env php
 <?php
 
+# todo: define better API with options
+
 $USAGE = <<<EOT
 Usage: micro [action:resource] [query]
 
@@ -45,5 +47,4 @@ if ( isset( $argv ) ) {
 }
 
 require_once __DIR__ . '../../../index.php';
-
 

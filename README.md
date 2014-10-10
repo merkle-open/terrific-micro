@@ -280,8 +280,8 @@ Here are some examples:
     // Generate content-variant view
     php app/bin/micro view:content-variant
 
-    // Generate index view with additional GET parameters foo=bar&baz=foo
-    php app/bin/micro view:index "foo=bar&baz=foo"
+    // Generate content view with additional GET parameters foo=bar&baz=foo
+    php app/bin/micro view:content "foo=bar&baz=foo"
 
     // Generate app.css
     php app/bin/micro css:app

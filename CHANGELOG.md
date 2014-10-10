@@ -12,7 +12,7 @@
 
 * Rename: get_asset_intro to get_asset_banner
 
-## v1.0.2 - 2014-10-
+## v1.0.2 - 2014-10-10
 
 ### Features
 
