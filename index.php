@@ -12,13 +12,11 @@ $config   = json_decode( file_get_contents( BASE . 'config.json' ) );
 $nocache  = false; // true -> disables .less/.scss caching
 $cachedir = ( is_writeable( sys_get_temp_dir() ) ? sys_get_temp_dir() : BASE . 'app/cache' ); // use php temp or the local cache directory
 
+// ---------------------
+// Commandline Usage
+// ---------------------
 $_server = $_SERVER;
 $_request = $_REQUEST;
-
-// ---------------------
-// Check for commandline
-// ---------------------
-
 if ( isset( $argv ) ) {
 	if ( isset( $argv[1] ) ) {
 		$parts = explode( ':', $argv[1] );
@@ -541,7 +539,7 @@ if ( !function_exists( 'process_asset' ) ) {
 	 * Processes a requested asset (from config.json)
 	 */
 	function process_asset() {
-		global $config;
+		global $config, $_server;
 
 		foreach ( $config->assets as $asset => $value ) {
 			if ( preg_match( '/\/' . $asset . '/', $_server['REQUEST_URI'] ) ) {
@@ -569,7 +567,7 @@ if ( !function_exists( 'process_view' ) ) {
 	 * Processes a requested view
 	 */
 	function process_view() {
-		global $config;
+		global $config, $_server;
 
 		$url    = str_replace( '?' . $_server['QUERY_STRING'], '', $_server['REQUEST_URI'] ); // remove query string
 		$url    = preg_replace( '/\.[^.\s]{2,4}$/', '', $url ); // remove file extension
