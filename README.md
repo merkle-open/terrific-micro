@@ -13,6 +13,7 @@ To unleash the beast and all its power we recommend you read more about the Terr
 * [Assets](#assets)
 * [Conventions](#conventions)
 * [Security](#security)
+* [Commandline](#commandline)
 * [Contributing](#contributing)
 * [Credits & License](#example-project-includes)
 
@@ -224,44 +225,6 @@ The assets can be loaded individually by adding the URL parameter `debug`. This 
 
     http://localhost/project/app.js?debug
 
-### Commandline access
-
-You can access Terrific Micro via your commandline and your php binary of choice.
-
-    php index.php
-
-You can add an additional argument to get the output for either
-
-- a specific view
-- a specific CSS file set in config.json
-- a specific JS file set in config.json
-
-Here are some examples:
-
-    // Generate /index view
-    php index.php view:index
-
-    // Generate /sub-example view
-    php index.php view:sub:example
-
-    // Generate /index view with additional GET parameters foo=bar&baz=foo
-    php index.php view:index foo=bar&baz=foo
-
-    // Generate app.css
-    php index.php css:app
-
-    // Generate minified app.css
-    php index.php css:app min
-
-    // Generate app.js
-    php index.php js:app
-
-    // Generate minified app.js
-    php index.php js:app min
-
-    // Generate debug app.js
-    php index.php js:app debug
-
 ## Conventions
 
 ### Resource linking
@@ -296,6 +259,44 @@ Note that camel case ComponentNames are represented in CSS with dashes.
 ### Indentation
 
 Terrific Micro uses tabs for indentation and spaces for alignment.
+
+## Commandline
+
+You can access Terrific Micro via your commandline and your php binary of choice.
+
+    php index.php
+
+You can add an additional argument to get the output for either
+
+* a specific view
+* a specific CSS file set in config.json
+* a specific JS file set in config.json
+
+Here are some examples:
+
+    // Generate index view
+    php index.php view:index
+
+    // Generate content-variant view
+    php index.php view:content-variant
+
+    // Generate index view with additional GET parameters foo=bar&baz=foo
+    php index.php view:index "foo=bar&baz=foo"
+
+    // Generate app.css
+    php index.php css:app
+
+    // Generate minified app.css
+    php index.php css:app min
+
+    // Generate app.js
+    php index.php js:app
+
+    // Generate minified app.js
+    php index.php js:app min
+
+    // Generate debug app.js
+    php index.php js:app debug
 
 ## Security
 
