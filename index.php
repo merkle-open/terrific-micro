@@ -171,8 +171,8 @@ if ( !function_exists( 'compile' ) ) {
 			case 'less':
 				$modified = filemtime( $filename );
 				foreach ( $dependencies as $dep ) {
-					if ( substr( strrchr( $dep, '.' ), 1 ) == $extension && filemtime( $dep ) > $modified ) {
-						$modified = filemtime( $dep );
+					if ( substr( strrchr( $dep, '.' ), 1 ) == $extension && filemtime( BASE . $dep ) > $modified ) {
+						$modified = filemtime( BASE . $dep );
 					}
 				}
 
@@ -182,7 +182,7 @@ if ( !function_exists( 'compile' ) ) {
 					$filecontents = '';
 					foreach ( $dependencies as $dep ) {
 						if ( substr( strrchr( $dep, '.' ), 1 ) == $extension ) {
-							$filecontents .= file_get_contents( $dep );
+							$filecontents .= file_get_contents( BASE . $dep );
 						}
 					}
 					$filecontents .= file_get_contents( $filename );
@@ -205,8 +205,8 @@ if ( !function_exists( 'compile' ) ) {
 			case 'scss':
 				$modified = filemtime( $filename );
 				foreach ( $dependencies as $dep ) {
-					if ( substr( strrchr( $dep, '.' ), 1 ) == $extension && filemtime( $dep ) > $modified ) {
-						$modified = filemtime( $dep );
+					if ( substr( strrchr( $dep, '.' ), 1 ) == $extension && filemtime( BASE . $dep ) > $modified ) {
+						$modified = filemtime( BASE . $dep );
 					}
 				}
 
@@ -216,7 +216,7 @@ if ( !function_exists( 'compile' ) ) {
 					$filecontents = '';
 					foreach ( $dependencies as $dep ) {
 						if ( substr( strrchr( $dep, '.' ), 1 ) == $extension ) {
-							$filecontents .= file_get_contents( $dep );
+							$filecontents .= file_get_contents( BASE . $dep );
 						}
 					}
 					$filecontents .= file_get_contents( $filename );
