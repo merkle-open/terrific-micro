@@ -17,3 +17,9 @@
 ### Features
 
 * Add commandline usage
+
+## v1.0.3 - 2014-
+
+### Maintenance / Fixes
+
+* fix pathes in commandline tool
