@@ -20,6 +20,10 @@
 
 ## v1.0.3 - 2014-
 
+### Features
+
+* Allow multiple subfolders in views
+
 ### Maintenance / Fixes
 
-* fix pathes in commandline tool
+* Fix pathes in commandline tool
