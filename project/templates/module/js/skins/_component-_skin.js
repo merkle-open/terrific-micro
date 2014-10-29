@@ -4,7 +4,7 @@
 	 * {{skin}} skin implementation for the {{component}} module.
 	 *
 	 * @author {{user}} <{{email}}>
-	 * @namespace Tc.Module.{{pattern-js}}
+	 * @namespace Tc.Module.{{component-js}}
 	 * @class {{skin-js}}
 	 * @extends Tc.Module
 	 */
