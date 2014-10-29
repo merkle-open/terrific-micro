@@ -550,8 +550,44 @@ if ( !function_exists( 'process_view' ) ) {
 		}
 		$view = BASE . $config->micro->view_directory . '/' . $action . '.' . $config->micro->view_file_extension;
 		if ( !is_file( $view ) ) {
+
+			// first part could be a subfolder
 			$view = BASE . $config->micro->view_directory . '/' . preg_replace( '/-/', '/', $action, 1 ) . '.' . $config->micro->view_file_extension;
+			if ( !is_file( $view ) ) {
+
+				// check for all subfolder combinations
+				$_positions = array();
+				$_start     = 0;
+				while ( ( $_pos = strpos( $action, '-', $_start ) ) !== false ) {
+					$_start       = $_pos + 1;
+					$_positions[] = $_pos;
+				}
+
+				$_len          = count( $_positions );
+				$_combinations = array();
+				for ( $_i = 1; $_i < ( 1 << $_len ); $_i ++ ) {
+					$_c = array();
+					for ( $_j = 0; $_j < $_len; $_j ++ ) {
+						if ( $_i & ( 1 << $_j ) ) {
+							$_c[] = $_positions[ $_j ];
+						}
+					}
+					$_combinations[] = $_c;
+				}
+
+				foreach ( $_combinations as $_combination ) {
+					$_action = $action;
+					foreach ( $_combination as $_pos ) {
+						$_action = substr_replace( $_action, '/', $_pos, 1 );
+					}
+					$view = BASE . $config->micro->view_directory . '/' . $_action . '.' . $config->micro->view_file_extension;
+					if ( is_file( $view ) ) {
+						break;
+					}
+				}
+			}
 		}
+
 		render_view( $view );
 	}
 }
