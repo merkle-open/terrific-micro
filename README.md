@@ -71,10 +71,10 @@ Try it out by requesting http://localhost/project/terrific/ (don't forget the tr
 You can use more than one type of components. Components are configured in `config.json` (`micro/components`).
 
     "component-type": {
-        "template": "project/templates/module"  // template folder to copy by creating a component
+        "template": "project/templates/module", // template folder to copy by creating a component
         "path": "components/modules",           // path for the newly created component
         "component_prefix": "mod",              // class prefix of component
-        "skin_prefix": "skin",                  // class prefix of skin (optional)
+        "skin_prefix": "skin"                   // class prefix of skin (optional)
     }
 
 The GUI component creator replaces `_component` and `_skin` in file names with the appropriate names. 
@@ -339,4 +339,4 @@ Terrific Micro was initiated by [Roger Dudler](https://github.com/rogerdudler) a
 
 ## License
 
-Released under the [MIT license](LICENSE)
+Released under the [MIT license](https://github.com/namics/terrific-micro/blob/master/LICENSE)
