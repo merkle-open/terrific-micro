@@ -18,7 +18,7 @@
 
 * Add commandline usage
 
-## v1.0.3 - 2014-
+## v1.0.3 - 2014-10-31
 
 ### Features
 
