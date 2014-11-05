@@ -20,7 +20,7 @@
     <header>
       <div class="inner">
         <h1>Terrific Micro</h1>
-        <h2>Powerful php application for simple &amp; complex frontend development with a tiny footprint.</h2>
+        <h2>Powerful PHP application for simple &amp; complex frontend development with a tiny footprint.</h2>
         <a href="https://github.com/namics/terrific-micro" class="button"><small>View project on</small> GitHub</a>
       </div>
     </header>
@@ -29,16 +29,16 @@
       <div class="inner clearfix">
         <section id="main-content">
           <h1>
-<a name="readme---terrific-micro" class="anchor" href="#readme---terrific-micro"><span class="octicon octicon-link"></span></a>Readme - Terrific Micro</h1>
+<a id="readme---terrific-micro" class="anchor" href="#readme---terrific-micro" aria-hidden="true"><span class="octicon octicon-link"></span></a>Readme - Terrific Micro</h1>
 
 <p><img align="right" src="https://raw.githubusercontent.com/namics/terrific-micro/master/assets/img/icon/terrific-micro.png"></p>
 
-<p>Terrific Micro is a powerful application for simple and complex frontend development with a tiny footprint. 
+<p>Terrific Micro is a PHP application for simple and complex frontend development with a tiny footprint. 
 It provides a proven but flexible structure to develop your frontend code.
 To unleash the beast and all its power we recommend you read more about the Terrific concept on <a href="http://terrifically.org">terrifically.org</a> first.</p>
 
 <h2>
-<a name="table-of-contents" class="anchor" href="#table-of-contents"><span class="octicon octicon-link"></span></a>Table of contents</h2>
+<a id="table-of-contents" class="anchor" href="#table-of-contents" aria-hidden="true"><span class="octicon octicon-link"></span></a>Table of contents</h2>
 
 <ul>
 <li><a href="#quick-start">Quick Start</a></li>
@@ -52,7 +52,7 @@ To unleash the beast and all its power we recommend you read more about the Terr
 </ul>
 
 <h2>
-<a name="quick-start" class="anchor" href="#quick-start"><span class="octicon octicon-link"></span></a>Quick Start</h2>
+<a id="quick-start" class="anchor" href="#quick-start" aria-hidden="true"><span class="octicon octicon-link"></span></a>Quick Start</h2>
 
 <p>You only need an Apache web server with PHP 5.3+ support. 
 Enable <code>mod_rewrite</code> and optionally <code>mod_deflate</code> and add the directive <code>AllowOverride All</code> for your directory.</p>
@@ -75,7 +75,7 @@ http://localhost/project/app.js
 </ol>
 
 <h3>
-<a name="features" class="anchor" href="#features"><span class="octicon octicon-link"></span></a>Features</h3>
+<a id="features" class="anchor" href="#features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Features</h3>
 
 <ul>
 <li>Simple project structure</li>
@@ -86,10 +86,10 @@ http://localhost/project/app.js
 </ul>
 
 <h2>
-<a name="daily-work---creating-components--pages" class="anchor" href="#daily-work---creating-components--pages"><span class="octicon octicon-link"></span></a>Daily Work - Creating Components &amp; Pages</h2>
+<a id="daily-work---creating-components--pages" class="anchor" href="#daily-work---creating-components--pages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Daily Work - Creating Components &amp; Pages</h2>
 
 <h3>
-<a name="creating-components" class="anchor" href="#creating-components"><span class="octicon octicon-link"></span></a>Creating Components</h3>
+<a id="creating-components" class="anchor" href="#creating-components" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating Components</h3>
 
 <p>Components are created in the <code>components</code> folder. A component is an encapsulated block of markup with corresponding styles and scripts. 
 A terrific module uses the following structure:</p>
@@ -112,13 +112,13 @@ A terrific module uses the following structure:</p>
 </code></pre>
 
 <h3>
-<a name="creating-components--skins-by-gui" class="anchor" href="#creating-components--skins-by-gui"><span class="octicon octicon-link"></span></a>Creating Components &amp; Skins by GUI</h3>
+<a id="creating-components--skins-by-gui" class="anchor" href="#creating-components--skins-by-gui" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating Components &amp; Skins by GUI</h3>
 
 <p>But the easiest way to do so is using the included GUI. 
 Try it out by requesting http://localhost/project/terrific/ (don't forget the trailing slash)</p>
 
 <h4>
-<a name="components-configuration" class="anchor" href="#components-configuration"><span class="octicon octicon-link"></span></a>Components Configuration</h4>
+<a id="components-configuration" class="anchor" href="#components-configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Components Configuration</h4>
 
 <p>You can use more than one type of components. Components are configured in <code>config.json</code> (<code>micro/components</code>).</p>
 
@@ -139,9 +139,9 @@ For file contents there are a bunch of placeholders available: </p>
 </code></pre>
 
 <h3>
-<a name="creating-pages" class="anchor" href="#creating-pages"><span class="octicon octicon-link"></span></a>Creating pages</h3>
+<a id="creating-pages" class="anchor" href="#creating-pages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating pages</h3>
 
-<p>Create a new <code>*.html</code> file in the <code>views</code> folder. You can use subfolders (one level).</p>
+<p>Create a new <code>*.html</code> file in the <code>views</code> folder. You can make as many subfolders as you want.</p>
 
 <pre><code>/views/index.html
 /views/content.html
@@ -156,7 +156,7 @@ http://localhost/project/content-variant
 </code></pre>
 
 <h3>
-<a name="render-components" class="anchor" href="#render-components"><span class="octicon octicon-link"></span></a>Render Components</h3>
+<a id="render-components" class="anchor" href="#render-components" aria-hidden="true"><span class="octicon octicon-link"></span></a>Render Components</h3>
 
 <p>Pages are meant to be compositions of your components. Therefore you can render components in pages. The component helper gives you two options: 
 You can write all markup in your template (= basic mode). 
@@ -170,7 +170,7 @@ Or you let the helper write the wrapping container with different inputs (= adva
 <p>Use the component's name as the first parameter. Be aware, the component name is case-sensitive!</p>
 
 <h4>
-<a name="basic-mode-template-with-complete-markup" class="anchor" href="#basic-mode-template-with-complete-markup"><span class="octicon octicon-link"></span></a>Basic Mode: Template with complete Markup</h4>
+<a id="basic-mode-template-with-complete-markup" class="anchor" href="#basic-mode-template-with-complete-markup" aria-hidden="true"><span class="octicon octicon-link"></span></a>Basic Mode: Template with complete Markup</h4>
 
 <p>Render the Example component. (file: <code>example.html</code>)</p>
 
@@ -183,7 +183,7 @@ Or you let the helper write the wrapping container with different inputs (= adva
 </code></pre>
 
 <h4>
-<a name="advanced-mode-template-without-wrapper-container" class="anchor" href="#advanced-mode-template-without-wrapper-container"><span class="octicon octicon-link"></span></a>Advanced Mode: Template without wrapper container</h4>
+<a id="advanced-mode-template-without-wrapper-container" class="anchor" href="#advanced-mode-template-without-wrapper-container" aria-hidden="true"><span class="octicon octicon-link"></span></a>Advanced Mode: Template without wrapper container</h4>
 
 <p>Render the Example component with skin "skinname". (file: <code>example-wrapme.html</code>)</p>
 
@@ -206,7 +206,7 @@ Or you let the helper write the wrapping container with different inputs (= adva
 </code></pre>
 
 <h3>
-<a name="render-partials" class="anchor" href="#render-partials"><span class="octicon octicon-link"></span></a>Render Partials</h3>
+<a id="render-partials" class="anchor" href="#render-partials" aria-hidden="true"><span class="octicon octicon-link"></span></a>Render Partials</h3>
 
 <p>Render a partial (HTML snippet). Partials are placed in <code>views/_partials/</code> as <code>*.html</code> files (e.g. <code>head.html</code>).</p>
 
@@ -220,12 +220,12 @@ Or you let the helper write the wrapping container with different inputs (= adva
 </code></pre>
 
 <h2>
-<a name="assets" class="anchor" href="#assets"><span class="octicon octicon-link"></span></a>Assets</h2>
+<a id="assets" class="anchor" href="#assets" aria-hidden="true"><span class="octicon octicon-link"></span></a>Assets</h2>
 
 <p>Terrific Micro's main feature is asset concatenation for CSS and JavaScript files. If changed, the files will be updated on every request, therefore you'll always get the latest version.</p>
 
 <h3>
-<a name="assets-configuration" class="anchor" href="#assets-configuration"><span class="octicon octicon-link"></span></a>Assets Configuration</h3>
+<a id="assets-configuration" class="anchor" href="#assets-configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Assets Configuration</h3>
 
 <p>You can configure the include order of your assets by defining patterns in <code>config.json</code>.</p>
 
@@ -250,7 +250,7 @@ Or you let the helper write the wrapping container with different inputs (= adva
 </code></pre>
 
 <h4>
-<a name="pattern" class="anchor" href="#pattern"><span class="octicon octicon-link"></span></a>Pattern</h4>
+<a id="pattern" class="anchor" href="#pattern" aria-hidden="true"><span class="octicon octicon-link"></span></a>Pattern</h4>
 
 <p>The matching patterns follow the standard glob patterns.
 Glob patterns are similar to regular expression but simplified. They are used by several shells.
@@ -260,7 +260,7 @@ matches zero or more characters.</p>
 <p>You can read more on standard glob patterns on <a href="http://www.php.net/manual/en/function.glob.php">php.net</a> and <a href="http://cowburn.info/2010/04/30/glob-patterns/">coburn.info</a>.</p>
 
 <h4>
-<a name="special-pattern-prefixes" class="anchor" href="#special-pattern-prefixes"><span class="octicon octicon-link"></span></a>Special Pattern Prefixes</h4>
+<a id="special-pattern-prefixes" class="anchor" href="#special-pattern-prefixes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Special Pattern Prefixes</h4>
 
 <ul>
 <li>You can negate a pattern by starting with an exclamation mark <code>!</code>.
@@ -272,7 +272,7 @@ matches zero or more characters.</p>
 <p>The order of these special patterns does not matter.</p>
 
 <h4>
-<a name="examples" class="anchor" href="#examples"><span class="octicon octicon-link"></span></a>Examples</h4>
+<a id="examples" class="anchor" href="#examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Examples</h4>
 
 <ul>
 <li>
@@ -284,14 +284,14 @@ matches zero or more characters.</p>
 </ul>
 
 <h4>
-<a name="note-on-less--scss-import" class="anchor" href="#note-on-less--scss-import"><span class="octicon octicon-link"></span></a>Note on less &amp; scss <a href="https://github.com/import" class="user-mention">@import</a>
+<a id="note-on-less--scss-import" class="anchor" href="#note-on-less--scss-import" aria-hidden="true"><span class="octicon octicon-link"></span></a>Note on less &amp; scss <a href="https://github.com/import" class="user-mention">@import</a>
 </h4>
 
 <p>Terrific Micro does not use a watcher for asset concatenation. The resources are concatenated with each request. 
 Due to less and scss caching-mechanisms in place, this process is quite fast. You should be warned about the usage of <a href="https://github.com/import" class="user-mention">@import</a>, though. As long as you configure them relatively to your <code>project</code>-folder, they work quite well. But changes in imported files are not tracked by Terrific Micro and therefore changes do not invalidate the cache. This means you either have to clean manually by changing the main file or you can disable caching by setting <code>$nocache = true;</code> in <code>project/index.project.php</code>.</p>
 
 <h4>
-<a name="other-asset-files" class="anchor" href="#other-asset-files"><span class="octicon octicon-link"></span></a>Other Asset Files</h4>
+<a id="other-asset-files" class="anchor" href="#other-asset-files" aria-hidden="true"><span class="octicon octicon-link"></span></a>Other Asset Files</h4>
 
 <p>You can configure as many different assets as you wish.</p>
 
@@ -301,7 +301,7 @@ Due to less and scss caching-mechanisms in place, this process is quite fast. Yo
 </code></pre>
 
 <h3>
-<a name="asset-minification" class="anchor" href="#asset-minification"><span class="octicon octicon-link"></span></a>Asset Minification</h3>
+<a id="asset-minification" class="anchor" href="#asset-minification" aria-hidden="true"><span class="octicon octicon-link"></span></a>Asset Minification</h3>
 
 <p>Minified versions of the CSS and/or JS files can be requested by adding the URL parameter <code>min</code>.</p>
 
@@ -310,7 +310,7 @@ http://localhost/project/app.js?min
 </code></pre>
 
 <h3>
-<a name="javascript-debugging" class="anchor" href="#javascript-debugging"><span class="octicon octicon-link"></span></a>JavaScript Debugging</h3>
+<a id="javascript-debugging" class="anchor" href="#javascript-debugging" aria-hidden="true"><span class="octicon octicon-link"></span></a>JavaScript Debugging</h3>
 
 <p>The assets can be loaded individually by adding the URL parameter <code>debug</code>. This is pretty useful for things like remote debugging in PhpStorm.</p>
 
@@ -318,10 +318,10 @@ http://localhost/project/app.js?min
 </code></pre>
 
 <h2>
-<a name="conventions" class="anchor" href="#conventions"><span class="octicon octicon-link"></span></a>Conventions</h2>
+<a id="conventions" class="anchor" href="#conventions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conventions</h2>
 
 <h3>
-<a name="resource-linking" class="anchor" href="#resource-linking"><span class="octicon octicon-link"></span></a>Resource linking</h3>
+<a id="resource-linking" class="anchor" href="#resource-linking" aria-hidden="true"><span class="octicon octicon-link"></span></a>Resource linking</h3>
 
 <p>To stay portable you should favour the use of relative paths. Link to resources relatively to the <code>project</code>-folder <strong>without</strong> a leading slash.</p>
 
@@ -334,7 +334,7 @@ background: url(assets/img/bg/texture.png) scroll 0 0 no-repeat;
 </code></pre>
 
 <h3>
-<a name="upper--lower-case-letters" class="anchor" href="#upper--lower-case-letters"><span class="octicon octicon-link"></span></a>Upper &amp; lower case letters</h3>
+<a id="upper--lower-case-letters" class="anchor" href="#upper--lower-case-letters" aria-hidden="true"><span class="octicon octicon-link"></span></a>Upper &amp; lower case letters</h3>
 
 <p>Use all lowercase if possible. 
 Exceptions:</p>
@@ -358,12 +358,12 @@ AdminNavMain -&gt; Tc.Module.AdminNavMain -&gt; mod-admin-nav-main
 </code></pre>
 
 <h3>
-<a name="indentation" class="anchor" href="#indentation"><span class="octicon octicon-link"></span></a>Indentation</h3>
+<a id="indentation" class="anchor" href="#indentation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Indentation</h3>
 
 <p>Terrific Micro uses tabs for indentation and spaces for alignment.</p>
 
 <h2>
-<a name="commandline" class="anchor" href="#commandline"><span class="octicon octicon-link"></span></a>Commandline</h2>
+<a id="commandline" class="anchor" href="#commandline" aria-hidden="true"><span class="octicon octicon-link"></span></a>Commandline</h2>
 
 <p>You can access Terrific Micro via your commandline and your php binary of choice.</p>
 
@@ -406,25 +406,24 @@ php app/bin/micro js:app debug
 </code></pre>
 
 <h2>
-<a name="security" class="anchor" href="#security"><span class="octicon octicon-link"></span></a>Security</h2>
+<a id="security" class="anchor" href="#security" aria-hidden="true"><span class="octicon octicon-link"></span></a>Security</h2>
 
-<p>To enable the use of Terrific Micro in any project structure some access restricting rules were set.
-These rules were made with the Apache web server in mind by using <code>.htaccess</code> files. These files can
-easily be adjusted as necessary.</p>
+<p>To enable the use of Terrific Micro in any project structure some access restricting rules were set. 
+These rules were made with the Apache web server in mind by using <code>.htaccess</code> files. These files can easily be adjusted as necessary.</p>
 
 <h3>
-<a name="terrific-gui" class="anchor" href="#terrific-gui"><span class="octicon octicon-link"></span></a>Terrific GUI</h3>
+<a id="terrific-gui" class="anchor" href="#terrific-gui" aria-hidden="true"><span class="octicon octicon-link"></span></a>Terrific GUI</h3>
 
 <p>All requests to <code>/terrific/</code> except from <code>localhost</code> will be blocked (<code>403 Forbidden</code>). To adjust this
 behaviour, see <code>app/terrific/public/.htaccess</code>.</p>
 
 <h3>
-<a name="directory-listing" class="anchor" href="#directory-listing"><span class="octicon octicon-link"></span></a>Directory Listing</h3>
+<a id="directory-listing" class="anchor" href="#directory-listing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Directory Listing</h3>
 
 <p>The directory listing is turned off in <code>.htaccess</code>.</p>
 
 <h2>
-<a name="contributing" class="anchor" href="#contributing"><span class="octicon octicon-link"></span></a>Contributing</h2>
+<a id="contributing" class="anchor" href="#contributing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contributing</h2>
 
 <ul>
 <li>For Bugs &amp; Features please use <a href="https://github.com/namics/terrific-micro/issues">github</a>
@@ -433,18 +432,18 @@ behaviour, see <code>app/terrific/public/.htaccess</code>.</p>
 </ul>
 
 <h2>
-<a name="example-project-includes" class="anchor" href="#example-project-includes"><span class="octicon octicon-link"></span></a>Example Project Includes</h2>
+<a id="example-project-includes" class="anchor" href="#example-project-includes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example Project Includes</h2>
 
 <ul>
 <li><a href="http://jquery.com/">jQuery 1.11.1</a></li>
 <li><a href="http://terrifically.org/api/">TerrificJS 2.1.0</a></li>
 <li><a href="http://yuilibrary.com/yui/docs/cssreset/">YUI CSS Reset 3.17.2</a></li>
-<li>Favicon &amp; Home-Icons from Terrific Micro (replace with your own )</li>
+<li>Favicon &amp; Home-Icons from Terrific Micro (replace with your own)</li>
 <li>Component <code>Example</code> and some styles in assets/css (you don't need them)</li>
 </ul>
 
 <h2>
-<a name="used-php-libraries" class="anchor" href="#used-php-libraries"><span class="octicon octicon-link"></span></a>Used PHP Libraries</h2>
+<a id="used-php-libraries" class="anchor" href="#used-php-libraries" aria-hidden="true"><span class="octicon octicon-link"></span></a>Used PHP Libraries</h2>
 
 <ul>
 <li><a href="http://lessphp.gpeasy.com">Less.php</a></li>
@@ -454,12 +453,12 @@ behaviour, see <code>app/terrific/public/.htaccess</code>.</p>
 </ul>
 
 <h2>
-<a name="credits" class="anchor" href="#credits"><span class="octicon octicon-link"></span></a>Credits</h2>
+<a id="credits" class="anchor" href="#credits" aria-hidden="true"><span class="octicon octicon-link"></span></a>Credits</h2>
 
 <p>Terrific Micro was initiated by <a href="https://github.com/rogerdudler">Roger Dudler</a> and is now maintained by Namics AG</p>
 
 <h2>
-<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
 
 <p>Released under the <a href="https://github.com/namics/terrific-micro/blob/master/LICENSE">MIT license</a></p>
         </section>
