@@ -2,7 +2,7 @@
 
 <img align="right" src="https://raw.githubusercontent.com/namics/terrific-micro/master/assets/img/icon/terrific-micro.png">
 
-Terrific Micro is a powerful application for simple and complex frontend development with a tiny footprint. 
+Terrific Micro is a PHP application for simple and complex frontend development with a tiny footprint. 
 It provides a proven but flexible structure to develop your frontend code.
 To unleash the beast and all its power we recommend you read more about the Terrific concept on [terrifically.org](http://terrifically.org) first.
 
@@ -86,7 +86,7 @@ For file contents there are a bunch of placeholders available:
 
 ### Creating pages
 
-Create a new `*.html` file in the `views` folder. You can use subfolders (one level).
+Create a new `*.html` file in the `views` folder. You can make as many subfolders as you want.
 
     /views/index.html
     /views/content.html
@@ -300,9 +300,8 @@ Here are some examples:
 
 ## Security
 
-To enable the use of Terrific Micro in any project structure some access restricting rules were set.
-These rules were made with the Apache web server in mind by using `.htaccess` files. These files can
-easily be adjusted as necessary.
+To enable the use of Terrific Micro in any project structure some access restricting rules were set. 
+These rules were made with the Apache web server in mind by using `.htaccess` files. These files can easily be adjusted as necessary.
 
 ### Terrific GUI
 
@@ -323,7 +322,7 @@ The directory listing is turned off in `.htaccess`.
 * [jQuery 1.11.1](http://jquery.com/)
 * [TerrificJS 2.1.0](http://terrifically.org/api/)
 * [YUI CSS Reset 3.17.2](http://yuilibrary.com/yui/docs/cssreset/)
-* Favicon & Home-Icons from Terrific Micro (replace with your own )
+* Favicon & Home-Icons from Terrific Micro (replace with your own)
 * Component `Example` and some styles in assets/css (you don't need them)
 
 ## Used PHP Libraries
@@ -339,4 +338,4 @@ Terrific Micro was initiated by [Roger Dudler](https://github.com/rogerdudler) a
 
 ## License
 
-Released under the [MIT license](https://github.com/namics/terrific-micro/blob/master/LICENSE)
+Released under the [MIT license](LICENSE)
