@@ -1,7 +1,7 @@
-# Disable directory viewing
+# Disable directory listing
 Options -Indexes +FollowSymLinks
 
-# Protect hidden files from being viewed
+# Protect hidden files, some specific files and some file types from being viewed
 <Files .*>
 	Order Deny,Allow
 	Deny From All
@@ -12,7 +12,12 @@ Options -Indexes +FollowSymLinks
 	Deny From All
 </Files>
 
-<FilesMatch "\.(md|conf|log|sh)$">
+<FilesMatch ^(Gruntfile|gulpfile)\.js$>
+	Order Deny,Allow
+	Deny From All
+</FilesMatch>
+
+<FilesMatch "\.(html|htm|ftl|tpl|yml|less|scss|json|xml|md|conf|log|txt|bat|sh)$">
 	Order Deny,Allow
 	Deny from all
 </FilesMatch>
