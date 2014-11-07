@@ -17,7 +17,7 @@ Options -Indexes +FollowSymLinks
 	Deny From All
 </FilesMatch>
 
-<FilesMatch "\.(html|htm|ftl|tpl|yml|less|scss|json|xml|md|conf|log|txt|bat|sh)$">
+<FilesMatch "\.(tpl|yml|ftl|less|scss|json|xml|md|conf|log|txt|bat|sh)$">
 	Order Deny,Allow
 	Deny from all
 </FilesMatch>
