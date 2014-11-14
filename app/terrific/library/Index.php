@@ -1,7 +1,7 @@
 <?php
 
-include_once('Utils.php');
-include_once('User.php');
+include_once( 'Utils.php' );
+include_once( 'User.php' );
 
 class Index {
 
@@ -9,12 +9,12 @@ class Index {
 	private $utils;
 
 	function __construct() {
-		$this->user = new User();
+		$this->user  = new User();
 		$this->utils = new Utils();
 
-		$this->utils->htmlFragmentStart('Terrific Start');
+		$this->utils->htmlFragmentStart( 'Terrific Start' );
 		$this->htmlList();
-		$this->utils->htmlFragmentEnd('');
+		$this->utils->htmlFragmentEnd( '' );
 	}
 
 	private function htmlList() {
@@ -28,54 +28,63 @@ class Index {
 				<h3>Views</h3>
 				<?php
 				global $config;
-
-				// views
-				$files = glob(BASE.$config->micro->view_directory.'/*.'.$config->micro->view_file_extension);
-				$this->viewList($files);
-
-				// views in subfolders
-				foreach ( glob( BASE . $config->micro->view_directory.'/*', GLOB_ONLYDIR ) as $dir ) {
-					$base_dir = basename($dir);
-					if ($base_dir !== basename($config->micro->view_partials_directory)) {
-						$files = glob($dir.'/*.'.$config->micro->view_file_extension);
-						$this->viewList($files, $base_dir);
-					}
-				}
+				$this->viewCollector( BASE . $config->micro->view_directory );
 				?>
 			</div>
 			<div class="col-md-6">
 				<h3>Tools</h3>
+
 				<div class="list-group">
 					<?php
 					global $config;
 					foreach ( $config->micro->components as $key => $component ) {
 						echo '<a href="' . TERRIFICURL . 'create/' . $key . '" class="list-group-item">';
-						echo 'Create ' . ucfirst($key);
+						echo 'Create ' . ucfirst( $key );
 						echo '</a>';
 					}
 					?>
 				</div>
 			</div>
 		</div>
-		<?php
+	<?php
 	}
 
-	private function viewList($files, $dir = NULL) {
+
+	private function viewCollector( $base, $folders = array() ) {
+		global $config;
+
+		// views
+		$files = glob( $base . '/*.' . $config->micro->view_file_extension );
+		$this->viewList( $files, $folders );
+
+		// sub folders
+		foreach ( glob( $base . '/*', GLOB_ONLYDIR ) as $dir ) {
+			$base_dir = basename( $dir );
+			if ( $base_dir !== basename( $config->micro->view_partials_directory ) ) {
+				$dirs = array_merge( $folders, array( $base_dir ) );
+
+				// more sub folders
+				$this->viewCollector($dir, $dirs);
+			}
+		}
+	}
+
+	private function viewList( $files, $dirs = null ) {
 		global $config;
 		?>
 		<div class="list-group">
-		<?php
-		foreach($files as $file){
-			if(basename($file, '.'.$config->micro->view_file_extension) !== basename(__FILE__, '.'.$config->micro->view_file_extension)){
-				?>
-				<a href="<?php echo BASEURL, !empty($dir) ? $dir.'-' : '', basename($file, '.'.$config->micro->view_file_extension); ?>" class="list-group-item">
-					<?php echo !empty($dir) ? ucwords($dir).' ' : '', ucwords(str_replace('-', ' ', basename($file, '.'.$config->micro->view_file_extension))); ?>
-				</a>
 			<?php
+			foreach ( $files as $file ) {
+				if ( basename( $file, '.' . $config->micro->view_file_extension ) !== basename( __FILE__, '.' . $config->micro->view_file_extension ) ) {
+					?>
+					<a href="<?php echo BASEURL, !empty( $dirs ) ? implode( $dirs, '-' ) . '-' : '', basename( $file, '.' . $config->micro->view_file_extension ); ?>" class="list-group-item">
+						<?php echo !empty( $dirs ) ? ucwords( implode( $dirs, ' ' ) ) . ' ' : '', ucwords( str_replace( '-', ' ', basename( $file, '.' . $config->micro->view_file_extension ) ) ); ?>
+					</a>
+				<?php
+				}
 			}
-		}
-		?>
+			?>
 		</div>
-		<?php
+	<?php
 	}
 }

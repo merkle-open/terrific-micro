@@ -24,4 +24,6 @@ indent_size = 4
 
 ### Markdown
 [*.md]
+indent_style = space
+indent_size = 4
 trim_trailing_whitespace = false

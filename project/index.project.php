@@ -60,4 +60,4 @@
 // ------------------------------
 // extensions
 // ------------------------------
-//you'll find some extensions ...
+//you'll find some extensions on GitHub: https://github.com/namics/terrific-micro-extensions

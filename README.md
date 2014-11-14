@@ -1,6 +1,8 @@
 # Readme - Terrific Micro
 
-Terrific Micro is a powerful application for simple and complex frontend development with a tiny footprint. 
+<img align="right" src="https://raw.githubusercontent.com/namics/terrific-micro/master/assets/img/icon/terrific-micro.png">
+
+Terrific Micro is a PHP application for simple and complex frontend development with a tiny footprint. 
 It provides a proven but flexible structure to develop your frontend code.
 To unleash the beast and all its power we recommend you read more about the Terrific concept on [terrifically.org](http://terrifically.org) first.
 
@@ -11,7 +13,9 @@ To unleash the beast and all its power we recommend you read more about the Terr
 * [Assets](#assets)
 * [Conventions](#conventions)
 * [Security](#security)
-* [Credits](#example-project-includes)
+* [Commandline](#commandline)
+* [Contributing](#contributing)
+* [Credits & License](#example-project-includes)
 
 ## Quick Start
 
@@ -67,10 +71,10 @@ Try it out by requesting http://localhost/project/terrific/ (don't forget the tr
 You can use more than one type of components. Components are configured in `config.json` (`micro/components`).
 
     "component-type": {
-        "template": "project/templates/module"  // template folder to copy by creating a component
+        "template": "project/templates/module", // template folder to copy by creating a component
         "path": "components/modules",           // path for the newly created component
         "component_prefix": "mod",              // class prefix of component
-        "skin_prefix": "skin",                  // class prefix of skin (optional)
+        "skin_prefix": "skin"                   // class prefix of skin (optional)
     }
 
 The GUI component creator replaces `_component` and `_skin` in file names with the appropriate names. 
@@ -82,7 +86,7 @@ For file contents there are a bunch of placeholders available:
 
 ### Creating pages
 
-Create a new `*.html` file in the `views` folder. You can use subfolders (one level).
+Create a new `*.html` file in the `views` folder. You can make as many subfolders as you want.
 
     /views/index.html
     /views/content.html
@@ -256,11 +260,48 @@ Note that camel case ComponentNames are represented in CSS with dashes.
 
 Terrific Micro uses tabs for indentation and spaces for alignment.
 
+## Commandline
+
+You can access Terrific Micro via your commandline and your php binary of choice.
+
+    php app/bin/micro
+
+You can add an additional argument to get the output for either
+
+* a specific view
+* a specific CSS file set in config.json
+* a specific JS file set in config.json
+
+Here are some examples:
+
+    // Generate index view
+    php app/bin/micro view:index
+
+    // Generate content-variant view
+    php app/bin/micro view:content-variant
+
+    // Generate content view with additional GET parameters foo=bar&baz=foo
+    php app/bin/micro view:content "foo=bar&baz=foo"
+
+    // Generate app.css
+    php app/bin/micro css:app
+
+    // Generate minified app.css
+    php app/bin/micro css:app min
+
+    // Generate app.js
+    php app/bin/micro js:app
+
+    // Generate minified app.js
+    php app/bin/micro js:app min
+
+    // Generate debug app.js
+    php app/bin/micro js:app debug
+
 ## Security
 
-To enable the use of Terrific Micro in any project structure some access restricting rules were set.
-These rules were made with the Apache web server in mind by using `.htaccess` files. These files can
-easily be adjusted as necessary.
+To enable the use of Terrific Micro in any project structure some access restricting rules were set. 
+These rules were made with the Apache web server in mind by using `.htaccess` files. These files can easily be adjusted as necessary.
 
 ### Terrific GUI
 
@@ -271,12 +312,17 @@ behaviour, see `app/terrific/public/.htaccess`.
 
 The directory listing is turned off in `.htaccess`.
 
+## Contributing
+
+* For Bugs & Features please use [github](https://github.com/namics/terrific-micro/issues)
+* Feel free to fork and send PRs. That's the best way to discuss your ideas.
+
 ## Example Project Includes
 
 * [jQuery 1.11.1](http://jquery.com/)
 * [TerrificJS 2.1.0](http://terrifically.org/api/)
 * [YUI CSS Reset 3.17.2](http://yuilibrary.com/yui/docs/cssreset/)
-* Favicon & Home-Icons from Terrific Micro (replace with your own )
+* Favicon & Home-Icons from Terrific Micro (replace with your own)
 * Component `Example` and some styles in assets/css (you don't need them)
 
 ## Used PHP Libraries
@@ -285,11 +331,6 @@ The directory listing is turned off in `.htaccess`.
 * [scssphp](http://leafo.net/scssphp)
 * [CssMin](https://code.google.com/p/cssmin/)
 * [JShrink](https://github.com/tedious/JShrink)
-
-## Contributing
-
-* For Bugs & Features please use [github](https://github.com/namics/terrific-micro/issues)
-* Feel free to fork and send PRs. That's the best way to discuss your ideas.
 
 ## Credits
 

@@ -1,17 +1,20 @@
 <?php
 
 // -------------------------------------------------------------------------------------------
-// Terrific Micro v1.0.0
+// Terrific Micro v1.0.3
 // https://github.com/namics/terrific-micro/blob/master/README.md
 //
 // Do not change this file - use project/index.project.php for your customisations
 // -------------------------------------------------------------------------------------------
 
-define( 'BASE', dirname( __FILE__ ) . '/' );
+define( 'BASE', __DIR__ . '/' );
 $config   = json_decode( file_get_contents( BASE . 'config.json' ) );
 $nocache  = false; // true -> disables .less/.scss caching
 $cachedir = ( is_writeable( sys_get_temp_dir() ) ? sys_get_temp_dir() : BASE . 'app/cache' ); // use php temp or the local cache directory
 
+// ---------------------
+// Project
+// ---------------------
 include_once( BASE . 'project/index.project.php' ); // use this file for all your customisations
 
 // ------------------
@@ -60,8 +63,8 @@ if ( !function_exists( 'component' ) ) {
 		$component_file     = false;
 
 		foreach ( $config->micro->components as $key => $component ) {
-			$directory = $component->path;
-			$component_prefix = property_exists( $component, 'component_prefix') ? $component->component_prefix : '';
+			$directory        = $component->path;
+			$component_prefix = property_exists( $component, 'component_prefix' ) ? $component->component_prefix : '';
 			if ( file_exists( BASE . $directory . '/' . $component_template ) ) {
 				$component_file = BASE . $directory . '/' . $component_template;
 				break 1;
@@ -69,7 +72,7 @@ if ( !function_exists( 'component' ) ) {
 			else {
 				foreach ( glob( BASE . $directory . '/*/' . $component_template ) as $component_template_file ) {
 					if ( file_exists( $component_template_file ) ) {
-						$component_file   = $component_template_file;
+						$component_file = $component_template_file;
 						break 2;
 					}
 				}
@@ -89,7 +92,7 @@ if ( !function_exists( 'component' ) ) {
 
 				$skins = '';
 				if ( !empty( $skin ) || $skin === '0' ) {
-					$skin_prefix = property_exists( $component, 'skin_prefix') ? $component->skin_prefix : '';
+					$skin_prefix = property_exists( $component, 'skin_prefix' ) ? $component->skin_prefix : '';
 					if ( is_array( $skin ) ) {
 						foreach ( $skin as $key => $value ) {
 							$skins .= ' ' . $skin_prefix . '-' . $dashed . '-' . $value;
@@ -168,8 +171,8 @@ if ( !function_exists( 'compile' ) ) {
 			case 'less':
 				$modified = filemtime( $filename );
 				foreach ( $dependencies as $dep ) {
-					if ( substr( strrchr( $dep, '.' ), 1 ) == $extension && filemtime( $dep ) > $modified ) {
-						$modified = filemtime( $dep );
+					if ( substr( strrchr( $dep, '.' ), 1 ) == $extension && filemtime( BASE . $dep ) > $modified ) {
+						$modified = filemtime( BASE . $dep );
 					}
 				}
 
@@ -179,7 +182,7 @@ if ( !function_exists( 'compile' ) ) {
 					$filecontents = '';
 					foreach ( $dependencies as $dep ) {
 						if ( substr( strrchr( $dep, '.' ), 1 ) == $extension ) {
-							$filecontents .= file_get_contents( $dep );
+							$filecontents .= file_get_contents( BASE . $dep );
 						}
 					}
 					$filecontents .= file_get_contents( $filename );
@@ -189,7 +192,8 @@ if ( !function_exists( 'compile' ) ) {
 						$content = $less->compile( $filecontents );
 						file_put_contents( $cachefile, $content );
 						touch( $cachefile, $modified );
-					} catch ( Exception $e ) {
+					}
+					catch ( Exception $e ) {
 						$content = get_compile_error_css( $e, $filename, 'lessphp' );
 					}
 				}
@@ -201,8 +205,8 @@ if ( !function_exists( 'compile' ) ) {
 			case 'scss':
 				$modified = filemtime( $filename );
 				foreach ( $dependencies as $dep ) {
-					if ( substr( strrchr( $dep, '.' ), 1 ) == $extension && filemtime( $dep ) > $modified ) {
-						$modified = filemtime( $dep );
+					if ( substr( strrchr( $dep, '.' ), 1 ) == $extension && filemtime( BASE . $dep ) > $modified ) {
+						$modified = filemtime( BASE . $dep );
 					}
 				}
 
@@ -212,7 +216,7 @@ if ( !function_exists( 'compile' ) ) {
 					$filecontents = '';
 					foreach ( $dependencies as $dep ) {
 						if ( substr( strrchr( $dep, '.' ), 1 ) == $extension ) {
-							$filecontents .= file_get_contents( $dep );
+							$filecontents .= file_get_contents( BASE . $dep );
 						}
 					}
 					$filecontents .= file_get_contents( $filename );
@@ -222,7 +226,8 @@ if ( !function_exists( 'compile' ) ) {
 						$content = $scss->compile( $filecontents );
 						file_put_contents( $cachefile, $content );
 						touch( $cachefile, $modified );
-					} catch ( Exception $e ) {
+					}
+					catch ( Exception $e ) {
 						$content = get_compile_error_css( $e, $filename, 'scssphp' );
 					}
 				}
@@ -487,7 +492,8 @@ if ( !function_exists( 'render_view' ) ) {
 		try {
 			render_view_template( $view );
 			$rendered = true;
-		} catch ( Exception $e ) {
+		}
+		catch ( Exception $e ) {
 		}
 
 		if ( !$rendered ) {
@@ -544,8 +550,44 @@ if ( !function_exists( 'process_view' ) ) {
 		}
 		$view = BASE . $config->micro->view_directory . '/' . $action . '.' . $config->micro->view_file_extension;
 		if ( !is_file( $view ) ) {
+
+			// first part could be a subfolder
 			$view = BASE . $config->micro->view_directory . '/' . preg_replace( '/-/', '/', $action, 1 ) . '.' . $config->micro->view_file_extension;
+			if ( !is_file( $view ) ) {
+
+				// check for all subfolder combinations
+				$_positions = array();
+				$_start     = 0;
+				while ( ( $_pos = strpos( $action, '-', $_start ) ) !== false ) {
+					$_start       = $_pos + 1;
+					$_positions[] = $_pos;
+				}
+
+				$_len          = count( $_positions );
+				$_combinations = array();
+				for ( $_i = 1; $_i < ( 1 << $_len ); $_i ++ ) {
+					$_c = array();
+					for ( $_j = 0; $_j < $_len; $_j ++ ) {
+						if ( $_i & ( 1 << $_j ) ) {
+							$_c[] = $_positions[ $_j ];
+						}
+					}
+					$_combinations[] = $_c;
+				}
+
+				foreach ( $_combinations as $_combination ) {
+					$_action = $action;
+					foreach ( $_combination as $_pos ) {
+						$_action = substr_replace( $_action, '/', $_pos, 1 );
+					}
+					$view = BASE . $config->micro->view_directory . '/' . $_action . '.' . $config->micro->view_file_extension;
+					if ( is_file( $view ) ) {
+						break;
+					}
+				}
+			}
 		}
+
 		render_view( $view );
 	}
 }
