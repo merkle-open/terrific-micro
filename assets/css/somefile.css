@@ -1,12 +1,10 @@
-@media all {
-	html {
-		border: 5em solid black;
-	}
+html {
+	border: 5em solid black;
+}
 
-	body:after {
-		content: "this shouldn't be visible, because its exluded in config.json!";
-		position: absolute;
-		color: white;
-		font-size: 3em;
-	}
+body:after {
+	content: "this shouldn't be visible, because its exluded in config.json!";
+	position: absolute;
+	color: white;
+	font-size: 3em;
 }
