@@ -3,8 +3,9 @@
 <img align="right" src="https://raw.githubusercontent.com/namics/terrific-micro/master/assets/img/icon/terrific-micro.png">
 
 Terrific Micro is a PHP application for simple and complex frontend development with a tiny footprint. 
-It provides a proven but flexible structure to develop your frontend code.
-To unleash the beast and all its power we recommend you read more about the Terrific concept on [terrifically.org](http://terrifically.org) first.
+It provides a proven but flexible structure to develop your frontend code, even in a large team. 
+Keep track of your code with a modularized frontend. This app and the suggested [`terrific` concept](http://terrifically.org) could help. 
+Terrific Micro is simple, fast and flexible. Use this app for all your frontend work, but it's not intended to use in production environment.
 
 ## Table of contents
 
@@ -131,7 +132,7 @@ Render the Example component with additional attributes. (file: `example-wrapme.
 
 Render the Example component with different skins and additional attributes. (file: `example-wrapme.html`)
 
-    <?php component('Example', 'wrapme', array('skinname','skinname2'), array('data-id' => 1, 'connectors' => 'con1', 'contenteditable' => 'true')); ?> (file: `example-wrapme.html`)
+    <?php component('Example', 'wrapme', array('skinname','skinname2'), array('data-id' => 1, 'data-connectors' => 'cart', 'contenteditable' => 'true')); ?> (file: `example-wrapme.html`)
 
 Render the Example component without special markup. (file: `example-wrapme.html`)
 
@@ -305,8 +306,8 @@ These rules were made with the Apache web server in mind by using `.htaccess` fi
 
 ### Terrific GUI
 
-All requests to `/terrific/` except from `localhost` will be blocked (`403 Forbidden`). To adjust this
-behaviour, see `app/terrific/public/.htaccess`.
+All requests to `/terrific/` except from `localhost` will be blocked (`403 Forbidden`). 
+To adjust this behaviour, see `app/terrific/public/.htaccess`.
 
 ### Directory Listing
 
@@ -321,7 +322,7 @@ The directory listing is turned off in `.htaccess`.
 
 * [jQuery 1.11.1](http://jquery.com/)
 * [TerrificJS 2.1.0](http://terrifically.org/api/)
-* [YUI CSS Reset 3.17.2](http://yuilibrary.com/yui/docs/cssreset/)
+* [YUI CSS Reset 3.18.1](http://yuilibrary.com/yui/docs/cssreset/)
 * Favicon & Home-Icons from Terrific Micro (replace with your own)
 * Component `Example` and some styles in assets/css (you don't need them)
 
