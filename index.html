@@ -34,8 +34,9 @@
 <p><img align="right" src="https://raw.githubusercontent.com/namics/terrific-micro/master/assets/img/icon/terrific-micro.png"></p>
 
 <p>Terrific Micro is a PHP application for simple and complex frontend development with a tiny footprint. 
-It provides a proven but flexible structure to develop your frontend code.
-To unleash the beast and all its power we recommend you read more about the Terrific concept on <a href="http://terrifically.org">terrifically.org</a> first.</p>
+It provides a proven but flexible structure to develop your frontend code, even in a large team. 
+Keep track of your code with a modularized frontend. This app and the suggested <a href="http://terrifically.org"><code>terrific</code> concept</a> could help. 
+Terrific Micro is simple, fast and flexible. Use this app for all your frontend work, but it's not intended to use in production environment.</p>
 
 <h2>
 <a id="table-of-contents" class="anchor" href="#table-of-contents" aria-hidden="true"><span class="octicon octicon-link"></span></a>Table of contents</h2>
@@ -197,7 +198,7 @@ Or you let the helper write the wrapping container with different inputs (= adva
 
 <p>Render the Example component with different skins and additional attributes. (file: <code>example-wrapme.html</code>)</p>
 
-<pre><code>&lt;?php component('Example', 'wrapme', array('skinname','skinname2'), array('data-id' =&gt; 1, 'connectors' =&gt; 'con1', 'contenteditable' =&gt; 'true')); ?&gt; (file: `example-wrapme.html`)
+<pre><code>&lt;?php component('Example', 'wrapme', array('skinname','skinname2'), array('data-id' =&gt; 1, 'data-connectors' =&gt; 'cart', 'contenteditable' =&gt; 'true')); ?&gt; (file: `example-wrapme.html`)
 </code></pre>
 
 <p>Render the Example component without special markup. (file: <code>example-wrapme.html</code>)</p>
@@ -414,8 +415,8 @@ These rules were made with the Apache web server in mind by using <code>.htacces
 <h3>
 <a id="terrific-gui" class="anchor" href="#terrific-gui" aria-hidden="true"><span class="octicon octicon-link"></span></a>Terrific GUI</h3>
 
-<p>All requests to <code>/terrific/</code> except from <code>localhost</code> will be blocked (<code>403 Forbidden</code>). To adjust this
-behaviour, see <code>app/terrific/public/.htaccess</code>.</p>
+<p>All requests to <code>/terrific/</code> except from <code>localhost</code> will be blocked (<code>403 Forbidden</code>). 
+To adjust this behaviour, see <code>app/terrific/public/.htaccess</code>.</p>
 
 <h3>
 <a id="directory-listing" class="anchor" href="#directory-listing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Directory Listing</h3>
@@ -437,7 +438,7 @@ behaviour, see <code>app/terrific/public/.htaccess</code>.</p>
 <ul>
 <li><a href="http://jquery.com/">jQuery 1.11.1</a></li>
 <li><a href="http://terrifically.org/api/">TerrificJS 2.1.0</a></li>
-<li><a href="http://yuilibrary.com/yui/docs/cssreset/">YUI CSS Reset 3.17.2</a></li>
+<li><a href="http://yuilibrary.com/yui/docs/cssreset/">YUI CSS Reset 3.18.1</a></li>
 <li>Favicon &amp; Home-Icons from Terrific Micro (replace with your own)</li>
 <li>Component <code>Example</code> and some styles in assets/css (you don't need them)</li>
 </ul>
