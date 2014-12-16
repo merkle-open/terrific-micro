@@ -1,29 +1,17 @@
 # Changelog - Terrific Micro
 
-## v1.0.0 - 2014-09-26 - first version
+## v1.0.3 - 2014-10-31
 
-## v1.0.1 - 2014-10-09
-
-### Features
-
-* Add possibility to configure less & scss parser
-
-### Maintenance / Fixes
-
-* Rename: get_asset_intro to get_asset_banner
+* [feature] allow multiple subfolders in views
+* [maintenance] commandline usage from different locations
 
 ## v1.0.2 - 2014-10-10
 
-### Features
+* [feature] add commandline usage
 
-* Add commandline usage
+## v1.0.1 - 2014-10-09
 
-## v1.0.3 - 2014-10-31
+* [feature] add possibility to configure less & scss parser
+* [maintenance] rename get_asset_intro to get_asset_banner
 
-### Features
-
-* Allow multiple subfolders in views
-
-### Maintenance / Fixes
-
-* Fix pathes in commandline tool
+## v1.0.0 - 2014-09-26 - initial release
