@@ -541,10 +541,20 @@ if ( !function_exists( 'process_view' ) ) {
 	function process_view() {
 		global $config;
 
-		$url    = str_replace( '?' . $_SERVER['QUERY_STRING'], '', $_SERVER['REQUEST_URI'] ); // remove query string
+		$path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+		$query = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
+
+		if ((empty($path) || '/' === $path) && !empty($query)) {
+			$url = $query;
+		}
+		else {
+			$url = $path;
+		}
+
 		$url    = preg_replace( '/\.[^.\s]{2,4}$/', '', $url ); // remove file extension
 		$route  = explode( '/', $url );
 		$action = end( $route );
+
 		if ( $action == '' ) {
 			$action = 'index';
 		}
