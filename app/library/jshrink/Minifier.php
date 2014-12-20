@@ -155,6 +155,7 @@ class Minifier
     {
         $this->options = array_merge(static::$defaultOptions, $options);
         $js = str_replace("\r\n", "\n", $js);
+        $js = str_replace('/**/', '', $js);
         $this->input = str_replace("\r", "\n", $js);
 
         // We add a newline to the end of the script to make it easier to deal
@@ -266,7 +267,7 @@ class Minifier
             $char = $this->c;
             unset($this->c);
 
-        // Otherwise we start pulling from the input.
+            // Otherwise we start pulling from the input.
         } else {
             $char = substr($this->input, $this->index, 1);
 
