@@ -168,7 +168,7 @@ You can configure the include order of your assets by defining patterns in `conf
         ],
         "app.js": [
             "!assets/js/somefile.js",
-            "assets/js/jquery-1.11.1.min.js",
+            "assets/js/jquery-1.11.2.min.js",
             "assets/js/terrific-2-1.0.js",
             "assets/js/*.js",
             "components/modules/*/js/*.js",
@@ -320,7 +320,7 @@ The directory listing is turned off in `.htaccess`.
 
 ## Example Project Includes
 
-* [jQuery 1.11.1](http://jquery.com/)
+* [jQuery 1.11.2](http://jquery.com/)
 * [TerrificJS 2.1.0](http://terrifically.org/api/)
 * [YUI CSS Reset 3.18.1](http://yuilibrary.com/yui/docs/cssreset/)
 * Favicon & Home-Icons from Terrific Micro (replace with your own)
