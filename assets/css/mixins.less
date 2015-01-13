@@ -34,6 +34,12 @@
 	user-select: @select;
 }
 
+.ellipsis() {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
 // -----------------------------------------
 // Transisiton, Transformation, Animation
 // -----------------------------------------
@@ -53,12 +59,24 @@
 	transform: @transformation;
 }
 
+.transform-style(@style: preserve-3d) {
+	-webkit-transform-style: @style;
+	-moz-transform-style: @style;
+	transform-style: @style;
+}
+
 .transform-origin (@origin) {
 	-webkit-transform-origin: @origin;
 	-moz-transform-origin: @origin;
 	-ms-transform-origin: @origin;
 	-o-transform-origin: @origin;
 	transform-origin: @origin;
+}
+
+.backface-visibility(@visibility: hidden) {
+	-webkit-backface-visibility: @visibility;
+	-moz-backface-visibility: @visibility;
+	backface-visibility: @visibility;
 }
 
 .rotate(@degrees) {
@@ -107,6 +125,14 @@
 	-ms-animation: @animation;
 	-o-animation: @animation;
 	animation: @animation;
+}
+
+.keyframes(@name, @frames) {
+	@-webkit-keyframes @name { @frames(); }
+	@-moz-keyframes @name { @frames(); }
+	@-ms-keyframes @name { @frames(); }
+	@-o-keyframes @name { @frames(); }
+	@keyframes @name { @frames(); }
 }
 
 // -----------------------------------------
