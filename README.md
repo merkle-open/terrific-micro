@@ -26,6 +26,7 @@ Enable `mod_rewrite` and optionally `mod_deflate` and add the directive `AllowOv
 1. Clone repo to a `project`-folder in your web root:
 
         git clone https://github.com/namics/terrific-micro.git project
+        rm -rf project/.git
 
 2. Start working on your code and see the results:
 
