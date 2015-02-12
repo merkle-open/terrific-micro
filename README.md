@@ -66,7 +66,7 @@ Create additional content templates directly in the component folder:
 ### Creating Components & Skins by GUI
 
 But the easiest way to do so is using the included GUI. 
-Try it out by requesting http://localhost/terrific/ (don't forget the trailing slash)
+Try it out by requesting http://localhost/project/terrific/ (don't forget the trailing slash)
 
 #### Components Configuration
 
