@@ -34,6 +34,8 @@ Enable `mod_rewrite` and optionally `mod_deflate` and add the directive `AllowOv
         http://localhost/project/app.css
         http://localhost/project/app.js
 
+You see, we don't need a virtual host.
+
 ### Features
 
 * Simple project structure
