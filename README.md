@@ -23,16 +23,16 @@ Terrific Micro is simple, fast and flexible. Use this app for all your frontend 
 You only need an Apache web server with PHP 5.3+ support. 
 Enable `mod_rewrite` and optionally `mod_deflate` and add the directive `AllowOverride All` for your directory.
 
-1. Clone repo to a `project`-folder in your web root:
+1. Clone repo to a project folder in your web root:
 
-        git clone https://github.com/namics/terrific-micro.git project
-        rm -rf project/.git
+        git clone https://github.com/namics/terrific-micro.git projectfolder
+        rm -rf projectfolder/.git
 
 2. Start working on your code and see the results:
 
-        http://localhost/project/
-        http://localhost/project/app.css
-        http://localhost/project/app.js
+        http://localhost/projectfolder/
+        http://localhost/projectfolder/app.css
+        http://localhost/projectfolder/app.js
 
 You see, we don't need a virtual host.
 
@@ -68,7 +68,7 @@ Create additional content templates directly in the component folder:
 ### Creating Components & Skins by GUI
 
 But the easiest way to do so is using the included GUI. 
-Try it out by requesting http://localhost/project/terrific/ (don't forget the trailing slash)
+Try it out by requesting http://localhost/projectfolder/terrific/ (don't forget the trailing slash)
 
 #### Components Configuration
 
@@ -98,9 +98,9 @@ Create a new `*.html` file in the `views` folder. You can make as many subfolder
 
 Your new page can then be called by the according URL (with or without an extension). Subfolders are represented with a dash.
 
-    http://localhost/project/index
-    http://localhost/project/content
-    http://localhost/project/content-variant
+    http://localhost/projectfolder/index
+    http://localhost/projectfolder/content
+    http://localhost/projectfolder/content-variant
 
 ### Render Components
 
@@ -206,7 +206,7 @@ The order of these special patterns does not matter.
 #### Note on less & scss @import
 
 Terrific Micro does not use a watcher for asset concatenation. The resources are concatenated with each request. 
-Due to less and scss caching-mechanisms in place, this process is quite fast. You should be warned about the usage of @import, though. As long as you configure them relatively to your `project`-folder, they work quite well. But changes in imported files are not tracked by Terrific Micro and therefore changes do not invalidate the cache. This means you either have to clean manually by changing the main file or you can disable caching by setting `$nocache = true;` in `project/index.project.php`.
+Due to less and scss caching-mechanisms in place, this process is quite fast. You should be warned about the usage of @import, though. As long as you configure them relatively to your `projectfolder`, they work quite well. But changes in imported files are not tracked by Terrific Micro and therefore changes do not invalidate the cache. This means you either have to clean manually by changing the main file or you can disable caching by setting `$nocache = true;` in `project/index.project.php`.
 
 #### Other Asset Files
 
@@ -220,20 +220,20 @@ You can configure as many different assets as you wish.
 
 Minified versions of the CSS and/or JS files can be requested by adding the URL parameter `min`.
 
-    http://localhost/project/app.css?min
-    http://localhost/project/app.js?min
+    http://localhost/projectfolder/app.css?min
+    http://localhost/projectfolder/app.js?min
 
 ### JavaScript Debugging
 
 The assets can be loaded individually by adding the URL parameter `debug`. This is pretty useful for things like remote debugging in PhpStorm.
 
-    http://localhost/project/app.js?debug
+    http://localhost/projectfolder/app.js?debug
 
 ## Conventions
 
 ### Resource linking
 
-To stay portable you should favour the use of relative paths. Link to resources relatively to the `project`-folder **without** a leading slash.
+To stay portable you should favour the use of relative paths. Link to resources relatively to the `projectfolder` **without** a leading slash.
 
     <link rel="stylesheet" href="app.css" type="text/css" />
     <link rel="shortcut icon" href="assets/img/icon/favicon.ico" type="image/x-icon" />
