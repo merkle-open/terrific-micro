@@ -55,25 +55,28 @@ Terrific Micro is simple, fast and flexible. Use this app for all your frontend 
 <h2>
 <a id="quick-start" class="anchor" href="#quick-start" aria-hidden="true"><span class="octicon octicon-link"></span></a>Quick Start</h2>
 
-<p>You only need an Apache web server with PHP 5.3+ support. 
-Enable <code>mod_rewrite</code> and optionally <code>mod_deflate</code> and add the directive <code>AllowOverride All</code> for your directory.</p>
+<p>You only need an Apache web server 2.2+ with PHP 5.3+ support. 
+Enable <code>mod_rewrite</code> and optionally <code>mod_deflate</code> and add the directive <code>AllowOverride All</code> for your directory. (Apache 2.4 needs <code>mod_access_compat</code> enabled.)</p>
 
 <ol>
 <li>
-<p>Clone repo to a <code>project</code>-folder in your web root:</p>
+<p>Clone repo to a project folder in your web root:</p>
 
-<pre><code>git clone https://github.com/namics/terrific-micro.git project
+<pre><code>git clone https://github.com/namics/terrific-micro.git projectfolder
+rm -rf projectfolder/.git
 </code></pre>
 </li>
 <li>
 <p>Start working on your code and see the results:</p>
 
-<pre><code>http://localhost/project/
-http://localhost/project/app.css
-http://localhost/project/app.js
+<pre><code>http://localhost/projectfolder/
+http://localhost/projectfolder/app.css
+http://localhost/projectfolder/app.js
 </code></pre>
 </li>
 </ol>
+
+<p>You see, we don't need a virtual host.</p>
 
 <h3>
 <a id="features" class="anchor" href="#features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Features</h3>
@@ -116,7 +119,7 @@ A terrific module uses the following structure:</p>
 <a id="creating-components--skins-by-gui" class="anchor" href="#creating-components--skins-by-gui" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating Components &amp; Skins by GUI</h3>
 
 <p>But the easiest way to do so is using the included GUI. 
-Try it out by requesting http://localhost/project/terrific/ (don't forget the trailing slash)</p>
+Try it out by requesting http://localhost/projectfolder/terrific/ (don't forget the trailing slash)</p>
 
 <h4>
 <a id="components-configuration" class="anchor" href="#components-configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Components Configuration</h4>
@@ -151,9 +154,9 @@ For file contents there are a bunch of placeholders available: </p>
 
 <p>Your new page can then be called by the according URL (with or without an extension). Subfolders are represented with a dash.</p>
 
-<pre><code>http://localhost/project/index
-http://localhost/project/content
-http://localhost/project/content-variant
+<pre><code>http://localhost/projectfolder/index
+http://localhost/projectfolder/content
+http://localhost/projectfolder/content-variant
 </code></pre>
 
 <h3>
@@ -241,7 +244,7 @@ Or you let the helper write the wrapping container with different inputs (= adva
     ],
     "app.js": [
         "!assets/js/somefile.js",
-        "assets/js/jquery-1.11.1.min.js",
+        "assets/js/jquery-1.11.2.min.js",
         "assets/js/terrific-2-1.0.js",
         "assets/js/*.js",
         "components/modules/*/js/*.js",
@@ -289,7 +292,7 @@ matches zero or more characters.</p>
 </h4>
 
 <p>Terrific Micro does not use a watcher for asset concatenation. The resources are concatenated with each request. 
-Due to less and scss caching-mechanisms in place, this process is quite fast. You should be warned about the usage of <a href="https://github.com/import" class="user-mention">@import</a>, though. As long as you configure them relatively to your <code>project</code>-folder, they work quite well. But changes in imported files are not tracked by Terrific Micro and therefore changes do not invalidate the cache. This means you either have to clean manually by changing the main file or you can disable caching by setting <code>$nocache = true;</code> in <code>project/index.project.php</code>.</p>
+Due to less and scss caching-mechanisms in place, this process is quite fast. You should be warned about the usage of <a href="https://github.com/import" class="user-mention">@import</a>, though. As long as you configure them relatively to your <code>projectfolder</code>, they work quite well. But changes in imported files are not tracked by Terrific Micro and therefore changes do not invalidate the cache. This means you either have to clean manually by changing the main file or you can disable caching by setting <code>$nocache = true;</code> in <code>project/index.project.php</code>.</p>
 
 <h4>
 <a id="other-asset-files" class="anchor" href="#other-asset-files" aria-hidden="true"><span class="octicon octicon-link"></span></a>Other Asset Files</h4>
@@ -306,8 +309,8 @@ Due to less and scss caching-mechanisms in place, this process is quite fast. Yo
 
 <p>Minified versions of the CSS and/or JS files can be requested by adding the URL parameter <code>min</code>.</p>
 
-<pre><code>http://localhost/project/app.css?min
-http://localhost/project/app.js?min
+<pre><code>http://localhost/projectfolder/app.css?min
+http://localhost/projectfolder/app.js?min
 </code></pre>
 
 <h3>
@@ -315,7 +318,7 @@ http://localhost/project/app.js?min
 
 <p>The assets can be loaded individually by adding the URL parameter <code>debug</code>. This is pretty useful for things like remote debugging in PhpStorm.</p>
 
-<pre><code>http://localhost/project/app.js?debug
+<pre><code>http://localhost/projectfolder/app.js?debug
 </code></pre>
 
 <h2>
@@ -324,7 +327,7 @@ http://localhost/project/app.js?min
 <h3>
 <a id="resource-linking" class="anchor" href="#resource-linking" aria-hidden="true"><span class="octicon octicon-link"></span></a>Resource linking</h3>
 
-<p>To stay portable you should favour the use of relative paths. Link to resources relatively to the <code>project</code>-folder <strong>without</strong> a leading slash.</p>
+<p>To stay portable you should favour the use of relative paths. Link to resources relatively to the <code>projectfolder</code> <strong>without</strong> a leading slash.</p>
 
 <pre><code>&lt;link rel="stylesheet" href="app.css" type="text/css" /&gt;
 &lt;link rel="shortcut icon" href="assets/img/icon/favicon.ico" type="image/x-icon" /&gt;
@@ -436,7 +439,7 @@ To adjust this behaviour, see <code>app/terrific/public/.htaccess</code>.</p>
 <a id="example-project-includes" class="anchor" href="#example-project-includes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example Project Includes</h2>
 
 <ul>
-<li><a href="http://jquery.com/">jQuery 1.11.1</a></li>
+<li><a href="http://jquery.com/">jQuery 1.11.2</a></li>
 <li><a href="http://terrifically.org/api/">TerrificJS 2.1.0</a></li>
 <li><a href="http://yuilibrary.com/yui/docs/cssreset/">YUI CSS Reset 3.18.1</a></li>
 <li>Favicon &amp; Home-Icons from Terrific Micro (replace with your own)</li>
