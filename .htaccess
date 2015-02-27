@@ -5,21 +5,25 @@ Options -Indexes +FollowSymLinks
 <Files .*>
 	Order Deny,Allow
 	Deny From All
+	Satisfy All
 </Files>
 
 <Files config.json>
 	Order Deny,Allow
 	Deny From All
+	Satisfy All
 </Files>
 
 <FilesMatch ^(Gruntfile|gulpfile)\.js$>
 	Order Deny,Allow
 	Deny From All
+	Satisfy All
 </FilesMatch>
 
 <FilesMatch "\.(tpl|yml|ftl|less|scss|json|xml|md|conf|log|txt|bat|sh)$">
 	Order Deny,Allow
-	Deny from all
+	Deny From All
+	Satisfy All
 </FilesMatch>
 
 # Routing

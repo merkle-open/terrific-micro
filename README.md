@@ -20,8 +20,8 @@ Terrific Micro is simple, fast and flexible. Use this app for all your frontend 
 
 ## Quick Start
 
-You only need an Apache web server with PHP 5.3+ support. 
-Enable `mod_rewrite` and optionally `mod_deflate` and add the directive `AllowOverride All` for your directory.
+You only need an Apache web server 2.2+ with PHP 5.3+ support. 
+Enable `mod_rewrite` and optionally `mod_deflate` and add the directive `AllowOverride All` for your directory. (Apache 2.4 needs `mod_access_compat` enabled.)
 
 1. Clone repo to a project folder in your web root:
 
