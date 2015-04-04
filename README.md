@@ -15,6 +15,7 @@ Terrific Micro is simple, fast and flexible. Use this app for all your frontend 
 * [Conventions](#conventions)
 * [Security](#security)
 * [Commandline](#commandline)
+* [Extending](#extending)
 * [Contributing](#contributing)
 * [Credits & License](#example-project-includes)
 
@@ -315,6 +316,11 @@ To adjust this behaviour, see `app/terrific/public/.htaccess`.
 ### Directory Listing
 
 The directory listing is turned off in `.htaccess`.
+
+## Extending
+
+Terrific Micro is very easy to extend. You may add your own functions or overwrite existing ones. See some examples in `index.project.php`. 
+And there is a couple of helpful extensions on (GitHub)[http://namics.github.io/terrific-micro-extensions/]. For example a lorem ipsum text and markup generator, a png sprite generator or a feature rich grunt exporter.
 
 ## Contributing
 
