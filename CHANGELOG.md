@@ -1,5 +1,9 @@
 # Changelog - Terrific Micro
 
+## v1.0.4 - 2015
+
+* [fix] allow lowercase component folders
+
 ## v1.0.3 - 2014-10-31
 
 * [feature] allow multiple subfolders in views

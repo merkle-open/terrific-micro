@@ -112,7 +112,7 @@ Or you let the helper write the wrapping container with different inputs (= adva
 * for basic mode use one or two parameters
 * for advanced mode use three or more parameters
 
-Use the component's name as the first parameter. Be aware, the component name is case-sensitive!
+Use the component's name as the first parameter. Be aware, the component name is case-sensitive and represents the folder name!
 
 #### Basic Mode: Template with complete Markup
 
