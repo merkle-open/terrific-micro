@@ -54,7 +54,6 @@ if ( !function_exists( 'component' ) ) {
 
 		global $config;
 
-		$name              = ucfirst( $name );
 		$flat              = strtolower( $name );
 		$template          = empty( $template ) || $template === true ? '' : '-' . strtolower( $template );
 		$component_wrapper = !empty( $skin ) || $skin === '0' || $skin === null || $skin === false || !empty( $attr ) || !empty( $tag );
