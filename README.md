@@ -2,9 +2,9 @@
 
 <img align="right" src="https://raw.githubusercontent.com/namics/terrific-micro/master/assets/img/icon/terrific-micro.png">
 
-Terrific Micro is a PHP application for simple and complex frontend development with a tiny footprint. 
-It provides a proven but flexible structure to develop your frontend code, even in a large team. 
-Keep track of your code with a modularized frontend. This app and the suggested [`terrific` concept](http://terrifically.org) could help. 
+Terrific Micro is a PHP application for simple and complex frontend development with a tiny footprint.  
+It provides a proven but flexible structure to develop your frontend code, even in a large team.  
+Keep track of your code with a modularized frontend. This app and the suggested [`terrific` concept](http://terrifically.org) could help.  
 Terrific Micro is simple, fast and flexible. Use this app for all your frontend work, but it's not intended to use in production environment.
 
 ## Table of contents
@@ -21,7 +21,7 @@ Terrific Micro is simple, fast and flexible. Use this app for all your frontend 
 
 ## Quick Start
 
-You only need an Apache web server 2.2+ with PHP 5.3+ support. 
+You only need an Apache web server 2.2+ with PHP 5.3+ support.  
 Enable `mod_rewrite` and optionally `mod_deflate` and add the directive `AllowOverride All` for your directory. (Apache 2.4 needs `mod_access_compat` enabled.)
 
 1. Clone repo to a project folder in your web root:
@@ -49,7 +49,7 @@ You see, we don't need a virtual host.
 
 ### Creating Components
 
-Components are created in the `components` folder. A component is an encapsulated block of markup with corresponding styles and scripts. 
+Components are created in the `components` folder. A component is an encapsulated block of markup with corresponding styles and scripts.  
 A terrific module uses the following structure:
 
     /Example
@@ -68,7 +68,7 @@ Create additional content templates directly in the component folder:
 
 ### Creating Components & Skins by GUI
 
-But the easiest way to do so is using the included GUI. 
+But the easiest way to do so is using the included GUI.  
 Try it out by requesting http://localhost/projectfolder/terrific/ (don't forget the trailing slash)
 
 #### Components Configuration
@@ -82,7 +82,7 @@ You can use more than one type of components. Components are configured in `conf
         "skin_prefix": "skin"                   // class prefix of skin (optional)
     }
 
-The GUI component creator replaces `_component` and `_skin` in file names with the appropriate names. 
+The GUI component creator replaces `_component` and `_skin` in file names with the appropriate names.  
 For file contents there are a bunch of placeholders available: 
 
     {{component}} {{component-css}} {{component-js}} {{component-file}} {{component-id}} {{component-prefix}}
@@ -105,9 +105,9 @@ Your new page can then be called by the according URL (with or without an extens
 
 ### Render Components
 
-Pages are meant to be compositions of your components. Therefore you can render components in pages. The component helper gives you two options: 
-You can write all markup in your template (= basic mode). 
-Or you let the helper write the wrapping container with different inputs (= advanced mode).
+Pages are meant to be compositions of your components. Therefore you can render components in pages. The component helper gives you two options:  
+You can write all markup in your template (= basic mode).  
+Or you let the helper write the wrapping container with different inputs (= advanced mode). 
 
 * for basic mode use one or two parameters
 * for advanced mode use three or more parameters
@@ -182,10 +182,9 @@ You can configure the include order of your assets by defining patterns in `conf
 
 #### Pattern
 
-The matching patterns follow the standard glob patterns.
-Glob patterns are similar to regular expression but simplified. They are used by several shells.
-You should always try to keep the patterns simple. Usually you only need the asterisk `*` which
-matches zero or more characters.
+The matching patterns follow the standard glob patterns.  
+Glob patterns are similar to regular expression but simplified. They are used by several shells.  
+You should always try to keep the patterns simple. Usually you only need the asterisk `*` which matches zero or more characters.
 
 You can read more on standard glob patterns on [php.net](http://www.php.net/manual/en/function.glob.php) and [coburn.info](http://cowburn.info/2010/04/30/glob-patterns/).
 
@@ -206,7 +205,7 @@ The order of these special patterns does not matter.
 
 #### Note on less & scss @import
 
-Terrific Micro does not use a watcher for asset concatenation. The resources are concatenated with each request. 
+Terrific Micro does not use a watcher for asset concatenation. The resources are concatenated with each request.  
 Due to less and scss caching-mechanisms in place, this process is quite fast. You should be warned about the usage of @import, though. As long as you configure them relatively to your `projectfolder`, they work quite well. But changes in imported files are not tracked by Terrific Micro and therefore changes do not invalidate the cache. This means you either have to clean manually by changing the main file or you can disable caching by setting `$nocache = true;` in `project/index.project.php`.
 
 #### Other Asset Files
@@ -305,7 +304,7 @@ Here are some examples:
 
 ## Security
 
-To enable the use of Terrific Micro in any project structure some access restricting rules were set. 
+To enable the use of Terrific Micro in any project structure some access restricting rules were set.  
 These rules were made with the Apache web server in mind by using `.htaccess` files. These files can easily be adjusted as necessary.
 
 ### Terrific GUI
@@ -319,7 +318,7 @@ The directory listing is turned off in `.htaccess`.
 
 ## Extending
 
-Terrific Micro is very easy to extend. You may add your own functions or overwrite existing ones. See some examples in `index.project.php`. 
+Terrific Micro is very easy to extend. You may add your own functions or overwrite existing ones. See some examples in `index.project.php`.  
 And there is a couple of helpful extensions on (GitHub)[http://namics.github.io/terrific-micro-extensions/]. For example a lorem ipsum text and markup generator, a png sprite generator or a feature rich grunt exporter.
 
 ## Contributing
