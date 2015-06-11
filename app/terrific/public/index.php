@@ -11,6 +11,9 @@ define( 'BASEURL', $baseuri . '/' );
 define( 'TERRIFICURL', $baseuri . '/terrific/' );
 
 $config = json_decode( file_get_contents( BASE . 'config.json' ) );
+if(false === is_object($config)){
+	die(BASE . 'config.json missing or broken');
+}
 
 include_once( '../../../project/index.project.php' );
 
