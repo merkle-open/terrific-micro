@@ -9,6 +9,9 @@
 
 define( 'BASE', __DIR__ . '/' );
 $config   = json_decode( file_get_contents( BASE . 'config.json' ) );
+if(false === is_object($config)){
+	die('config.json missing or broken');
+}
 $nocache  = false; // true -> disables .less/.scss caching
 $cachedir = ( is_writeable( sys_get_temp_dir() ) ? sys_get_temp_dir() : BASE . 'app/cache' ); // use php temp or the local cache directory
 
