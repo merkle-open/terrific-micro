@@ -45,7 +45,7 @@ class Utils {
 			echo '</div>';
 
 			if (isset($script) && !empty($script)) {
-				echo '<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>';
+				echo '<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>';
 				echo '<script type="text/javascript">';
 				echo 'if (window.jQuery) {';
 				echo $script;
