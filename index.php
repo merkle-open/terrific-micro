@@ -9,16 +9,28 @@
 
 define( 'BASE', __DIR__ . '/' );
 $config   = json_decode( file_get_contents( BASE . 'config.json' ) );
-if(false === is_object($config)){
-	die('config.json missing or broken');
-}
 $nocache  = false; // true -> disables .less/.scss caching
 $cachedir = ( is_writeable( sys_get_temp_dir() ) ? sys_get_temp_dir() : BASE . 'app/cache' ); // use php temp or the local cache directory
 
 // ---------------------
-// Project
+// Project & Check
 // ---------------------
 include_once( BASE . 'project/index.project.php' ); // use this file for all your customisations
+
+if ( !function_exists( 'check_config' ) ) {
+	/**
+	 * checks base configuration
+	 */
+	function check_config() {
+		global $config;
+
+		if ( false === is_object( $config ) ) {
+			die( BASE . 'config.json missing or broken' );
+		}
+	}
+}
+
+check_config();
 
 // ------------------
 // Base Functionality

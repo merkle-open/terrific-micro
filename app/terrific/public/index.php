@@ -11,11 +11,12 @@ define( 'BASEURL', $baseuri . '/' );
 define( 'TERRIFICURL', $baseuri . '/terrific/' );
 
 $config = json_decode( file_get_contents( BASE . 'config.json' ) );
+
+include_once( '../../../project/index.project.php' );
+
 if(false === is_object($config)){
 	die(BASE . 'config.json missing or broken');
 }
-
-include_once( '../../../project/index.project.php' );
 
 $parts     = isset( $_GET['uriparts'] ) ? explode( '/', $_GET['uriparts'] ) : '';
 $nrOfParts = count( $parts );
