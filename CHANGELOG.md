@@ -3,6 +3,8 @@
 ## v1.0.4 - 2015
 
 * [fix] allow lowercase component folders
+* [maintenance] update jQuery, jshrink, lessphp
+* [maintenance] add simple config check
 
 ## v1.0.3 - 2014-10-31
 
