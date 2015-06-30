@@ -21,6 +21,9 @@ use Leafo\ScssPhp\Formatter;
  */
 class Compressed extends Formatter
 {
+    /**
+     * {@inheritdoc}
+     */
     public function __construct()
     {
         $this->indentLevel = 0;
@@ -32,11 +35,17 @@ class Compressed extends Formatter
         $this->assignSeparator = ':';
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function indentStr($n = 0)
     {
         return '';
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function blockLines($inner, $block)
     {
         $glue = $this->break . $inner;
@@ -54,5 +63,16 @@ class Compressed extends Formatter
         if (!empty($block->children)) {
             echo $this->break;
         }
+    }
+
+    /**
+     * {@inherit}
+     */
+    public function format($block)
+    {
+        return parent::format($block);
+
+        // TODO: we need to fix the 2 "compressed" tests where the "close" is applied
+        return trim(str_replace(';}', '}', parent::format($block)));
     }
 }

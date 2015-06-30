@@ -27,7 +27,7 @@ use Leafo\ScssPhp\Parser;
  * types are brought to the lowest form before being dump as strings. This
  * handles math equations, variable dereferences, and the like.
  *
- * The `parse` function of `Compiler` is the entry point.
+ * The `compile` function of `Compiler` is the entry point.
  *
  * In summary:
  *
@@ -63,6 +63,8 @@ class Compiler
 
         '<=' => 'lte',
         '>=' => 'gte',
+
+        '<=>' => 'cmp',
     );
 
     static protected $namespaces = array(
@@ -79,6 +81,7 @@ class Compiler
             'cm' => 2.54,
             'mm' => 25.4,
             'px' => 96,
+            'q'  => 101.6,
         )
     );
 
@@ -87,6 +90,8 @@ class Compiler
     static public $null = array('null');
     static public $defaultValue = array('keyword', '');
     static public $selfSelector = array('self');
+    static public $emptyList = array('list', '', array());
+    static public $emptyMap = array('map', array(), array());
 
     protected $importPaths = array('');
     protected $importCache = array();
@@ -108,6 +113,8 @@ class Compiler
     private $sourcePos;
     private $sourceParser;
     private $storeEnv;
+    private $charsetSeen;
+    private $stderr;
 
     /**
      * Compile scss
@@ -127,6 +134,8 @@ class Compiler
         $this->env          = null;
         $this->scope        = null;
 
+        $this->stderr = fopen('php://stderr', 'w');
+
         $locale = setlocale(LC_NUMERIC, 0);
         setlocale(LC_NUMERIC, 'C');
 
@@ -136,7 +145,7 @@ class Compiler
 
         $this->formatter = new $this->formatter();
 
-        $this->pushEnv($tree);
+        $this->rootEnv = $this->pushEnv($tree);
         $this->injectVariables($this->registeredVars);
         $this->compileRoot($tree);
         $this->popEnv();
@@ -449,7 +458,7 @@ class Compiler
      *
      * @see Compiler::compileChild()
      *
-     * @param \StdClass $block
+     * @param \stdClass $block
      */
     protected function compileBlock($block)
     {
@@ -772,13 +781,25 @@ class Compiler
                 $this->compileBlock($child[1]);
                 break;
             case 'charset':
-                $out->lines[] = '@charset ' . $this->compileValue($child[1]) . ';';
+                if (! $this->charsetSeen) {
+                    $this->charsetSeen = true;
+
+                    $out->lines[] = '@charset ' . $this->compileValue($child[1]) . ';';
+                }
                 break;
             case 'assign':
                 list(, $name, $value) = $child;
 
                 if ($name[0] == 'var') {
-                    $isDefault = ! empty($child[3]);
+                    $flag = isset($child[3]) ? $child[3] : null;
+                    $isDefault = $flag === '!default';
+                    $isGlobal = $flag === '!global';
+
+                    if ($isGlobal) {
+                        $this->set($name[1], $this->reduce($value), false, $this->rootEnv);
+
+                        break;
+                    }
 
                     if ($isDefault) {
                         $existingValue = $this->get($name[1], true);
@@ -978,6 +999,10 @@ class Compiler
                     $this->throwError('Expected @content inside of mixin');
                 }
 
+                if (! isset($content->children)) {
+                    break;
+                }
+
                 $strongTypes = array('include', 'block', 'for', 'while');
 
                 foreach ($content->children as $child) {
@@ -995,7 +1020,7 @@ class Compiler
 
                 $line = $this->parser->getLineNo($pos);
                 $value = $this->compileValue($this->reduce($value, true));
-                fwrite(STDERR, "Line $line DEBUG: $value\n");
+                fwrite($this->stderr, "Line $line DEBUG: $value\n");
                 break;
             default:
                 $this->throwError("unknown child type: $child[0]");
@@ -1180,12 +1205,23 @@ class Compiler
                 }
 
                 return $value;
+            case 'map':
+                foreach ($value[1] as &$item) {
+                    $item = $this->reduce($item);
+                }
+
+                foreach ($value[2] as &$item) {
+                    $item = $this->reduce($item);
+                }
+
+                return $value;
             case 'string':
                 foreach ($value[2] as &$item) {
                     if (is_array($item)) {
                         $item = $this->reduce($item);
                     }
                 }
+
                 return $value;
             case 'interpolate':
                 $value[1] = $this->reduce($value[1]);
@@ -1474,6 +1510,23 @@ class Compiler
         return $this->toBool($left[1] < $right[1]);
     }
 
+    /**
+     * Three-way comparison, aka spaceship operator
+     *
+     * @param array $left
+     * @param array $right
+     *
+     * @return array
+     */
+    protected function opCmpNumberNumber($left, $right)
+    {
+        $n = $left[1] - $right[1];
+
+        return array('number', $n ? $n / abs($n) : 0, '');
+
+        // PHP7: return array('number', $left[1] <=> $right[1], '');
+    }
+
     public function toBool($thing)
     {
         return $thing ? self::$true : self::$false;
@@ -1491,8 +1544,10 @@ class Compiler
      * things like expressions and variables.
      *
      * @param array $value
+     *
+     * @return string
      */
-    protected function compileValue($value)
+    public function compileValue($value)
     {
         $value = $this->reduce($value);
 
@@ -1551,18 +1606,17 @@ class Compiler
 
                 return implode("$delim ", $filtered);
             case 'map':
-                $map = $value[1];
-
+                $keys = $value[1];
+                $values = $value[2];
                 $filtered = array();
-                foreach ($map as $key => $item) {
-                    if ($item[0] == 'null') {
-                        continue;
-                    }
 
-                    $filtered[] = $key . ': ' . $this->compileValue($item);
+                for ($i = 0, $s = count($keys); $i < $s; $i++) {
+                    $filtered[$this->compileValue($keys[$i])] = $this->compileValue($values[$i]);
                 }
 
-                return '(' . implode(", ", $filtered) . ')';
+                array_walk($filtered, function (&$value, $key) { $value = $key . ': ' . $value; });
+
+                return '(' . implode(', ', $filtered) . ')';
             case 'interpolated': # node created by extractInterpolation
                 list(, $interpolate, $left, $right) = $value;
                 list(,, $whiteLeft, $whiteRight) = $interpolate;
@@ -1724,7 +1778,33 @@ class Compiler
         return $this->multiplyMedia($env->parent, $childQueries);
     }
 
-    // convert something to list
+    /**
+     * Coerce something to map
+     *
+     * @param array $item
+     *
+     * @return array
+     */
+    protected function coerceMap($item)
+    {
+        if ($item[0] === 'map') {
+            return $item;
+        }
+
+        if ($item == self::$emptyList) {
+            return self::$emptyMap;
+        }
+
+        return array('map', array($item), array(self::$null));
+    }
+
+    /**
+     * Coerce something to list
+     *
+     * @param array $item
+     *
+     * @return array
+     */
     protected function coerceList($item, $delim = ',')
     {
         if (isset($item) && $item[0] == 'list') {
@@ -1732,11 +1812,15 @@ class Compiler
         }
 
         if (isset($item) && $item[0] == 'map') {
-            $map = $item[1];
+            $keys = $item[1];
+            $values = $item[2];
             $list = array();
 
-            foreach ($map as $key => $value) {
-                $list[] = array('list', '', array(array('keyword', $key), $value));
+            for ($i = 0, $s = count($keys); $i < $s; $i++) {
+                $key = $keys[$i];
+                $value = $values[$i];
+
+                $list[] = array('list', '', array(array('keyword', $this->compileValue($key)), $value));
             }
 
             return array('list', ',', $list);
@@ -1917,6 +2001,13 @@ class Compiler
         return $defaultValue; // found nothing
     }
 
+    protected function has($name, $env = null)
+    {
+        $value = $this->get($name, false, $env);
+
+        return $value !== false;
+    }
+
     protected function injectVariables(array $args)
     {
         if (empty($args)) {
@@ -2067,30 +2158,21 @@ class Compiler
         return is_file($name);
     }
 
+    /**
+     * Call built-in and registered (PHP) functions
+     *
+     * @param string $name
+     * @param array  $args
+     * @param array  $returnValue
+     *
+     * @return boolean Returns true if returnValue is set; otherwise, false
+     */
     protected function callBuiltin($name, $args, &$returnValue)
     {
         // try a lib function
         $name = $this->normalizeName($name);
-        $libName = 'lib' . preg_replace_callback(
-            '/_(.)/',
-            function ($m) {
-                return ucfirst($m[1]);
-            },
-            ucfirst($name)
-        );
 
-        $f = array($this, $libName);
-
-        if (is_callable($f)) {
-            $prototype = isset(self::$$libName) ? self::$$libName : null;
-            $sorted = $this->sortArgs($prototype, $args);
-
-            foreach ($sorted as &$val) {
-                $val = $this->reduce($val, true);
-            }
-
-            $returnValue = call_user_func($f, $sorted, $this);
-        } elseif (isset($this->userFunctions[$name])) {
+        if (isset($this->userFunctions[$name])) {
             // see if we can find a user function
             $fn = $this->userFunctions[$name];
 
@@ -2099,6 +2181,21 @@ class Compiler
             }
 
             $returnValue = call_user_func($fn, $args, $this);
+        } else {
+            $f = $this->getBuiltinFunction($name);
+
+            if (is_callable($f)) {
+                $libName = $f[1];
+
+                $prototype = isset(self::$$libName) ? self::$$libName : null;
+                $sorted = $this->sortArgs($prototype, $args);
+
+                foreach ($sorted as &$val) {
+                    $val = $this->reduce($val, true);
+                }
+
+                $returnValue = call_user_func($f, $sorted, $this);
+            }
         }
 
         if (isset($returnValue)) {
@@ -2116,6 +2213,27 @@ class Compiler
 
         return false;
     }
+
+    /**
+     * Get built-in function
+     *
+     * @param string $name Normalized name
+     *
+     * @return array
+     */
+    protected function getBuiltinFunction($name)
+    {
+        $libName = 'lib' . preg_replace_callback(
+            '/_(.)/',
+            function ($m) {
+                return ucfirst($m[1]);
+            },
+            ucfirst($name)
+        );
+
+        return array($this, $libName);
+    }
+
 
     // sorts any keyword arguments
     // TODO: merge with apply arguments?
@@ -2204,6 +2322,17 @@ class Compiler
                 return array('string', '', array($value[1]));
         }
         return null;
+    }
+
+    public function assertMap($value)
+    {
+        $value = $this->coerceMap($value);
+
+        if ($value[0] != 'map') {
+            $this->throwError('expecting map');
+        }
+
+        return $value;
     }
 
     public function assertList($value)
@@ -2356,7 +2485,9 @@ class Compiler
     {
         list($list, $value) = $args;
 
-        $list = $this->assertList($list);
+        if ($list[0] !== 'list') {
+            return self::$null;
+        }
 
         $values = array();
 
@@ -2919,20 +3050,25 @@ class Compiler
     protected static $libMapGet = array('map', 'key');
     protected function libMapGet($args)
     {
-        $map = $args[0];
+        $map = $this->assertMap($args[0]);
+
         $key = $this->compileStringContent($this->coerceString($args[1]));
 
-        return isset($map[1][$key]) ? $map[1][$key] : self::$defaultValue;
+        for ($i = count($map[1]) - 1; $i >= 0; $i--) {
+            if ($key === $this->compileValue($map[1][$i])) {
+                return $map[2][$i];
+            }
+        }
+
+        return self::$defaultValue;
     }
 
     protected static $libMapKeys = array('map');
     protected function libMapKeys($args)
     {
-        $map = $args[0][1];
-        $keys = array();
-        foreach (array_keys($map) as $key) {
-            $keys[] = array('keyword', $key);
-        }
+        $map = $this->assertMap($args[0]);
+
+        $keys = $map[1];
 
         return array('list', ',', $keys);
     }
@@ -2940,40 +3076,55 @@ class Compiler
     protected static $libMapValues = array('map');
     protected function libMapValues($args)
     {
-        $map = $args[0][1];
+        $map = $this->assertMap($args[0]);
 
-        return array('list', ',', array_values($map));
+        $values = $map[2];
+
+        return array('list', ',', $values);
     }
 
     protected static $libMapRemove = array('map', 'key');
     protected function libMapRemove($args)
     {
-        $map = $args[0][1];
+        $map = $this->assertMap($args[0]);
+
         $key = $this->compileStringContent($this->coerceString($args[1]));
 
-        unset($map[$key]);
+        for ($i = count($map[1]) - 1; $i >= 0; $i--) {
+            if ($key === $this->compileValue($map[1][$i])) {
+                array_splice($map[1], $i, 1);
+                array_splice($map[2], $i, 1);
+            }
+        }
 
-        return array('map', $map);
+        return $map;
     }
 
     protected static $libMapHasKey = array('map', 'key');
     protected function libMapHasKey($args)
     {
-        $map = $args[0][1];
+        $map = $this->assertMap($args[0]);
+
         $key = $this->compileStringContent($this->coerceString($args[1]));
 
-        return isset($map[$key]) ? self::$true : self::$false;
-    }
+        for ($i = count($map[1]) - 1; $i >= 0; $i--) {
+            if ($key === $this->compileValue($map[1][$i])) {
+                return self::$true;
+            }
+        }
 
+        return self::$false;
+    }
 
     protected static $libMapMerge = array('map-1', 'map-2');
     protected function libMapMerge($args)
     {
-        $map1 = $args[0][1];
-        $map2 = $args[1][1];
+        $map1 = $this->assertMap($args[0]);
+        $map2 = $this->assertMap($args[1]);
 
-        return array('map', array_merge($map1, $map2));
+        return array('map', array_merge($map1[1], $map2[1]), array_merge($map1[2], $map2[2]));
     }
+
     protected function listSeparatorForJoin($list1, $sep)
     {
         if (! isset($sep)) {
@@ -3169,6 +3320,69 @@ class Compiler
         return $string;
     }
 
+    protected static $libFeatureExists = array('feature');
+    protected function libFeatureExists($args)
+    {
+        /*
+         * The following features not not (yet) supported:
+         * - global-variable-shadowing
+         * - extend-selector-pseudoclass
+         * - units-level-3
+         * - at-error
+         */
+        return self::$false;
+    }
+
+    protected static $libFunctionExists = array('name');
+    protected function libFunctionExists($args)
+    {
+        $string = $this->coerceString($args[0]);
+        $name = $this->compileStringContent($string);
+
+        // user defined functions
+        if ($this->has(self::$namespaces['function'] . $name)) {
+            return self::$true;
+        }
+
+        $name = $this->normalizeName($name);
+
+        if (isset($this->userFunctions[$name])) {
+            return self::$true;
+        }
+
+        // built-in functions
+        $f = $this->getBuiltinFunction($name);
+
+        return $this->toBool(is_callable($f));
+    }
+
+    protected static $libGlobalVariableExists = array('name');
+    protected function libGlobalVariableExists($args)
+    {
+        $string = $this->coerceString($args[0]);
+        $name = $this->compileStringContent($string);
+
+        return $this->has($name, $this->rootEnv) ? self::$true : self::$false;
+    }
+
+    protected static $libMixinExists = array('name');
+    protected function libMixinExists($args)
+    {
+        $string = $this->coerceString($args[0]);
+        $name = $this->compileStringContent($string);
+
+        return $this->has(self::$namespaces['mixin'] . $name) ? self::$true : self::$false;
+    }
+
+    protected static $libVariableExists = array('name');
+    protected function libVariableExists($args)
+    {
+        $string = $this->coerceString($args[0]);
+        $name = $this->compileStringContent($string);
+
+        return $this->has($name) ? self::$true : self::$false;
+    }
+
     /**
      * Workaround IE7's content counter bug.
      *
@@ -3179,6 +3393,34 @@ class Compiler
         $list = array_map(array($this, 'compileValue'), $args);
 
         return array('string', '', array('counter(' . implode(',', $list) . ')'));
+    }
+
+    protected function libRandom($args)
+    {
+        if (isset($args[0])) {
+            $n = $this->assertNumber($args[0]);
+
+            if ($n < 1) {
+                $this->throwError("limit must be greater than or equal to 1");
+            }
+
+            return array('number', mt_rand(1, $n), '');
+        }
+
+        return array('number', mt_rand(1, mt_getrandmax()), '');
+    }
+
+    protected function libUniqueId()
+    {
+        static $id;
+
+        if (! isset($id)) {
+            $id = mt_rand(0, pow(36, 8));
+        }
+
+        $id += mt_rand(0, 10) + 1;
+
+        return array('string', '', array('u' . str_pad(base_convert($id, 10, 36), 8, '0', STR_PAD_LEFT)));
     }
 
     public function throwError($msg = null)
