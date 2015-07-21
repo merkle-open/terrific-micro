@@ -23,7 +23,7 @@
 	"micro": {
 		"components": {
 			"module": {
-				"template": "project/templates/module",
+				"template": "project/templates/component",
 				"path": "components/modules",
 				"component_prefix": "mod",
 				"skin_prefix": "skin"
