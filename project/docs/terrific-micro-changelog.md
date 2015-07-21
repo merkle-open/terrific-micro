@@ -1,6 +1,6 @@
 # Changelog - Terrific Micro
 
-## v1.0.4 - 2015
+## v1.0.4 - 2015-07-21
 
 * [fix] allow lowercase component folders
 * [maintenance] update jQuery, jshrink, lessphp & scssphp
