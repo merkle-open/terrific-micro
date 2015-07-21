@@ -4,10 +4,9 @@
  *
  * @copyright 2012-2015 Leaf Corcoran
  *
- * @license http://opensource.org/licenses/gpl-license GPL-3.0
  * @license http://opensource.org/licenses/MIT MIT
  *
- * @link http://leafo.net/scssphp
+ * @link http://leafo.github.io/scssphp
  */
 
 namespace Leafo\ScssPhp;
@@ -426,6 +425,12 @@ class Parser
                 if (! isset($this->charset)) {
                     $statement = array('charset', $charset);
 
+                    $statement[self::SOURCE_POSITION] = $s;
+
+                    if (! $this->rootParser) {
+                        $statement[self::SOURCE_PARSER] = $this;
+                    }
+
                     $this->charset = $statement;
                 }
 
@@ -604,7 +609,7 @@ class Parser
      *
      * @return \stdClass
      */
-    protected function pushBlock($selectors, $pos = null)
+    protected function pushBlock($selectors, $pos = 0)
     {
         $b = new \stdClass;
         $b->parent = $this->env; // not sure if we need this yet
@@ -1193,7 +1198,9 @@ class Parser
         $keys = array();
         $values = array();
 
-        while ($this->genericList($key, 'expression') && $this->literal(':') && $this->genericList($value, 'expression')) {
+        while ($this->genericList($key, 'expression') && $this->literal(':')
+            && $this->genericList($value, 'expression')
+        ) {
             $keys[] = $key;
             $values[] = $value;
 
@@ -1777,9 +1784,15 @@ class Parser
         return false;
     }
 
-    // advance counter to next occurrence of $what
-    // $until - don't include $what in advance
-    // $allowNewline, if string, will be used as valid char set
+    /**
+     * @deprecated
+     *
+     * {@internal
+     *     advance counter to next occurrence of $what
+     *     $until - don't include $what in advance
+     *     $allowNewline, if string, will be used as valid char set
+     * }}
+     */
     protected function to($what, &$out, $until = false, $allowNewline = false)
     {
         if (is_string($allowNewline)) {
@@ -1952,6 +1965,9 @@ class Parser
         return preg_quote($what, '/');
     }
 
+    /**
+     * @deprecated
+     */
     protected function show()
     {
         if ($this->peek("(.*?)(\n|$)", $m, $this->count)) {

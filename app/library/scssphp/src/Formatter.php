@@ -4,10 +4,9 @@
  *
  * @copyright 2012-2015 Leaf Corcoran
  *
- * @license http://opensource.org/licenses/gpl-license GPL-3.0
  * @license http://opensource.org/licenses/MIT MIT
  *
- * @link http://leafo.net/scssphp
+ * @link http://leafo.github.io/scssphp
  */
 
 namespace Leafo\ScssPhp;
@@ -54,7 +53,7 @@ abstract class Formatter
      */
     public $assignSeparator;
 
-    abstract function __construct();
+    abstract public function __construct();
 
     /**
      * Return indentation (whitespace)
@@ -77,6 +76,15 @@ abstract class Formatter
     public function property($name, $value)
     {
         return $name . $this->assignSeparator . $value . ';';
+    }
+
+    /**
+     * Strip semi-colon appended by property(); it's a separator, not a terminator
+     *
+     * @param array $lines
+     */
+    public function stripSemicolon(&$lines)
+    {
     }
 
     /**

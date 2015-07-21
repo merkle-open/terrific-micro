@@ -4,16 +4,17 @@
  *
  * @copyright 2012-2015 Leaf Corcoran
  *
- * @license http://opensource.org/licenses/gpl-license GPL-3.0
  * @license http://opensource.org/licenses/MIT MIT
  *
- * @link http://leafo.net/scssphp
+ * @link http://leafo.github.io/scssphp
  */
 
 namespace Leafo\ScssPhp;
 
+use Leafo\ScssPhp\Base\Range;
 use Leafo\ScssPhp\Colors;
 use Leafo\ScssPhp\Parser;
+use Leafo\ScssPhp\Util;
 
 /**
  * The scss compiler and parser.
@@ -49,6 +50,9 @@ use Leafo\ScssPhp\Parser;
  */
 class Compiler
 {
+    const LINE_COMMENTS = 1;
+    const DEBUG_INFO    = 2;
+
     static protected $operatorNames = array(
         '+' => 'add',
         '-' => 'sub',
@@ -92,6 +96,7 @@ class Compiler
     static public $selfSelector = array('self');
     static public $emptyList = array('list', '', array());
     static public $emptyMap = array('map', array(), array());
+    static public $emptyString = array('string', '"', array());
 
     protected $importPaths = array('');
     protected $importCache = array();
@@ -99,6 +104,7 @@ class Compiler
     protected $registeredVars = array();
 
     protected $numberPrecision = 5;
+    protected $lineNumberStyle = null;
 
     protected $formatter = 'Leafo\ScssPhp\Formatter\Nested';
 
@@ -468,8 +474,32 @@ class Compiler
             array_map(array($this, 'evalSelector'), $block->selectors);
 
         $out = $this->makeOutputBlock(null, $this->multiplySelectors($env));
+
+        if (isset($this->lineNumberStyle) && count($env->selectors) && count($block->children)) {
+            $annotation = $this->makeOutputBlock('comment');
+            $annotation->depth = 0;
+
+            $file = $block->sourceParser->getSourceName();
+            $line = $block->sourceParser->getLineNo($block->sourcePosition);
+
+            switch ($this->lineNumberStyle) {
+                case self::LINE_COMMENTS:
+                    $annotation->lines[] = '/* line ' . $line . ', ' . $file . ' */';
+                    break;
+                case self::DEBUG_INFO:
+                    $annotation->lines[] = '@media -sass-debug-info{filename{font-family:"' . $file
+                                         . '"}line{font-family:' . $line . '}}';
+                    break;
+            }
+
+            $this->scope->children[] = $annotation;
+        }
+
         $this->scope->children[] = $out;
+
         $this->compileChildren($block->children, $out);
+
+        $this->formatter->stripSemicolon($out->lines);
 
         $this->popEnv();
     }
@@ -698,7 +728,7 @@ class Compiler
         }
 
         if ($m1 == 'not' && $m2 == 'not') {
-            # CSS has no way of representing "neither screen nor print"
+            // CSS has no way of representing "neither screen nor print"
             if ($t1 != $t2) {
                 return null;
             }
@@ -889,6 +919,7 @@ class Compiler
                 $list = $this->coerceList($this->reduce($each->list));
                 foreach ($list[2] as $item) {
                     $this->pushEnv();
+
                     if (count($each->vars) == 1) {
                         $this->set($each->vars[0], $item);
                     } else {
@@ -897,9 +928,13 @@ class Compiler
                             $this->set($var, isset($values[$i]) ? $values[$i] : self::$null);
                         }
                     }
-                    // TODO: allow return from here?
-                    $this->compileChildren($each->children, $out);
+
+                    $ret = $this->compileChildren($each->children, $out);
                     $this->popEnv();
+
+                    if ($ret) {
+                        return $ret;
+                    }
                 }
                 break;
             case 'while':
@@ -907,6 +942,7 @@ class Compiler
 
                 while ($this->isTruthy($this->reduce($while->cond, true))) {
                     $ret = $this->compileChildren($while->children, $out);
+
                     if ($ret) {
                         return $ret;
                     }
@@ -959,7 +995,8 @@ class Compiler
 
                 $this->compileChildren($prefixed, $out);
                 break;
-            case 'include': // including a mixin
+            case 'include':
+                // including a mixin
                 list(, $name, $argValues, $content) = $child;
 
                 $mixin = $this->get(self::$namespaces['mixin'] . $name, false);
@@ -1274,6 +1311,11 @@ class Compiler
         }
     }
 
+    protected function normalizeName($name)
+    {
+        return str_replace('-', '_', $name);
+    }
+
     public function normalizeValue($value)
     {
         $value = $this->coerceForExpression($this->reduce($value));
@@ -1292,6 +1334,9 @@ class Compiler
                 }
 
                 return $value;
+
+            case 'string':
+                return array($value[0], '"', $value[2]);
 
             case 'number':
                 return $this->normalizeNumber($value);
@@ -1313,18 +1358,6 @@ class Compiler
         }
 
         return $number;
-    }
-
-    // $number should be normalized
-    protected function coerceUnit($number, $unit)
-    {
-        list(, $value, $baseUnit) = $number;
-
-        if (isset(self::$unitTable[$baseUnit][$unit])) {
-            $value = $value * self::$unitTable[$baseUnit][$unit];
-        }
-
-        return array('number', $value, $unit);
     }
 
     protected function opAddNumberNumber($left, $right)
@@ -1479,7 +1512,8 @@ class Compiler
             $lStr[1] = '';
             $rStr[1] = '';
 
-            return $this->toBool($this->compileValue($lStr) == $this->compileValue($rStr));
+            $left = $this->compileValue($lStr);
+            $right = $this->compileValue($rStr);
         }
 
         return $this->toBool($left == $right);
@@ -1487,6 +1521,14 @@ class Compiler
 
     protected function opNeq($left, $right)
     {
+        if (($lStr = $this->coerceString($left)) && ($rStr = $this->coerceString($right))) {
+            $lStr[1] = '';
+            $rStr[1] = '';
+
+            $left = $this->compileValue($lStr);
+            $right = $this->compileValue($rStr);
+        }
+
         return $this->toBool($left != $right);
     }
 
@@ -1614,10 +1656,13 @@ class Compiler
                     $filtered[$this->compileValue($keys[$i])] = $this->compileValue($values[$i]);
                 }
 
-                array_walk($filtered, function (&$value, $key) { $value = $key . ': ' . $value; });
+                array_walk($filtered, function (&$value, $key) {
+                    $value = $key . ': ' . $value;
+                });
 
                 return '(' . implode(', ', $filtered) . ')';
-            case 'interpolated': # node created by extractInterpolation
+            case 'interpolated':
+                // node created by extractInterpolation
                 list(, $interpolate, $left, $right) = $value;
                 list(,, $whiteLeft, $whiteRight) = $interpolate;
 
@@ -1629,7 +1674,8 @@ class Compiler
 
                 return $left . $this->compileValue($interpolate) . $right;
 
-            case 'interpolate': # raw parse node
+            case 'interpolate':
+                // raw parse node
                 list(, $exp) = $value;
 
                 // strip quotes if it's a string
@@ -1649,6 +1695,12 @@ class Compiler
             default:
                 $this->throwError("unknown value type: $type");
         }
+    }
+
+    protected function flattenList($list)
+    {
+        // temporary
+        return $this->compileValue($list);
     }
 
     protected function compileStringContent($string)
@@ -1778,150 +1830,6 @@ class Compiler
         return $this->multiplyMedia($env->parent, $childQueries);
     }
 
-    /**
-     * Coerce something to map
-     *
-     * @param array $item
-     *
-     * @return array
-     */
-    protected function coerceMap($item)
-    {
-        if ($item[0] === 'map') {
-            return $item;
-        }
-
-        if ($item == self::$emptyList) {
-            return self::$emptyMap;
-        }
-
-        return array('map', array($item), array(self::$null));
-    }
-
-    /**
-     * Coerce something to list
-     *
-     * @param array $item
-     *
-     * @return array
-     */
-    protected function coerceList($item, $delim = ',')
-    {
-        if (isset($item) && $item[0] == 'list') {
-            return $item;
-        }
-
-        if (isset($item) && $item[0] == 'map') {
-            $keys = $item[1];
-            $values = $item[2];
-            $list = array();
-
-            for ($i = 0, $s = count($keys); $i < $s; $i++) {
-                $key = $keys[$i];
-                $value = $values[$i];
-
-                $list[] = array('list', '', array(array('keyword', $this->compileValue($key)), $value));
-            }
-
-            return array('list', ',', $list);
-        }
-
-        return array('list', $delim, ! isset($item) ? array(): array($item));
-    }
-
-    protected function applyArguments($argDef, $argValues)
-    {
-        $storeEnv = $this->getStoreEnv();
-
-        $env = new \stdClass;
-        $env->store = $storeEnv->store;
-
-        $hasVariable = false;
-        $args = array();
-
-        foreach ($argDef as $i => $arg) {
-            list($name, $default, $isVariable) = $argDef[$i];
-
-            $args[$name] = array($i, $name, $default, $isVariable);
-            $hasVariable |= $isVariable;
-        }
-
-        $keywordArgs = array();
-        $deferredKeywordArgs = array();
-        $remaining = array();
-
-        // assign the keyword args
-        foreach ((array) $argValues as $arg) {
-            if (! empty($arg[0])) {
-                if (! isset($args[$arg[0][1]])) {
-                    if ($hasVariable) {
-                        $deferredKeywordArgs[$arg[0][1]] = $arg[1];
-                    } else {
-                        $this->throwError("Mixin or function doesn't have an argument named $%s.", $arg[0][1]);
-                    }
-                } elseif ($args[$arg[0][1]][0] < count($remaining)) {
-                    $this->throwError("The argument $%s was passed both by position and by name.", $arg[0][1]);
-                } else {
-                    $keywordArgs[$arg[0][1]] = $arg[1];
-                }
-            } elseif (count($keywordArgs)) {
-                $this->throwError('Positional arguments must come before keyword arguments.');
-            } elseif ($arg[2] == true) {
-                $val = $this->reduce($arg[1], true);
-
-                if ($val[0] == 'list') {
-                    foreach ($val[2] as $name => $item) {
-                        if (! is_numeric($name)) {
-                            $keywordArgs[$name] = $item;
-                        } else {
-                            $remaining[] = $item;
-                        }
-                    }
-                } else {
-                    $remaining[] = $val;
-                }
-            } else {
-                $remaining[] = $arg[1];
-            }
-        }
-
-        foreach ($args as $arg) {
-            list($i, $name, $default, $isVariable) = $arg;
-
-            if ($isVariable) {
-                $val = array('list', ',', array());
-                for ($count = count($remaining); $i < $count; $i++) {
-                    $val[2][] = $remaining[$i];
-                }
-                foreach ($deferredKeywordArgs as $itemName => $item) {
-                    $val[2][$itemName] = $item;
-                }
-            } elseif (isset($remaining[$i])) {
-                $val = $remaining[$i];
-            } elseif (isset($keywordArgs[$name])) {
-                $val = $keywordArgs[$name];
-            } elseif (! empty($default)) {
-                continue;
-            } else {
-                $this->throwError("Missing argument $name");
-            }
-
-            $this->set($name, $this->reduce($val, true), true, $env);
-        }
-
-        $storeEnv->store = $env->store;
-
-        foreach ($args as $arg) {
-            list($i, $name, $default, $isVariable) = $arg;
-
-            if ($isVariable || isset($remaining[$i]) || isset($keywordArgs[$name]) || empty($default)) {
-                continue;
-            }
-
-            $this->set($name, $this->reduce($default, true), true);
-        }
-    }
-
     protected function pushEnv($block = null)
     {
         $env = new \stdClass;
@@ -1935,9 +1843,12 @@ class Compiler
         return $env;
     }
 
-    protected function normalizeName($name)
+    protected function popEnv()
     {
-        return str_replace('-', '_', $name);
+        $env = $this->env;
+        $this->env = $this->env->parent;
+
+        return $env;
     }
 
     protected function getStoreEnv()
@@ -2049,14 +1960,6 @@ class Compiler
         unset($this->registeredVars[$name]);
     }
 
-    protected function popEnv()
-    {
-        $env = $this->env;
-        $this->env = $this->env->parent;
-
-        return $env;
-    }
-
     public function getParsedFiles()
     {
         return $this->parsedFiles;
@@ -2084,6 +1987,11 @@ class Compiler
         $this->formatter = $formatterName;
     }
 
+    public function setLineNumberStyle($lineNumberStyle)
+    {
+        $this->lineNumberStyle = $lineNumberStyle;
+    }
+
     public function registerFunction($name, $func)
     {
         $this->userFunctions[$this->normalizeName($name)] = $func;
@@ -2098,6 +2006,7 @@ class Compiler
     {
         // see if tree is cached
         $realPath = realpath($path);
+
         if (isset($this->importCache[$realPath])) {
             $tree = $this->importCache[$realPath];
         } else {
@@ -2153,6 +2062,33 @@ class Compiler
         return null;
     }
 
+    /**
+     * Throw error (exception)
+     *
+     * @param string $msg Message with optional sprintf()-style vararg parameters
+     *
+     * @throws \Exception
+     */
+    public function throwError($msg)
+    {
+        if (func_num_args() > 1) {
+            $msg = call_user_func_array('sprintf', func_get_args());
+        }
+
+        if ($this->sourcePos >= 0 && isset($this->sourceParser)) {
+            $this->sourceParser->throwParseError($msg, $this->sourcePos);
+        }
+
+        throw new \Exception($msg);
+    }
+
+    /**
+     * Does file exist?
+     *
+     * @param string $name
+     *
+     * @return boolean
+     */
     protected function fileExists($name)
     {
         return is_file($name);
@@ -2281,6 +2217,162 @@ class Compiler
         return $finalArgs;
     }
 
+    protected function applyArguments($argDef, $argValues)
+    {
+        $storeEnv = $this->getStoreEnv();
+
+        $env = new \stdClass;
+        $env->store = $storeEnv->store;
+
+        $hasVariable = false;
+        $args = array();
+
+        foreach ($argDef as $i => $arg) {
+            list($name, $default, $isVariable) = $argDef[$i];
+
+            $args[$name] = array($i, $name, $default, $isVariable);
+            $hasVariable |= $isVariable;
+        }
+
+        $keywordArgs = array();
+        $deferredKeywordArgs = array();
+        $remaining = array();
+
+        // assign the keyword args
+        foreach ((array) $argValues as $arg) {
+            if (! empty($arg[0])) {
+                if (! isset($args[$arg[0][1]])) {
+                    if ($hasVariable) {
+                        $deferredKeywordArgs[$arg[0][1]] = $arg[1];
+                    } else {
+                        $this->throwError("Mixin or function doesn't have an argument named $%s.", $arg[0][1]);
+                    }
+                } elseif ($args[$arg[0][1]][0] < count($remaining)) {
+                    $this->throwError("The argument $%s was passed both by position and by name.", $arg[0][1]);
+                } else {
+                    $keywordArgs[$arg[0][1]] = $arg[1];
+                }
+            } elseif (count($keywordArgs)) {
+                $this->throwError('Positional arguments must come before keyword arguments.');
+            } elseif ($arg[2] == true) {
+                $val = $this->reduce($arg[1], true);
+
+                if ($val[0] == 'list') {
+                    foreach ($val[2] as $name => $item) {
+                        if (! is_numeric($name)) {
+                            $keywordArgs[$name] = $item;
+                        } else {
+                            $remaining[] = $item;
+                        }
+                    }
+                } else {
+                    $remaining[] = $val;
+                }
+            } else {
+                $remaining[] = $arg[1];
+            }
+        }
+
+        foreach ($args as $arg) {
+            list($i, $name, $default, $isVariable) = $arg;
+
+            if ($isVariable) {
+                $val = array('list', ',', array(), $isVariable);
+                for ($count = count($remaining); $i < $count; $i++) {
+                    $val[2][] = $remaining[$i];
+                }
+                foreach ($deferredKeywordArgs as $itemName => $item) {
+                    $val[2][$itemName] = $item;
+                }
+            } elseif (isset($remaining[$i])) {
+                $val = $remaining[$i];
+            } elseif (isset($keywordArgs[$name])) {
+                $val = $keywordArgs[$name];
+            } elseif (! empty($default)) {
+                continue;
+            } else {
+                $this->throwError("Missing argument $name");
+            }
+
+            $this->set($name, $this->reduce($val, true), true, $env);
+        }
+
+        $storeEnv->store = $env->store;
+
+        foreach ($args as $arg) {
+            list($i, $name, $default, $isVariable) = $arg;
+
+            if ($isVariable || isset($remaining[$i]) || isset($keywordArgs[$name]) || empty($default)) {
+                continue;
+            }
+
+            $this->set($name, $this->reduce($default, true), true);
+        }
+    }
+
+    // $number should be normalized
+    protected function coerceUnit($number, $unit)
+    {
+        list(, $value, $baseUnit) = $number;
+
+        if (isset(self::$unitTable[$baseUnit][$unit])) {
+            $value = $value * self::$unitTable[$baseUnit][$unit];
+        }
+
+        return array('number', $value, $unit);
+    }
+
+    /**
+     * Coerce something to map
+     *
+     * @param array $item
+     *
+     * @return array
+     */
+    protected function coerceMap($item)
+    {
+        if ($item[0] === 'map') {
+            return $item;
+        }
+
+        if ($item == self::$emptyList) {
+            return self::$emptyMap;
+        }
+
+        return array('map', array($item), array(self::$null));
+    }
+
+    /**
+     * Coerce something to list
+     *
+     * @param array $item
+     *
+     * @return array
+     */
+    protected function coerceList($item, $delim = ',')
+    {
+        if (isset($item) && $item[0] == 'list') {
+            return $item;
+        }
+
+        if (isset($item) && $item[0] == 'map') {
+            $keys = $item[1];
+            $values = $item[2];
+            $list = array();
+
+            for ($i = 0, $s = count($keys); $i < $s; $i++) {
+                $key = $keys[$i];
+                $value = $values[$i];
+
+                $list[] = array('list', '', array(array('keyword', $this->compileValue($key)), $value));
+            }
+
+            return array('list', ',', $list);
+        }
+
+        return array('list', $delim, ! isset($item) ? array(): array($item));
+    }
+
     protected function coerceForExpression($value)
     {
         if ($color = $this->coerceColor($value)) {
@@ -2318,10 +2410,25 @@ class Compiler
         switch ($value[0]) {
             case 'string':
                 return $value;
+            case 'function':
+                return array('string', '', array($value[1] . '(' . $this->flattenList($value[2]) . ')'));
             case 'keyword':
                 return array('string', '', array($value[1]));
         }
         return null;
+    }
+
+    protected function coercePercent($value)
+    {
+        if ($value[0] == 'number') {
+            if ($value[2] == '%') {
+                return $value[1] / 100;
+            }
+
+            return $value[1];
+        }
+
+        return 0;
     }
 
     public function assertMap($value)
@@ -2360,19 +2467,6 @@ class Compiler
         }
 
         return $value[1];
-    }
-
-    protected function coercePercent($value)
-    {
-        if ($value[0] == 'number') {
-            if ($value[2] == '%') {
-                return $value[1] / 100;
-            }
-
-            return $value[1];
-        }
-
-        return 0;
     }
 
     // make sure a color's components don't go out of bounds
@@ -2485,6 +2579,14 @@ class Compiler
     {
         list($list, $value) = $args;
 
+        if ($value[0] == 'map') {
+            return self::$null;
+        }
+
+        if ($list[0] === 'map') {
+            $list = $this->coerceList($list, ' ');
+        }
+
         if ($list[0] !== 'list') {
             return self::$null;
         }
@@ -2497,7 +2599,7 @@ class Compiler
 
         $key = array_search($this->normalizeValue($value), $values);
 
-        return false === $key ? false : $key + 1;
+        return false === $key ? self::$null : $key + 1;
     }
 
     protected static $libRgb = array('red', 'green', 'blue');
@@ -2541,8 +2643,7 @@ class Compiler
             if (isset($args[$i])) {
                 $val = $this->assertNumber($args[$i]);
                 $ii = $i == 7 ? 4 : $i; // alpha
-                $color[$ii] =
-                    $this->$fn(isset($color[$ii]) ? $color[$ii] : 0, $val, $i);
+                $color[$ii] = call_user_func($fn, isset($color[$ii]) ? $color[$ii] : 0, $val, $i);
             }
         }
 
@@ -2552,7 +2653,7 @@ class Compiler
             foreach (array(4, 5, 6) as $i) {
                 if (isset($args[$i])) {
                     $val = $this->assertNumber($args[$i]);
-                    $hsl[$i - 3] = $this->$fn($hsl[$i - 3], $val, $i);
+                    $hsl[$i - 3] = call_user_func($fn, $hsl[$i - 3], $val, $i);
                 }
             }
 
@@ -2572,64 +2673,61 @@ class Compiler
         'color', 'red', 'green', 'blue',
         'hue', 'saturation', 'lightness', 'alpha'
     );
-    protected function adjustColorHelper($base, $alter, $i)
-    {
-        return $base += $alter;
-    }
     protected function libAdjustColor($args)
     {
-        return $this->alterColor($args, 'adjustColorHelper');
+        return $this->alterColor($args, function ($base, $alter, $i) {
+            return $base + $alter;
+        });
     }
 
     protected static $libChangeColor = array(
         'color', 'red', 'green', 'blue',
         'hue', 'saturation', 'lightness', 'alpha'
     );
-    protected function changeColorHelper($base, $alter, $i)
-    {
-        return $alter;
-    }
     protected function libChangeColor($args)
     {
-        return $this->alterColor($args, 'changeColorHelper');
+        return $this->alterColor($args, function ($base, $alter, $i) {
+            return $alter;
+        });
     }
 
     protected static $libScaleColor = array(
         'color', 'red', 'green', 'blue',
         'hue', 'saturation', 'lightness', 'alpha'
     );
-    protected function scaleColorHelper($base, $scale, $i)
-    {
-        // 1, 2, 3 - rgb
-        // 4, 5, 6 - hsl
-        // 7 - a
-        switch ($i) {
-            case 1:
-            case 2:
-            case 3:
-                $max = 255;
-                break;
-            case 4:
-                $max = 360;
-                break;
-            case 7:
-                $max = 1;
-                break;
-            default:
-                $max = 100;
-        }
-
-        $scale = $scale / 100;
-
-        if ($scale < 0) {
-            return $base * $scale + $base;
-        }
-
-        return ($max - $base) * $scale + $base;
-    }
     protected function libScaleColor($args)
     {
-        return $this->alterColor($args, 'scaleColorHelper');
+        return $this->alterColor($args, function ($base, $scale, $i) {
+            // 1, 2, 3 - rgb
+            // 4, 5, 6 - hsl
+            // 7 - a
+            switch ($i) {
+                case 1:
+                case 2:
+                case 3:
+                    $max = 255;
+                    break;
+
+                case 4:
+                    $max = 360;
+                    break;
+
+                case 7:
+                    $max = 1;
+                    break;
+
+                default:
+                    $max = 100;
+            }
+
+            $scale = $scale / 100;
+
+            if ($scale < 0) {
+                return $base * $scale + $base;
+            }
+
+            return ($max - $base) * $scale + $base;
+        });
     }
 
     protected static $libIeHexStr = array('color');
@@ -2797,7 +2895,7 @@ class Compiler
     protected function libLighten($args)
     {
         $color = $this->assertColor($args[0]);
-        $amount = 100*$this->coercePercent($args[1]);
+        $amount = Util::checkRange('amount', new Range(0, 100), $args[1], '%');
 
         return $this->adjustHsl($color, 3, $amount);
     }
@@ -2806,7 +2904,7 @@ class Compiler
     protected function libDarken($args)
     {
         $color = $this->assertColor($args[0]);
-        $amount = 100*$this->coercePercent($args[1]);
+        $amount = Util::checkRange('amount', new Range(0, 100), $args[1], '%');
 
         return $this->adjustHsl($color, 3, -$amount);
     }
@@ -3204,7 +3302,15 @@ class Compiler
                     return 'color';
                 }
 
+                // fall-thru
+            case 'function':
                 return 'string';
+            case 'list':
+                if (isset($value[3]) && $value[3]) {
+                    return 'arglist';
+                }
+
+                // fall-thru
             default:
                 return $value[0];
         }
@@ -3287,13 +3393,17 @@ class Compiler
     protected static $libStrSlice = array('string', 'start-at', 'end-at');
     protected function libStrSlice($args)
     {
+        if ($args[2][1] == 0) {
+            return self::$emptyString;
+        }
+
         $string = $this->coerceString($args[0]);
         $stringContent = $this->compileStringContent($string);
 
-        list(, $start) = $args[1];
-        list(, $end) = $args[2];
+        $start = (int) $args[1][1] ?: 1;
+        $end = (int) $args[2][1];
 
-        $string[2] = array(substr($stringContent, $start - 1, $end - $start + 1));
+        $string[2] = array(substr($stringContent, $start - 1, $end < 0 ? $end : $end - $start + 1));
 
         return $string;
     }
@@ -3421,18 +3531,5 @@ class Compiler
         $id += mt_rand(0, 10) + 1;
 
         return array('string', '', array('u' . str_pad(base_convert($id, 10, 36), 8, '0', STR_PAD_LEFT)));
-    }
-
-    public function throwError($msg = null)
-    {
-        if (func_num_args() > 1) {
-            $msg = call_user_func_array('sprintf', func_get_args());
-        }
-
-        if ($this->sourcePos >= 0 && isset($this->sourceParser)) {
-            $this->sourceParser->throwParseError($msg, $this->sourcePos);
-        }
-
-        throw new \Exception($msg);
     }
 }
