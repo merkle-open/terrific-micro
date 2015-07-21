@@ -50,6 +50,7 @@ You see, we don't need a virtual host.
 ### Creating Components
 
 Components are created in the `components` folder. A component is an encapsulated block of markup with corresponding styles and scripts.  
+For a better overview it is useful to define different types of components. It is recommended to make subfolders like `atoms`, `molecules` & `organisms`
 A terrific module uses the following structure:
 
     /Example
@@ -343,7 +344,7 @@ And there is a couple of helpful extensions on (GitHub)[http://namics.github.io/
 
 ## Credits
 
-Terrific Micro was initiated by [Roger Dudler](https://github.com/rogerdudler) and is now maintained by Namics AG
+Terrific Micro was initiated by [Roger Dudler](https://github.com/rogerdudler) and is developed and maintained by Namics AG
 
 ## License
 
