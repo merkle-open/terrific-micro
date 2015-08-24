@@ -315,7 +315,7 @@ if ( !function_exists( 'dump' ) ) {
 		if ( $minify ) {
 			switch ( $filetype ) {
 				case 'css':
-					require BASE . 'app/library/cssmin/cssmin.php';
+					require BASE . 'app/library/cssmin/CssMin.php';
 					$output = CssMin::minify( $output );
 					break;
 				case 'js':
