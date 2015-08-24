@@ -30,15 +30,6 @@
  * @copyright	2008 - 2011 Joe Scylla <joe.scylla@gmail.com>
  * @license		http://opensource.org/licenses/mit-license.php MIT License
  * @version		3.0.1
- *
- *
- *
- *
- */
-/**
- * changes/fixes by namics
- *
- * fix for keyframes minifying bug - keyframes animation names without double quotes
  */
 /**
  * Abstract definition of a CSS token class.
@@ -502,10 +493,10 @@ class CssWhitesmithsFormatter extends aCssFormatter
 				$r[] = $this->indent . $indent . "{";
 				$level++;
 			}
-			elseif ($class == "CssAtFontFaceDeclarationToken"
+			elseif ($class === "CssAtFontFaceDeclarationToken"
 				|| $class === "CssAtKeyframesRulesetDeclarationToken"
 				|| $class === "CssAtPageDeclarationToken"
-				|| $class == "CssAtVariablesDeclarationToken"
+				|| $class === "CssAtVariablesDeclarationToken"
 				|| $class === "CssRulesetDeclarationToken"
 			)
 			{
@@ -1446,20 +1437,20 @@ class CssParser
 	public function __construct($source = null, array $plugins = null)
 	{
 		$plugins = array_merge(array
-		(
-			"Comment"		=> true,
-			"String"		=> true,
-			"Url"			=> true,
-			"Expression"	=> true,
-			"Ruleset"		=> true,
-			"AtCharset"		=> true,
-			"AtFontFace"	=> true,
-			"AtImport"		=> true,
-			"AtKeyframes"	=> true,
-			"AtMedia"		=> true,
-			"AtPage"		=> true,
-			"AtVariables"	=> true
-		), is_array($plugins) ? $plugins : array());
+		                       (
+		                       "Comment"		=> true,
+		                       "String"		=> true,
+		                       "Url"			=> true,
+		                       "Expression"	=> true,
+		                       "Ruleset"		=> true,
+		                       "AtCharset"		=> true,
+		                       "AtFontFace"	=> true,
+		                       "AtImport"		=> true,
+		                       "AtKeyframes"	=> true,
+		                       "AtMedia"		=> true,
+		                       "AtPage"		=> true,
+		                       "AtVariables"	=> true
+		                       ), is_array($plugins) ? $plugins : array());
 		// Create plugin instances
 		foreach ($plugins as $name => $config)
 		{
@@ -1872,10 +1863,10 @@ class CssOtbsFormatter extends aCssFormatter
 				$r[] = $indent . implode(", ", $token->Selectors) . " {";
 				$level++;
 			}
-			elseif ($class == "CssAtFontFaceDeclarationToken"
+			elseif ($class === "CssAtFontFaceDeclarationToken"
 				|| $class === "CssAtKeyframesRulesetDeclarationToken"
 				|| $class === "CssAtPageDeclarationToken"
-				|| $class == "CssAtVariablesDeclarationToken"
+				|| $class === "CssAtVariablesDeclarationToken"
 				|| $class === "CssRulesetDeclarationToken"
 			)
 			{
@@ -1969,27 +1960,27 @@ class CssMinifier
 	public function __construct($source = null, array $filters = null, array $plugins = null)
 	{
 		$filters = array_merge(array
-		(
-			"ImportImports"					=> false,
-			"RemoveComments"				=> true,
-			"RemoveEmptyRulesets"			=> true,
-			"RemoveEmptyAtBlocks"			=> true,
-			"ConvertLevel3Properties"		=> false,
-			"ConvertLevel3AtKeyframes"		=> false,
-			"Variables"						=> true,
-			"RemoveLastDelarationSemiColon"	=> true
-		), is_array($filters) ? $filters : array());
+		                       (
+		                       "ImportImports"					=> false,
+		                       "RemoveComments"				=> true,
+		                       "RemoveEmptyRulesets"			=> true,
+		                       "RemoveEmptyAtBlocks"			=> true,
+		                       "ConvertLevel3Properties"		=> false,
+		                       "ConvertLevel3AtKeyframes"		=> false,
+		                       "Variables"						=> true,
+		                       "RemoveLastDelarationSemiColon"	=> true
+		                       ), is_array($filters) ? $filters : array());
 		$plugins = array_merge(array
-		(
-			"Variables"						=> true,
-			"ConvertFontWeight"				=> false,
-			"ConvertHslColors"				=> false,
-			"ConvertRgbColors"				=> false,
-			"ConvertNamedColors"			=> false,
-			"CompressColorValues"			=> false,
-			"CompressUnitValues"			=> false,
-			"CompressExpressionValues"		=> false
-		), is_array($plugins) ? $plugins : array());
+		                       (
+		                       "Variables"						=> true,
+		                       "ConvertFontWeight"				=> false,
+		                       "ConvertHslColors"				=> false,
+		                       "ConvertRgbColors"				=> false,
+		                       "ConvertNamedColors"			=> false,
+		                       "CompressColorValues"			=> false,
+		                       "CompressUnitValues"			=> false,
+		                       "CompressExpressionValues"		=> false
+		                       ), is_array($plugins) ? $plugins : array());
 		// Filters
 		foreach ($filters as $name => $config)
 		{
@@ -2772,13 +2763,7 @@ class CssConvertNamedColorsMinifierPlugin extends aCssMinifierPlugin
 	 */
 	private $reMatch = null;
 	/**
-	 * Regular expression replacing the value.
-	 *
-	 * @var string
-	 */
-	private $reReplace = "\"\${1}\" . \$this->transformation[strtolower(\"\${2}\")] . \"\${3}\"";
-	/**
-	 * Transformation table used by the {@link CssConvertNamedColorsMinifierPlugin::$reReplace replace regular expression}.
+	 * Transformation table used by the {@link CssConvertNamedColorsMinifierPlugin::reReplace() replacement method}.
 	 *
 	 * @var array
 	 */
@@ -2924,7 +2909,7 @@ class CssConvertNamedColorsMinifierPlugin extends aCssMinifierPlugin
 	/**
 	 * Overwrites {@link aCssMinifierPlugin::__construct()}.
 	 *
-	 * The constructor will create the {@link CssConvertNamedColorsMinifierPlugin::$reReplace replace regular expression}
+	 * The constructor will create the {@link CssConvertNamedColorsMinifierPlugin::$reMatch replace regular expression}
 	 * based on the {@link CssConvertNamedColorsMinifierPlugin::$transformation transformation table}.
 	 *
 	 * @param CssMinifier $minifier The CssMinifier object of this plugin.
@@ -2933,7 +2918,7 @@ class CssConvertNamedColorsMinifierPlugin extends aCssMinifierPlugin
 	 */
 	public function __construct(CssMinifier $minifier, array $configuration = array())
 	{
-		$this->reMatch = "/(^|\s)+(" . implode("|", array_keys($this->transformation)) . ")(\s|$)+/eiS";
+		$this->reMatch = "/(^|\s)+(" . implode("|", array_keys($this->transformation)) . ")(\s|$)+/iS";
 		parent::__construct($minifier, $configuration);
 	}
 	/**
@@ -2953,9 +2938,19 @@ class CssConvertNamedColorsMinifierPlugin extends aCssMinifierPlugin
 		// Declaration value contains a value in the transformation table => regular expression replace
 		elseif (preg_match($this->reMatch, $token->Value))
 		{
-			$token->Value = preg_replace($this->reMatch, $this->reReplace, $token->Value);
+			$token->Value = preg_replace_callback($this->reMatch, array($this, 'reReplace'), $token->Value);
 		}
 		return false;
+	}
+	/**
+	 * Callback for replacement value.
+	 *
+	 * @param array $match
+	 * @return string
+	 */
+	private function reReplace($match)
+	{
+		return $match[1] . $this->transformation[strtolower($match[2])] . $match[3];
 	}
 	/**
 	 * Implements {@link aMinifierPlugin::getTriggerTokens()}
@@ -3334,7 +3329,7 @@ class CssConvertLevel3AtKeyframesMinifierFilter extends aCssMinifierFilter
 	public function apply(array &$tokens)
 	{
 		$r = 0;
-		$transformations = array("-moz-keyframes", "-webkit-keyframes", "-o-keyframes", "-ms-keyframes");
+		$transformations = array("-moz-keyframes", "-webkit-keyframes");
 		for ($i = 0, $l = count($tokens); $i < $l; $i++)
 		{
 			if (get_class($tokens[$i]) === "CssAtKeyframesStartToken")
@@ -3552,13 +3547,7 @@ class CssConvertFontWeightMinifierPlugin extends aCssMinifierPlugin
 	 */
 	private $reMatch = null;
 	/**
-	 * Regular expression replace the value.
-	 *
-	 * @var string
-	 */
-	private $reReplace = "\"\${1}\" . \$this->transformation[\"\${2}\"] . \"\${3}\"";
-	/**
-	 * Transformation table used by the {@link CssConvertFontWeightMinifierPlugin::$reReplace replace regular expression}.
+	 * Transformation table used by the {@link CssConvertFontWeightMinifierPlugin::reReplace() replacement method}.
 	 *
 	 * @var array
 	 */
@@ -3570,7 +3559,7 @@ class CssConvertFontWeightMinifierPlugin extends aCssMinifierPlugin
 	/**
 	 * Overwrites {@link aCssMinifierPlugin::__construct()}.
 	 *
-	 * The constructor will create the {@link CssConvertFontWeightMinifierPlugin::$reReplace replace regular expression}
+	 * The constructor will create the {@link CssConvertFontWeightMinifierPlugin::$reMatch replace regular expression}
 	 * based on the {@link CssConvertFontWeightMinifierPlugin::$transformation transformation table}.
 	 *
 	 * @param CssMinifier $minifier The CssMinifier object of this plugin.
@@ -3578,7 +3567,7 @@ class CssConvertFontWeightMinifierPlugin extends aCssMinifierPlugin
 	 */
 	public function __construct(CssMinifier $minifier)
 	{
-		$this->reMatch = "/(^|\s)+(" . implode("|", array_keys($this->transformation)). ")(\s|$)+/eiS";
+		$this->reMatch = "/(^|\s)+(" . implode("|", array_keys($this->transformation)). ")(\s|$)+/iS";
 		parent::__construct($minifier);
 	}
 	/**
@@ -3591,9 +3580,19 @@ class CssConvertFontWeightMinifierPlugin extends aCssMinifierPlugin
 	{
 		if (in_array($token->Property, $this->include) && preg_match($this->reMatch, $token->Value, $m))
 		{
-			$token->Value = preg_replace($this->reMatch, $this->reReplace, $token->Value);
+			$token->Value = preg_replace_callback($this->reMatch, array($this, 'reReplace'), $token->Value);
 		}
 		return false;
+	}
+	/**
+	 * Callback for replacement value.
+	 *
+	 * @param array $match
+	 * @return string
+	 */
+	private function reReplace($match)
+	{
+		return $match[1] . $this->transformation[strtolower($match[2])] . $match[3];
 	}
 	/**
 	 * Implements {@link aMinifierPlugin::getTriggerTokens()}
@@ -3648,8 +3647,21 @@ class CssCompressUnitValuesMinifierPlugin extends aCssMinifierPlugin
 	(
 		"/(^| |-)0\.([0-9]+?)(0+)?(%|em|ex|px|in|cm|mm|pt|pc)/iS" => "\${1}.\${2}\${4}",
 		"/(^| )-?(\.?)0(%|em|ex|px|in|cm|mm|pt|pc)/iS" => "\${1}0",
-		"/(^0\s0\s0\s0)|(^0\s0\s0$)|(^0\s0$)/iS" => "0"
 	);
+	/**
+	 * Regular expression used for matching and replacing unit values only for non-blacklisted declarations.
+	 *
+	 * @var array
+	 */
+	private $reBlacklisted = array(
+		"/(^0\s0\s0\s0)|(^0\s0\s0$)|(^0\s0$)/iS" => "0",
+	);
+	/**
+	 * Blacklisted properties for the above regular expression.
+	 *
+	 * @var array
+	 */
+	private $propertiesBlacklist = array('background-position');
 	/**
 	 * Regular expression matching the value.
 	 *
@@ -3669,6 +3681,13 @@ class CssCompressUnitValuesMinifierPlugin extends aCssMinifierPlugin
 			foreach ($this->re as $reMatch => $reReplace)
 			{
 				$token->Value = preg_replace($reMatch, $reReplace, $token->Value);
+			}
+			if (!in_array($token->Property, $this->propertiesBlacklist))
+			{
+				foreach ($this->reBlacklisted as $reMatch => $reReplace)
+				{
+					$token->Value = preg_replace($reMatch, $reReplace, $token->Value);
+				}
 			}
 		}
 		return false;
@@ -4448,22 +4467,6 @@ class CssAtKeyframesStartToken extends aCssAtBlockStartToken
 		{
 			return "@-moz-keyframes " . $this->Name . " {";
 		}
-		else if ($this->AtRuleName === "-webkit-keyframes")
-		{
-			return "@-webkit-keyframes " . $this->Name . " {";
-		}
-		else if ($this->AtRuleName === "-o-keyframes")
-		{
-			return "@-o-keyframes " . $this->Name . " {";
-		}
-		else if ($this->AtRuleName === "-ms-keyframes")
-		{
-			return "@-ms-keyframes " . $this->Name . " {";
-		}
-		else if ($this->AtRuleName === "keyframes")
-		{
-			return "@keyframes " . $this->Name . " {";
-		}
 		return "@" . $this->AtRuleName . " \"" . $this->Name . "\"{";
 	}
 }
@@ -4847,7 +4850,7 @@ class CssAtImportParserPlugin extends aCssParserPlugin
 			}
 			else
 			{
-				CssMin::triggerError(new CssError(__FILE__, __LINE__, __METHOD__ . ": Invalid @import at-rule syntax", $this->parser->buffer));
+				CssMin::triggerError(new CssError(__FILE__, __LINE__, __METHOD__ . ": Invalid @import at-rule syntax", $this->buffer));
 			}
 			$this->parser->popState();
 		}
@@ -4930,7 +4933,7 @@ class CssAtFontFaceParserPlugin extends aCssParserPlugin
 		{
 			$this->parser->pushState("T_AT_FONT_FACE::PREPARE");
 			$this->parser->clearBuffer();
-			return $index + 10;
+			return $index + 10 - 1;
 		}
 		// Start of @font-face declarations
 		elseif ($char === "{" && $state === "T_AT_FONT_FACE::PREPARE")

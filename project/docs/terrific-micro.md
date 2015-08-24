@@ -339,7 +339,7 @@ And there is a couple of helpful extensions on (GitHub)[http://namics.github.io/
 
 * [Less.php](http://lessphp.gpeasy.com)
 * [scssphp](http://leafo.net/scssphp)
-* [CssMin](https://code.google.com/p/cssmin/)
+* [CssMin](https://github.com/natxet/CssMin)
 * [JShrink](https://github.com/tedious/JShrink)
 
 ## Credits

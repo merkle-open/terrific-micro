@@ -2,7 +2,7 @@
 
 ## v1.0.5 - 2015
 
-* [maintenance] update scssphp to v0.1.10
+* [maintenance] update scssphp & cssmin
 
 ## v1.0.4 - 2015-07-21
 
