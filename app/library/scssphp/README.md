@@ -1,13 +1,10 @@
-# scssphp v0.1.7
+# scssphp
 ### <http://leafo.github.io/scssphp>
 
 [![Build](https://travis-ci.org/leafo/scssphp.svg?branch=master)](http://travis-ci.org/leafo/scssphp)
 [![License](https://poser.pugx.org/leafo/scssphp/license.svg)](https://packagist.org/packages/leafo/scssphp)
 
 `scssphp` is a compiler for SCSS written in PHP.
-
-It primarily implements SCSS 3.2.16, with some 3.3.x/3.4.x compatibility. It does not implement the SASS syntax, only the SCSS
-syntax.
 
 Checkout the homepage, <http://leafo.github.io/scssphp>, for directions on how to use.
 

@@ -32,7 +32,6 @@ class Parser
         'and' => 2,
         '==' => 3,
         '!=' => 3,
-        '<=>' => 3,
         '<=' => 4,
         '>=' => 4,
         '<' => 4,
@@ -55,7 +54,6 @@ class Parser
         '%',
         '==',
         '!=',
-        '<=>',
         '<=',
         '>=',
         '<',
@@ -170,6 +168,25 @@ class Parser
         $this->buffer          = (string) $buffer;
 
         return $this->valueList($out);
+    }
+
+    /**
+     * Parse a selector or selector list
+     *
+     * @param string $buffer
+     * @param string $out
+     *
+     * @return boolean
+     */
+    public function parseSelector($buffer, &$out)
+    {
+        $this->count           = 0;
+        $this->env             = null;
+        $this->inParens        = false;
+        $this->eatWhiteDefault = true;
+        $this->buffer          = (string) $buffer;
+
+        return $this->selectors($out);
     }
 
     /**
@@ -325,9 +342,11 @@ class Parser
                 $this->literal('{')
             ) {
                 $each = $this->pushSpecialBlock('each', $s);
+
                 foreach ($varNames[2] as $varName) {
                     $each->vars[] = $varName[1];
                 }
+
                 $each->list = $list;
 
                 return true;
@@ -377,10 +396,33 @@ class Parser
 
             $this->seek($s);
 
-            if (($this->literal('@debug') || $this->literal('@warn')) &&
+            if ($this->literal('@debug') &&
                 $this->valueList($value) &&
-                $this->end()) {
-                $this->append(array('debug', $value, $s), $s);
+                $this->end()
+            ) {
+                $this->append(array('debug', $value), $s);
+
+                return true;
+            }
+
+            $this->seek($s);
+
+            if ($this->literal('@warn') &&
+                $this->valueList($value) &&
+                $this->end()
+            ) {
+                $this->append(array('warn', $value), $s);
+
+                return true;
+            }
+
+            $this->seek($s);
+
+            if ($this->literal('@error') &&
+                $this->valueList($value) &&
+                $this->end()
+            ) {
+                $this->append(array('error', $value), $s);
 
                 return true;
             }
@@ -396,6 +438,7 @@ class Parser
             $this->seek($s);
 
             $last = $this->last();
+
             if (isset($last) && $last[0] == 'if') {
                 list(, $if) = $last;
 
@@ -505,6 +548,7 @@ class Parser
         // property assign, or nested assign
         if ($this->propertyName($name) && $this->literal(':')) {
             $foundSomething = false;
+
             if ($this->valueList($value)) {
                 $this->append(array('assign', $name, $value), $s);
                 $foundSomething = true;
@@ -691,6 +735,7 @@ class Parser
         $this->env->children[] = $statement;
 
         $comments = $this->env->comments;
+
         if (count($comments)) {
             $this->env->children = array_merge($this->env->children, $comments);
             $this->env->comments = array();
@@ -801,6 +846,7 @@ class Parser
         $s = $this->seek();
 
         $keyword = null;
+
         if (! $this->variable($keyword) || ! $this->literal(':')) {
             $this->seek($s);
             $keyword = null;
@@ -1042,6 +1088,7 @@ class Parser
             $this->literal('(')
         ) {
             $this->openString(')', $args, '(');
+
             if ($this->literal(')')) {
                 $out = array('string', '', array(
                     'progid:', $fn, '(', $args, ')'
@@ -1367,9 +1414,11 @@ class Parser
         $nestingLevel = 0;
 
         $content = array();
+
         while ($this->match($patt, $m, false)) {
             if (isset($m[1]) && $m[1] !== '') {
                 $content[] = $m[1];
+
                 if ($nestingOpen) {
                     $nestingLevel += substr_count($m[1], $nestingOpen);
                 }
@@ -1378,12 +1427,9 @@ class Parser
             $tok = $m[2];
 
             $this->count-= strlen($tok);
-            if ($tok == $end) {
-                if ($nestingLevel == 0) {
-                    break;
-                } else {
-                    $nestingLevel--;
-                }
+
+            if ($tok == $end && ! $nestingLevel--) {
+                break;
             }
 
             if (($tok == '\'' || $tok == '"') && $this->string($str)) {
@@ -1423,6 +1469,7 @@ class Parser
         $this->eatWhiteDefault = true;
 
         $s = $this->seek();
+
         if ($this->literal('#{') && $this->valueList($value) && $this->literal('}', false)) {
             // TODO: don't error if out of bounds
 
@@ -1435,6 +1482,7 @@ class Parser
 
             $out = array('interpolate', $value, $left, $right);
             $this->eatWhiteDefault = $oldWhite;
+
             if ($this->eatWhiteDefault) {
                 $this->whitespace();
             }
@@ -1471,6 +1519,7 @@ class Parser
         }
 
         $this->eatWhiteDefault = $oldWhite;
+
         if (count($parts) == 0) {
             return false;
         }
@@ -1573,6 +1622,7 @@ class Parser
             }
 
             $s = $this->seek();
+
             // self
             if ($this->literal('&', false)) {
                 $parts[] = Compiler::$selfSelector;
@@ -1624,6 +1674,7 @@ class Parser
             // a pseudo selector
             if ($this->match('::?', $m) && $this->mixedKeyword($nameParts)) {
                 $parts[] = $m[0];
+
                 foreach ($nameParts as $sub) {
                     $parts[] = $sub;
                 }
@@ -1646,14 +1697,15 @@ class Parser
                 }
 
                 continue;
-            } else {
-                $this->seek($s);
             }
+
+            $this->seek($s);
 
             // attribute selector
             // TODO: replace with open string?
             if ($this->literal('[', false)) {
                 $attrParts = array('[');
+
                 // keyword, string, operator
                 while (true) {
                     if ($this->literal(']', false)) {
@@ -1665,6 +1717,7 @@ class Parser
                         $attrParts[] = ' ';
                         continue;
                     }
+
                     if ($this->string($str)) {
                         $attrParts[] = $str;
                         continue;
