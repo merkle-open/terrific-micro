@@ -465,7 +465,7 @@ class CssWhitesmithsFormatter extends aCssFormatter
 			}
 			elseif ($class === "CssAtKeyframesStartToken")
 			{
-				$r[] = $indent . "@keyframes \"" . $token->Name . "\"";
+				$r[] = $indent . "@keyframes " . $token->Name;
 				$r[] = $this->indent . $indent . "{";
 				$level++;
 			}
@@ -494,10 +494,10 @@ class CssWhitesmithsFormatter extends aCssFormatter
 				$level++;
 			}
 			elseif ($class === "CssAtFontFaceDeclarationToken"
-				|| $class === "CssAtKeyframesRulesetDeclarationToken"
-				|| $class === "CssAtPageDeclarationToken"
-				|| $class === "CssAtVariablesDeclarationToken"
-				|| $class === "CssRulesetDeclarationToken"
+			        || $class === "CssAtKeyframesRulesetDeclarationToken"
+			        || $class === "CssAtPageDeclarationToken"
+			        || $class === "CssAtVariablesDeclarationToken"
+			        || $class === "CssRulesetDeclarationToken"
 			)
 			{
 				$declaration = $indent . $token->Property . ": ";
@@ -508,12 +508,12 @@ class CssWhitesmithsFormatter extends aCssFormatter
 				$r[] = $declaration . $token->Value . ($token->IsImportant ? " !important" : "") . ";";
 			}
 			elseif ($class === "CssAtFontFaceEndToken"
-				|| $class === "CssAtMediaEndToken"
-				|| $class === "CssAtKeyframesEndToken"
-				|| $class === "CssAtKeyframesRulesetEndToken"
-				|| $class === "CssAtPageEndToken"
-				|| $class === "CssAtVariablesEndToken"
-				|| $class === "CssRulesetEndToken"
+			        || $class === "CssAtMediaEndToken"
+			        || $class === "CssAtKeyframesEndToken"
+			        || $class === "CssAtKeyframesRulesetEndToken"
+			        || $class === "CssAtPageEndToken"
+			        || $class === "CssAtVariablesEndToken"
+			        || $class === "CssRulesetEndToken"
 			)
 			{
 				$r[] = $indent . "}";
@@ -1241,8 +1241,8 @@ class CssRemoveLastDelarationSemiColonMinifierFilter extends aCssMinifierFilter
 			$current	= get_class($tokens[$i]);
 			$next		= isset($tokens[$i+1]) ? get_class($tokens[$i+1]) : false;
 			if (($current === "CssRulesetDeclarationToken" && $next === "CssRulesetEndToken") ||
-				($current === "CssAtFontFaceDeclarationToken" && $next === "CssAtFontFaceEndToken") ||
-				($current === "CssAtPageDeclarationToken" && $next === "CssAtPageEndToken"))
+			    ($current === "CssAtFontFaceDeclarationToken" && $next === "CssAtFontFaceEndToken") ||
+			    ($current === "CssAtPageDeclarationToken" && $next === "CssAtPageEndToken"))
 			{
 				$tokens[$i]->IsLast = true;
 			}
@@ -1278,7 +1278,7 @@ class CssRemoveEmptyRulesetsMinifierFilter extends aCssMinifierFilter
 			$current	= get_class($tokens[$i]);
 			$next		= isset($tokens[$i + 1]) ? get_class($tokens[$i + 1]) : false;
 			if (($current === "CssRulesetStartToken" && $next === "CssRulesetEndToken") ||
-				($current === "CssAtKeyframesRulesetStartToken" && $next === "CssAtKeyframesRulesetEndToken" && !array_intersect(array("from", "0%", "to", "100%"), array_map("strtolower", $tokens[$i]->Selectors)))
+			    ($current === "CssAtKeyframesRulesetStartToken" && $next === "CssAtKeyframesRulesetEndToken" && !array_intersect(array("from", "0%", "to", "100%"), array_map("strtolower", $tokens[$i]->Selectors)))
 			)
 			{
 				$tokens[$i]		= null;
@@ -1318,9 +1318,9 @@ class CssRemoveEmptyAtBlocksMinifierFilter extends aCssMinifierFilter
 			$current	= get_class($tokens[$i]);
 			$next		= isset($tokens[$i + 1]) ? get_class($tokens[$i + 1]) : false;
 			if (($current === "CssAtFontFaceStartToken" && $next === "CssAtFontFaceEndToken") ||
-				($current === "CssAtKeyframesStartToken" && $next === "CssAtKeyframesEndToken") ||
-				($current === "CssAtPageStartToken" && $next === "CssAtPageEndToken") ||
-				($current === "CssAtMediaStartToken" && $next === "CssAtMediaEndToken"))
+			    ($current === "CssAtKeyframesStartToken" && $next === "CssAtKeyframesEndToken") ||
+			    ($current === "CssAtPageStartToken" && $next === "CssAtPageEndToken") ||
+			    ($current === "CssAtMediaStartToken" && $next === "CssAtMediaEndToken"))
 			{
 				$tokens[$i]		= null;
 				$tokens[$i + 1]	= null;
@@ -1345,6 +1345,13 @@ class CssRemoveEmptyAtBlocksMinifierFilter extends aCssMinifierFilter
 class CssRemoveCommentsMinifierFilter extends aCssMinifierFilter
 {
 	/**
+	 * Regular expression whitelisting any important comments to preserve.
+	 *
+	 * @var string
+	 */
+	private $whitelistPattern = '/(^\/\*!|@preserve|copyright|license|author|https?:|www\.)/i';
+
+	/**
 	 * Implements {@link aCssMinifierFilter::filter()}.
 	 *
 	 * @param array $tokens Array of objects of type aCssToken
@@ -1357,8 +1364,11 @@ class CssRemoveCommentsMinifierFilter extends aCssMinifierFilter
 		{
 			if (get_class($tokens[$i]) === "CssCommentToken")
 			{
-				$tokens[$i] = null;
-				$r++;
+				if (!preg_match($this->whitelistPattern, $tokens[$i]->Comment))
+				{
+					$tokens[$i] = null;
+					$r++;
+				}
 			}
 		}
 		return $r;
@@ -1437,20 +1447,20 @@ class CssParser
 	public function __construct($source = null, array $plugins = null)
 	{
 		$plugins = array_merge(array
-		                       (
-		                       "Comment"		=> true,
-		                       "String"		=> true,
-		                       "Url"			=> true,
-		                       "Expression"	=> true,
-		                       "Ruleset"		=> true,
-		                       "AtCharset"		=> true,
-		                       "AtFontFace"	=> true,
-		                       "AtImport"		=> true,
-		                       "AtKeyframes"	=> true,
-		                       "AtMedia"		=> true,
-		                       "AtPage"		=> true,
-		                       "AtVariables"	=> true
-		                       ), is_array($plugins) ? $plugins : array());
+		(
+			"Comment"		=> true,
+			"String"		=> true,
+			"Url"			=> true,
+			"Expression"	=> true,
+			"Ruleset"		=> true,
+			"AtCharset"		=> true,
+			"AtFontFace"	=> true,
+			"AtImport"		=> true,
+			"AtKeyframes"	=> true,
+			"AtMedia"		=> true,
+			"AtPage"		=> true,
+			"AtVariables"	=> true
+		), is_array($plugins) ? $plugins : array());
 		// Create plugin instances
 		foreach ($plugins as $name => $config)
 		{
@@ -1840,7 +1850,7 @@ class CssOtbsFormatter extends aCssFormatter
 			}
 			elseif ($class === "CssAtKeyframesStartToken")
 			{
-				$r[] = $indent . "@keyframes \"" . $token->Name . "\" {";
+				$r[] = $indent . "@keyframes " . $token->Name . " {";
 				$level++;
 			}
 			elseif ($class === "CssAtMediaStartToken")
@@ -1864,10 +1874,10 @@ class CssOtbsFormatter extends aCssFormatter
 				$level++;
 			}
 			elseif ($class === "CssAtFontFaceDeclarationToken"
-				|| $class === "CssAtKeyframesRulesetDeclarationToken"
-				|| $class === "CssAtPageDeclarationToken"
-				|| $class === "CssAtVariablesDeclarationToken"
-				|| $class === "CssRulesetDeclarationToken"
+			        || $class === "CssAtKeyframesRulesetDeclarationToken"
+			        || $class === "CssAtPageDeclarationToken"
+			        || $class === "CssAtVariablesDeclarationToken"
+			        || $class === "CssRulesetDeclarationToken"
 			)
 			{
 				$declaration = $indent . $token->Property . ": ";
@@ -1878,12 +1888,12 @@ class CssOtbsFormatter extends aCssFormatter
 				$r[] = $declaration . $token->Value . ($token->IsImportant ? " !important" : "") . ";";
 			}
 			elseif ($class === "CssAtFontFaceEndToken"
-				|| $class === "CssAtMediaEndToken"
-				|| $class === "CssAtKeyframesEndToken"
-				|| $class === "CssAtKeyframesRulesetEndToken"
-				|| $class === "CssAtPageEndToken"
-				|| $class === "CssAtVariablesEndToken"
-				|| $class === "CssRulesetEndToken"
+			        || $class === "CssAtMediaEndToken"
+			        || $class === "CssAtKeyframesEndToken"
+			        || $class === "CssAtKeyframesRulesetEndToken"
+			        || $class === "CssAtPageEndToken"
+			        || $class === "CssAtVariablesEndToken"
+			        || $class === "CssRulesetEndToken"
 			)
 			{
 				$level--;
@@ -1960,27 +1970,27 @@ class CssMinifier
 	public function __construct($source = null, array $filters = null, array $plugins = null)
 	{
 		$filters = array_merge(array
-		                       (
-		                       "ImportImports"					=> false,
-		                       "RemoveComments"				=> true,
-		                       "RemoveEmptyRulesets"			=> true,
-		                       "RemoveEmptyAtBlocks"			=> true,
-		                       "ConvertLevel3Properties"		=> false,
-		                       "ConvertLevel3AtKeyframes"		=> false,
-		                       "Variables"						=> true,
-		                       "RemoveLastDelarationSemiColon"	=> true
-		                       ), is_array($filters) ? $filters : array());
+		(
+			"ImportImports"					=> false,
+			"RemoveComments"				=> true,
+			"RemoveEmptyRulesets"			=> true,
+			"RemoveEmptyAtBlocks"			=> true,
+			"ConvertLevel3Properties"		=> false,
+			"ConvertLevel3AtKeyframes"		=> false,
+			"Variables"						=> true,
+			"RemoveLastDelarationSemiColon"	=> true
+		), is_array($filters) ? $filters : array());
 		$plugins = array_merge(array
-		                       (
-		                       "Variables"						=> true,
-		                       "ConvertFontWeight"				=> false,
-		                       "ConvertHslColors"				=> false,
-		                       "ConvertRgbColors"				=> false,
-		                       "ConvertNamedColors"			=> false,
-		                       "CompressColorValues"			=> false,
-		                       "CompressUnitValues"			=> false,
-		                       "CompressExpressionValues"		=> false
-		                       ), is_array($plugins) ? $plugins : array());
+		(
+			"Variables"						=> true,
+			"ConvertFontWeight"				=> false,
+			"ConvertHslColors"				=> false,
+			"ConvertRgbColors"				=> false,
+			"ConvertNamedColors"			=> false,
+			"CompressColorValues"			=> false,
+			"CompressUnitValues"			=> false,
+			"CompressExpressionValues"		=> false
+		), is_array($plugins) ? $plugins : array());
 		// Filters
 		foreach ($filters as $name => $config)
 		{
@@ -4467,7 +4477,7 @@ class CssAtKeyframesStartToken extends aCssAtBlockStartToken
 		{
 			return "@-moz-keyframes " . $this->Name . " {";
 		}
-		return "@" . $this->AtRuleName . " \"" . $this->Name . "\"{";
+		return "@" . $this->AtRuleName . " " . $this->Name . "{";
 	}
 }
 
