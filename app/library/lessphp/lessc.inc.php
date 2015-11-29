@@ -23,6 +23,7 @@ class lessc{
 	protected $libFunctions = array();
 	protected $registeredVars = array();
 	private $formatterName;
+	private $options = array();
 
 	public function __construct($lessc=null, $sourceName=null) {}
 
@@ -62,26 +63,41 @@ class lessc{
 		unset( $this->registeredVars[$name] );
 	}
 
+	public function setOptions($options){
+		foreach( $options as $name => $value ){
+			$this->setOption( $name, $value);
+		}
+	}
+	
+	public function setOption($name, $value){
+		$this->options[$name] = $value;
+	}
+	
 	public function parse($buffer, $presets = array()){
+
 		$this->setVariables($presets);
 
 		$parser = new Less_Parser($this->getOptions());
 		$parser->setImportDirs($this->getImportDirs());
-		if( count( $this->registeredVars ) ) $parser->ModifyVars( $this->registeredVars );
 		foreach ($this->libFunctions as $name => $func) {
 			$parser->registerFunction($name, $func);
 		}
 		$parser->parse($buffer);
+		if( count( $this->registeredVars ) ) $parser->ModifyVars( $this->registeredVars );
 
 		return $parser->getCss();
 	}
 
 	protected function getOptions(){
-		$options = array();
+		$options = array('relativeUrls'=>false);
 		switch($this->formatterName){
 			case 'compressed':
 				$options['compress'] = true;
 				break;
+		}
+		if (is_array($this->options))
+		{
+			$options = array_merge($options, $this->options);
 		}
 		return $options;
 	}
