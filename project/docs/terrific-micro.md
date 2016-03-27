@@ -21,7 +21,7 @@ Terrific Micro is simple, fast and flexible. Use this app for all your frontend 
 
 ## Quick Start
 
-You only need an Apache web server 2.2+ with PHP 5.3+ support.  
+You only need an Apache web server 2.2+ with PHP 5.4+ support.  
 Enable `mod_rewrite` and optionally `mod_deflate` and add the directive `AllowOverride All` for your directory. (Apache 2.4 needs `mod_access_compat` enabled.)
 
 1. Clone repo to a project folder in your web root:
@@ -173,7 +173,7 @@ You can configure the include order of your assets by defining patterns in `conf
         ],
         "app.js": [
             "!assets/js/somefile.js",
-            "assets/js/jquery-1.11.3.min.js",
+            "assets/js/jquery-1.12.2.min.js",
             "assets/js/terrific-2-1.0.js",
             "assets/js/*.js",
             "components/modules/*/js/*.js",
@@ -329,7 +329,7 @@ And there is a couple of helpful extensions on (GitHub)[http://namics.github.io/
 
 ## Example Project Includes
 
-* [jQuery 1.11.3](http://jquery.com/)
+* [jQuery 1.12.2](http://jquery.com/)
 * [TerrificJS 2.1.0](https://github.com/brunschgi/terrificjs/tree/2.1.0)
 * [YUI CSS Reset 3.18.1](http://yuilibrary.com/yui/docs/cssreset/)
 * Favicon & Home-Icons from Terrific Micro (replace with your own)

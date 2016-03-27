@@ -13,7 +13,7 @@
 		"app.js": [
 			"!**/somefile.*",
 			"!components/modules/Test*/*",
-			"assets/js/jquery-1.11.3.min.js",
+			"assets/js/jquery-1.12.2.min.js",
 			"assets/js/terrific-2.1.0.js",
 			"assets/js/*.js",
 			"components/modules/*/js/*.js",
