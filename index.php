@@ -465,6 +465,7 @@ if ( !function_exists( 'get_scss_parser' ) ) {
 	function get_scss_parser() {
 
 		require_once BASE . 'app/library/scssphp/scss.inc.php';
+		class scssc extends \Leafo\ScssPhp\Compiler {} // Stub class for backward compatibility
 		$scss = new scssc;
 
 		//$scss->setImportPaths( array( '' ) ); // default

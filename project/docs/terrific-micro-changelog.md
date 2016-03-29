@@ -1,8 +1,8 @@
 # Changelog - Terrific Micro
 
-## v1.0.5 - 2015
+## v1.0.5 - 2016
 
-* [maintenance] update lessphp, scssphp & cssmin
+* [maintenance] update jQuery, lessphp, scssphp & cssmin
 
 ## v1.0.4 - 2015-07-21
 
