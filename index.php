@@ -1,7 +1,7 @@
 <?php
 
 // -------------------------------------------------------------------------------------------
-// Terrific Micro v1.0.4
+// Terrific Micro v1.0.5
 // https://github.com/namics/terrific-micro/blob/master/README.md
 //
 // Do not change this file - use project/index.project.php for your customisations
