@@ -1,3 +1,5 @@
+⚠️ Micro is no longer developed - use its successor [Nitro](https://github.com/namics/generator-nitro) that is based on node ⚠️
+
 # Readme - Project
 
 Introduction…
